@@ -2,7 +2,7 @@ using FSD_Project_Bookstore_Group4.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// Add services to the container. 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
