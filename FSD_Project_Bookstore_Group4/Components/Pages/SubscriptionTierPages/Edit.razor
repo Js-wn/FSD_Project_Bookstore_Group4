@@ -1,0 +1,104 @@
+﻿@page "/subscriptiontiers/edit"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>SubscriptionTier</h2>
+<hr />
+@if (SubscriptionTier is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="SubscriptionTier" OnValidSubmit="UpdateSubscriptionTier" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="SubscriptionTier.Id" value="@SubscriptionTier.Id" />
+                <div class="mb-3">
+                    <label for="tiername" class="form-label">TierName:</label>
+                    <InputText id="tiername" @bind-Value="SubscriptionTier.TierName" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionTier.TierName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="cost" class="form-label">Cost:</label>
+                    <InputNumber id="cost" @bind-Value="SubscriptionTier.Cost" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionTier.Cost" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="SubscriptionTier.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionTier.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dateupdate" class="form-label">DateUpdate:</label>
+                    <InputDate id="dateupdate" @bind-Value="SubscriptionTier.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionTier.DateUpdate" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/subscriptiontiers">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private SubscriptionTier? SubscriptionTier { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        SubscriptionTier ??= await context.SubscriptionTier.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (SubscriptionTier is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateSubscriptionTier()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(SubscriptionTier!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!SubscriptionTierExists(SubscriptionTier!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/subscriptiontiers");
+    }
+
+    private bool SubscriptionTierExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.SubscriptionTier.Any(e => e.Id == id);
+    }
+}

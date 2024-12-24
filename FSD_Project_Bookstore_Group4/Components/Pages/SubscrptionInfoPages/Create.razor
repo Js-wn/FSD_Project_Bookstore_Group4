@@ -1,0 +1,69 @@
+﻿@page "/subscrptioninfos/create"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>SubscrptionInfo</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="SubscrptionInfo" OnValidSubmit="AddSubscrptionInfo" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="datestart" class="form-label">DateStart:</label> 
+                <InputDate id="datestart" @bind-Value="SubscrptionInfo.DateStart" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.DateStart" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dateend" class="form-label">DateEnd:</label> 
+                <InputDate id="dateend" @bind-Value="SubscrptionInfo.DateEnd" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.DateEnd" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="cutomerid" class="form-label">CutomerId:</label> 
+                <InputNumber id="cutomerid" @bind-Value="SubscrptionInfo.CutomerId" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.CutomerId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="tierid" class="form-label">TierId:</label> 
+                <InputNumber id="tierid" @bind-Value="SubscrptionInfo.TierId" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.TierId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="SubscrptionInfo.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dateupdate" class="form-label">DateUpdate:</label> 
+                <InputDate id="dateupdate" @bind-Value="SubscrptionInfo.DateUpdate" class="form-control" /> 
+                <ValidationMessage For="() => SubscrptionInfo.DateUpdate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/subscrptioninfos">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private SubscrptionInfo SubscrptionInfo { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddSubscrptionInfo()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.SubscrptionInfo.Add(SubscrptionInfo);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/subscrptioninfos");
+    }
+}

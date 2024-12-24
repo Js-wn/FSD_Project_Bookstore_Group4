@@ -1,0 +1,79 @@
+﻿@page "/books/create"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Book</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Book" OnValidSubmit="AddBook" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="booktitle" class="form-label">BookTitle:</label> 
+                <InputText id="booktitle" @bind-Value="Book.BookTitle" class="form-control" /> 
+                <ValidationMessage For="() => Book.BookTitle" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookdesc" class="form-label">BookDesc:</label> 
+                <InputText id="bookdesc" @bind-Value="Book.BookDesc" class="form-control" /> 
+                <ValidationMessage For="() => Book.BookDesc" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookcoverimg" class="form-label">BookCoverImg:</label> 
+                <InputText id="bookcoverimg" @bind-Value="Book.BookCoverImg" class="form-control" /> 
+                <ValidationMessage For="() => Book.BookCoverImg" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookpublishdate" class="form-label">BookPublishDate:</label> 
+                <InputDate id="bookpublishdate" @bind-Value="Book.BookPublishDate" class="form-control" /> 
+                <ValidationMessage For="() => Book.BookPublishDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookprice" class="form-label">BookPrice:</label> 
+                <InputNumber id="bookprice" @bind-Value="Book.BookPrice" class="form-control" /> 
+                <ValidationMessage For="() => Book.BookPrice" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="publisherid" class="form-label">PublisherId:</label> 
+                <InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
+                <ValidationMessage For="() => Book.PublisherId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Book.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Book.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dateupdate" class="form-label">DateUpdate:</label> 
+                <InputDate id="dateupdate" @bind-Value="Book.DateUpdate" class="form-control" /> 
+                <ValidationMessage For="() => Book.DateUpdate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/books">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Book Book { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddBook()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Book.Add(Book);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/books");
+    }
+}

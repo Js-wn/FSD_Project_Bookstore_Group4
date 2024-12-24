@@ -1,0 +1,59 @@
+﻿@page "/subscriptiontiers/create"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>SubscriptionTier</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="SubscriptionTier" OnValidSubmit="AddSubscriptionTier" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="tiername" class="form-label">TierName:</label> 
+                <InputText id="tiername" @bind-Value="SubscriptionTier.TierName" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionTier.TierName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="cost" class="form-label">Cost:</label> 
+                <InputNumber id="cost" @bind-Value="SubscriptionTier.Cost" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionTier.Cost" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="SubscriptionTier.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionTier.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dateupdate" class="form-label">DateUpdate:</label> 
+                <InputDate id="dateupdate" @bind-Value="SubscriptionTier.DateUpdate" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionTier.DateUpdate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/subscriptiontiers">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private SubscriptionTier SubscriptionTier { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddSubscriptionTier()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.SubscriptionTier.Add(SubscriptionTier);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/subscriptiontiers");
+    }
+}

@@ -1,0 +1,114 @@
+﻿@page "/publishers/edit"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Publisher</h2>
+<hr />
+@if (Publisher is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Publisher" OnValidSubmit="UpdatePublisher" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Publisher.Id" value="@Publisher.Id" />
+                <div class="mb-3">
+                    <label for="publishername" class="form-label">PublisherName:</label>
+                    <InputText id="publishername" @bind-Value="Publisher.PublisherName" class="form-control" />
+                    <ValidationMessage For="() => Publisher.PublisherName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="publishercontact" class="form-label">PublisherContact:</label>
+                    <InputText id="publishercontact" @bind-Value="Publisher.PublisherContact" class="form-control" />
+                    <ValidationMessage For="() => Publisher.PublisherContact" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="publisheremail" class="form-label">PublisherEmail:</label>
+                    <InputText id="publisheremail" @bind-Value="Publisher.PublisherEmail" class="form-control" />
+                    <ValidationMessage For="() => Publisher.PublisherEmail" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="publisheraddress" class="form-label">PublisherAddress:</label>
+                    <InputText id="publisheraddress" @bind-Value="Publisher.PublisherAddress" class="form-control" />
+                    <ValidationMessage For="() => Publisher.PublisherAddress" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="Publisher.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => Publisher.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dateupdate" class="form-label">DateUpdate:</label>
+                    <InputDate id="dateupdate" @bind-Value="Publisher.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => Publisher.DateUpdate" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/publishers">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Publisher? Publisher { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Publisher ??= await context.Publisher.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Publisher is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdatePublisher()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Publisher!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!PublisherExists(Publisher!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/publishers");
+    }
+
+    private bool PublisherExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Publisher.Any(e => e.Id == id);
+    }
+}

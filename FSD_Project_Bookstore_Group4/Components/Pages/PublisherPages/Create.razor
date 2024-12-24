@@ -1,0 +1,69 @@
+﻿@page "/publishers/create"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Publisher</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Publisher" OnValidSubmit="AddPublisher" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="publishername" class="form-label">PublisherName:</label> 
+                <InputText id="publishername" @bind-Value="Publisher.PublisherName" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.PublisherName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="publishercontact" class="form-label">PublisherContact:</label> 
+                <InputText id="publishercontact" @bind-Value="Publisher.PublisherContact" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.PublisherContact" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="publisheremail" class="form-label">PublisherEmail:</label> 
+                <InputText id="publisheremail" @bind-Value="Publisher.PublisherEmail" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.PublisherEmail" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="publisheraddress" class="form-label">PublisherAddress:</label> 
+                <InputText id="publisheraddress" @bind-Value="Publisher.PublisherAddress" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.PublisherAddress" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Publisher.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dateupdate" class="form-label">DateUpdate:</label> 
+                <InputDate id="dateupdate" @bind-Value="Publisher.DateUpdate" class="form-control" /> 
+                <ValidationMessage For="() => Publisher.DateUpdate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/publishers">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Publisher Publisher { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddPublisher()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Publisher.Add(Publisher);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/publishers");
+    }
+}

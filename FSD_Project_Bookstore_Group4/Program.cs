@@ -4,8 +4,15 @@ using FSD_Project_Bookstore_Group4.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContextFactory<FSD_Project_Bookstore_Group4Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FSD_Project_Bookstore_Group4Context") ?? throw new InvalidOperationException("Connection string 'FSD_Project_Bookstore_Group4Context' not found.")));
+
+builder.Services.AddQuickGridEntityFrameworkAdapter();
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var connectionString = builder.Configuration.GetConnectionString("IdentityContext") ?? throw new InvalidOperationException("Connection string 'IdentityContextConnection' not found.");;
 
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString));
@@ -44,6 +51,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseMigrationsEndPoint();
 }
 
 app.UseHttpsRedirection();

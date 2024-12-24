@@ -1,0 +1,104 @@
+﻿@page "/orders/edit"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Order</h2>
+<hr />
+@if (Order is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Order" OnValidSubmit="UpdateOrder" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Order.Id" value="@Order.Id" />
+                <div class="mb-3">
+                    <label for="orderdatetime" class="form-label">OrderDateTime:</label>
+                    <InputDate id="orderdatetime" @bind-Value="Order.OrderDateTime" class="form-control" />
+                    <ValidationMessage For="() => Order.OrderDateTime" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="customerid" class="form-label">CustomerId:</label>
+                    <InputNumber id="customerid" @bind-Value="Order.CustomerId" class="form-control" />
+                    <ValidationMessage For="() => Order.CustomerId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="Order.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => Order.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dateupdate" class="form-label">DateUpdate:</label>
+                    <InputDate id="dateupdate" @bind-Value="Order.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => Order.DateUpdate" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/orders">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Order? Order { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Order ??= await context.Order.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Order is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateOrder()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Order!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!OrderExists(Order!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/orders");
+    }
+
+    private bool OrderExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Order.Any(e => e.Id == id);
+    }
+}

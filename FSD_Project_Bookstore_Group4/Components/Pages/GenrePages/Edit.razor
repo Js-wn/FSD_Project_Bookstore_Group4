@@ -1,0 +1,104 @@
+﻿@page "/genres/edit"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Genre</h2>
+<hr />
+@if (Genre is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Genre" OnValidSubmit="UpdateGenre" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Genre.Id" value="@Genre.Id" />
+                <div class="mb-3">
+                    <label for="genrename" class="form-label">GenreName:</label>
+                    <InputText id="genrename" @bind-Value="Genre.GenreName" class="form-control" />
+                    <ValidationMessage For="() => Genre.GenreName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="genredesc" class="form-label">GenreDesc:</label>
+                    <InputText id="genredesc" @bind-Value="Genre.GenreDesc" class="form-control" />
+                    <ValidationMessage For="() => Genre.GenreDesc" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="Genre.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => Genre.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dateupdate" class="form-label">DateUpdate:</label>
+                    <InputDate id="dateupdate" @bind-Value="Genre.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => Genre.DateUpdate" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/genres">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Genre? Genre { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Genre ??= await context.Genre.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Genre is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateGenre()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Genre!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!GenreExists(Genre!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/genres");
+    }
+
+    private bool GenreExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Genre.Any(e => e.Id == id);
+    }
+}

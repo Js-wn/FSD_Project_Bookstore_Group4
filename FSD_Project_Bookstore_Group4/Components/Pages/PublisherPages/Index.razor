@@ -1,0 +1,41 @@
+﻿@page "/publishers"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="publishers/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.Publisher">
+    <PropertyColumn Property="publisher => publisher.PublisherName" />
+    <PropertyColumn Property="publisher => publisher.PublisherContact" />
+    <PropertyColumn Property="publisher => publisher.PublisherEmail" />
+    <PropertyColumn Property="publisher => publisher.PublisherAddress" />
+    <PropertyColumn Property="publisher => publisher.DateCreated" />
+    <PropertyColumn Property="publisher => publisher.DateUpdate" />
+
+    <TemplateColumn Context="publisher">
+        <a href="@($"publishers/edit?id={publisher.Id}")">Edit</a> |
+        <a href="@($"publishers/details?id={publisher.Id}")">Details</a> |
+        <a href="@($"publishers/delete?id={publisher.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private FSD_Project_Bookstore_Group4Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
