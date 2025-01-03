@@ -9,7 +9,7 @@ namespace FSD_Project_Bookstore_Group4.Data
 {
     public class FSD_Project_Bookstore_Group4Context : DbContext
     {
-        public FSD_Project_Bookstore_Group4Context (DbContextOptions<FSD_Project_Bookstore_Group4Context> options)
+        public FSD_Project_Bookstore_Group4Context(DbContextOptions<FSD_Project_Bookstore_Group4Context> options)
             : base(options)
         {
         }

@@ -13,9 +13,9 @@ builder.Services.AddDbContextFactory<FSD_Project_Bookstore_Group4Context>(option
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-var connectionString = builder.Configuration.GetConnectionString("IdentityContext") ?? throw new InvalidOperationException("Connection string 'IdentityContextConnection' not found.");;
+var connectionString = builder.Configuration.GetConnectionString("FSD_Project_Bookstore_Group4Context") ?? throw new InvalidOperationException("Connection string 'FSD_Project_Bookstore_Group4Context' not found.");;
 
-builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<FSD_Project_Bookstore_Group4Context>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container. 
 builder.Services.AddRazorComponents()
@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddIdentityCore<FSD_Project_Bookstore_Group4User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<IdentityContext>()
+    .AddEntityFrameworkStores<FSD_Project_Bookstore_Group4Context>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
