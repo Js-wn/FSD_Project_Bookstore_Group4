@@ -37,6 +37,7 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddIdentityCore<FSD_Project_Bookstore_Group4User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FSD_Project_Bookstore_Group4Context>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
