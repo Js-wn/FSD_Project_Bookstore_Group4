@@ -4,6 +4,7 @@ using FSD_Project_Bookstore_Group4.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    partial class FSD_Project_Bookstore_Group4ContextModelSnapshot : ModelSnapshot
+    [Migration("20250108021859_GenderSeed")]
+    partial class GenderSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "724896b7-f634-4ee5-9563-58d4d7899fb4",
+                            ConcurrencyStamp = "7a9d2268-1286-45dd-9075-7bbcc91110da",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -105,9 +108,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ1KXzy7mMq1ykCy8IUI0o6kgTljRhJQZ5ahkl5S+39UC3XbiA72gshg/2nwmNCTDw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH7BNXzktaviSMN4ZW+QY9sl+xM4qsd9q82/rxv+7u8n6Ik3JKCzbUVcISnOhccnDg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e8a341fb-2134-4b92-939e-e089332c3372",
+                            SecurityStamp = "0695a41d-8b6f-4bf0-8619-7ed2c2812ee0",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -238,22 +241,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Gender");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6235),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6236),
-                            GenderName = "Male"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6238),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6238),
-                            GenderName = "Female"
-                        });
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Genre", b =>
@@ -340,8 +327,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6013),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6023),
+                            DateCreated = new DateTime(2025, 1, 8, 10, 18, 58, 367, DateTimeKind.Local).AddTicks(1613),
+                            DateUpdate = new DateTime(2025, 1, 8, 10, 18, 58, 367, DateTimeKind.Local).AddTicks(1623),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",

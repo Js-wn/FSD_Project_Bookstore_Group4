@@ -30,6 +30,7 @@ IdentityDbContext<FSD_Project_Bookstore_Group4User>(options)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new PublisherSeed());
+            builder.ApplyConfiguration(new GenderSeed());
             builder.ApplyConfiguration(new RoleSeed());
             builder.ApplyConfiguration(new UserSeed());
             builder.ApplyConfiguration(new UserRoleSeed());

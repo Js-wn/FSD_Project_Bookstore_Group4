@@ -59,13 +59,57 @@
             <NavLink class="nav-link" href="Sales">
                 <span class="bi bi-percent" aria-hidden="true"></span> Sales
             </NavLink>
-        </div
+        </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Featured">
                 <span class="bi bi-star-fill" aria-hidden="true"></span> Featured
             </NavLink>
         </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="authors">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Author
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="books">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Book
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="customers">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Customer
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="genders">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Gender
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="genres">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Genre
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="publishers">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Publisher
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="subscriptiontiers">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> SubscriptionTier
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="subscrptioninfos">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> SubscriptionInfo
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
 
