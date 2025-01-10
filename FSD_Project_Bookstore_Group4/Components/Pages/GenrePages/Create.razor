@@ -37,12 +37,12 @@
             </div>
             <div class="mb-3" hidden>
                 <label for="createdby" class="form-label">CreatedBy:</label>
-                <InputDate id="createdby" @bind-Value="Genre.CreatedBy" class="form-control" />
+                <InputText id="createdby" @bind-Value="Genre.CreatedBy" class="form-control" />
                 <ValidationMessage For="() => Genre.CreatedBy" class="text-danger" />
             </div>
             <div class="mb-3" hidden>
                 <label for="updatedby" class="form-label">UpdatedBy:</label>
-                <InputDate id="updatedby" @bind-Value="Genre.UpdatedBy" class="form-control" />
+                <InputText id="updatedby" @bind-Value="Genre.UpdatedBy" class="form-control" />
                 <ValidationMessage For="() => Genre.UpdatedBy" class="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
