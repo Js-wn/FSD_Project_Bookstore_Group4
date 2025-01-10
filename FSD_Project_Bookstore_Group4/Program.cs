@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
+// test
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<FSD_Project_Bookstore_Group4Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FSD_Project_Bookstore_Group4Context") ?? throw new InvalidOperationException("Connection string 'FSD_Project_Bookstore_Group4Context' not found.")));
