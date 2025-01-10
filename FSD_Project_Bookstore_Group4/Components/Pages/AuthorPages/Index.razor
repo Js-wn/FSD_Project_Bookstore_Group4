@@ -6,6 +6,8 @@
 @implements IAsyncDisposable
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 
+@attribute [Authorize(Roles = "Administrator")]
+
 <PageTitle>Index</PageTitle>
 
 <h1>Index</h1>
@@ -22,9 +24,11 @@
     <PropertyColumn Property="author => author.DateUpdate" />
 
     <TemplateColumn Context="author">
-        <a href="@($"authors/edit?id={author.Id}")">Edit</a> |
-        <a href="@($"authors/details?id={author.Id}")">Details</a> |
-        <a href="@($"authors/delete?id={author.Id}")">Delete</a>
+        <AuthorizeView Roles="Administrator">
+            <a href="@($"authors/edit?id={author.Id}")">Edit</a> |
+            <a href="@($"authors/details?id={author.Id}")">Details</a> |
+            <a href="@($"authors/delete?id={author.Id}")">Delete</a>
+        </AuthorizeView>
     </TemplateColumn>
 </QuickGrid>
 
