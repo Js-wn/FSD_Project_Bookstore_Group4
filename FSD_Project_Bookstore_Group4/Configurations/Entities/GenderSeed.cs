@@ -14,15 +14,19 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     Id = 1,
                     DateCreated = DateTime.Now,
                     DateUpdate = DateTime.Now,
-                    GenderName = "Male"
-                    
+                    GenderName = "Male",
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+
                 },
                 new Gender
                 {
                     Id = 2,
                     DateCreated = DateTime.Now,
                     DateUpdate = DateTime.Now,
-                    GenderName = "Female"
+                    GenderName = "Female",
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
 
                 }
 

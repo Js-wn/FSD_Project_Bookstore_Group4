@@ -50,16 +50,26 @@
                 <InputNumber id="genderid" @bind-Value="Customer.GenderId" class="form-control" /> 
                 <ValidationMessage For="() => Customer.GenderId" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Customer.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Customer.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dateupdate" class="form-label">DateUpdate:</label> 
                 <InputDate id="dateupdate" @bind-Value="Customer.DateUpdate" class="form-control" /> 
                 <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3" hidden>
+                <label for="createdby" class="form-label">CreatedBy:</label>
+                <InputDate id="createdby" @bind-Value="Customer.CreatedBy" class="form-control" />
+                <ValidationMessage For="() => Customer.CreatedBy" class="text-danger" />
+            </div>
+            <div class="mb-3" hidden>
+                <label for="updatedby" class="form-label">UpdatedBy:</label>
+                <InputDate id="updatedby" @bind-Value="Customer.UpdatedBy" class="form-control" />
+                <ValidationMessage For="() => Customer.UpdatedBy" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

@@ -22,7 +22,8 @@
     <PropertyColumn Property="author => author.AuthorBio" />
     <PropertyColumn Property="author => author.DateCreated" />
     <PropertyColumn Property="author => author.DateUpdate" />
-
+    <PropertyColumn Property="author => author.CreatedBy" />
+    <PropertyColumn Property="author => author.UpdatedBy" />
     <TemplateColumn Context="author">
         <AuthorizeView Roles="Administrator">
             <a href="@($"authors/edit?id={author.Id}")">Edit</a> |

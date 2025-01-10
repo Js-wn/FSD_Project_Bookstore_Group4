@@ -17,7 +17,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     PublisherName = "PlaceHolder",
                     PublisherContact = "11111111",
                     PublisherEmail = "example@gmail.com",
-                    PublisherAddress = "123 street"
+                    PublisherAddress = "123 street",
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 }
 
             );

@@ -20,7 +20,8 @@
     <PropertyColumn Property="gender => gender.GenderName" />
     <PropertyColumn Property="gender => gender.DateCreated" />
     <PropertyColumn Property="gender => gender.DateUpdate" />
-
+    <PropertyColumn Property="gender => gender.CreatedBy" />
+    <PropertyColumn Property="gender => gender.UpdatedBy" />
     <TemplateColumn Context="gender">
         <AuthorizeView Roles="Administrator">
             <a href="@($"genders/edit?id={gender.Id}")">Edit</a> |

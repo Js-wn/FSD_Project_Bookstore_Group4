@@ -39,8 +39,18 @@
                 <label for="dateupdate" class="form-label">DateUpdate:</label> 
                 <InputDate id="dateupdate" @bind-Value="Author.DateUpdate" class="form-control" /> 
                 <ValidationMessage For="() => Author.DateUpdate" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3" hidden>
+                <label for="createdby" class="form-label">CreatedBy:</label>
+                <InputDate id="createdby" @bind-Value="Author.CreatedBy" class="form-control" />
+                <ValidationMessage For="() => Author.CreatedBy" class="text-danger" />
+            </div>
+            <div class="mb-3" hidden>
+                <label for="updatedby" class="form-label">UpdatedBy:</label>
+                <InputDate id="updatedby" @bind-Value="Author.UpdatedBy" class="form-control" />
+                <ValidationMessage For="() => Author.UpdatedBy" class="text-danger" />
             <button type="submit" class="btn btn-primary">Create</button>
+            </div>
         </EditForm>
     </div>
 </div>

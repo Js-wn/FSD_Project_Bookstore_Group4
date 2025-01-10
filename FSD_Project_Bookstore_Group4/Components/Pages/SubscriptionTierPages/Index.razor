@@ -21,7 +21,8 @@
     <PropertyColumn Property="subscriptiontier => subscriptiontier.Cost" />
     <PropertyColumn Property="subscriptiontier => subscriptiontier.DateCreated" />
     <PropertyColumn Property="subscriptiontier => subscriptiontier.DateUpdate" />
-
+    <PropertyColumn Property="subscriptiontier => subscriptiontier.CreatedBy" />
+    <PropertyColumn Property="subscriptiontier => subscriptiontier.UpdatedBy" />
     <TemplateColumn Context="subscriptiontier">
         <AuthorizeView Roles="Administrator">
             <a href="@($"subscriptiontiers/edit?id={subscriptiontier.Id}")">Edit</a> |

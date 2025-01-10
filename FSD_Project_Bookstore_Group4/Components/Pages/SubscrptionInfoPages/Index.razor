@@ -23,7 +23,8 @@
     <PropertyColumn Property="subscrptioninfo => subscrptioninfo.TierId" />
     <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateCreated" />
     <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateUpdate" />
-
+    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.CreatedBy" />
+    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.UpdatedBy" />
     <TemplateColumn Context="subscrptioninfo">
         <AuthorizeView Roles="Administrator">
             <a href="@($"subscrptioninfos/edit?id={subscrptioninfo.Id}")">Edit</a> |

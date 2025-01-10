@@ -24,7 +24,8 @@
     <PropertyColumn Property="customer => customer.GenderId" />
     <PropertyColumn Property="customer => customer.DateCreated" />
     <PropertyColumn Property="customer => customer.DateUpdate" />
-
+    <PropertyColumn Property="customer => customer.CreatedBy" />
+    <PropertyColumn Property="customer => customer.UpdatedBy" />
     <TemplateColumn Context="customer">
         <a href="@($"customers/edit?id={customer.Id}")">Edit</a> |
         <a href="@($"customers/details?id={customer.Id}")">Details</a> |

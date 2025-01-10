@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     /// <inheritdoc />
@@ -62,7 +64,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     AurthorDOB = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AuthorBio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,7 +86,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     BookPrice = table.Column<float>(type: "real", nullable: false),
                     PublisherId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,7 +109,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     CustomerPoints = table.Column<int>(type: "int", nullable: false),
                     GenderId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,7 +126,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,7 +144,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     GenreName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GenreDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -150,7 +162,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     OrderDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,7 +182,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     PublisherEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PublisherAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,7 +202,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     OrderItemId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +220,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     TierName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cost = table.Column<float>(type: "real", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -220,7 +240,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     CutomerId = table.Column<int>(type: "int", nullable: false),
                     TierId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -334,9 +356,37 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", null, "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "b7fe12a5-953e-4bc8-bcb4-7beda0dd11f4", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEEpQMjiLOTLtlV838oQhsr0bnYCKs6UM27CFE6H92Y+EOqsC4g56QaAfI1Nrb5C28A==", null, false, "d06250ad-59c9-4258-977a-c5f81dd91b23", false, "admin@localhost.com" });
+
+            migrationBuilder.InsertData(
+                table: "Gender",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "GenderName", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, "System", new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6281), new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6282), "Male", "System" },
+                    { 2, "System", new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6284), new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6285), "Female", "System" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Publisher",
-                columns: new[] { "Id", "DateCreated", "DateUpdate", "PublisherAddress", "PublisherContact", "PublisherEmail", "PublisherName" },
-                values: new object[] { 1, new DateTime(2025, 1, 8, 9, 45, 6, 801, DateTimeKind.Local).AddTicks(7562), new DateTime(2025, 1, 8, 9, 45, 6, 801, DateTimeKind.Local).AddTicks(7576), "123 street", "11111111", "example@gmail.com", "PlaceHolder" });
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "PublisherAddress", "PublisherContact", "PublisherEmail", "PublisherName", "UpdatedBy" },
+                values: new object[] { 1, "System", new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6068), new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6078), "123 street", "11111111", "example@gmail.com", "PlaceHolder", "System" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -23,7 +23,8 @@
     <PropertyColumn Property="review => review.OrderItemId" />
     <PropertyColumn Property="review => review.DateCreated" />
     <PropertyColumn Property="review => review.DateUpdate" />
-
+    <PropertyColumn Property="review => review.CreatedBy" />
+    <PropertyColumn Property="review => review.UpdatedBy" />
     <TemplateColumn Context="review">
         <a href="@($"reviews/edit?id={review.Id}")">Edit</a> |
         <a href="@($"reviews/details?id={review.Id}")">Details</a> |

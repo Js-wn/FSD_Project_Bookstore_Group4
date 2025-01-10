@@ -25,7 +25,8 @@
     <PropertyColumn Property="book => book.PublisherId" />
     <PropertyColumn Property="book => book.DateCreated" />
     <PropertyColumn Property="book => book.DateUpdate" />
-
+    <PropertyColumn Property="book => book.CreatedBy" />
+    <PropertyColumn Property="book => book.UpdatedBy" />
     <TemplateColumn Context="book">
         <AuthorizeView Roles="Administrator">
             <a href="@($"books/edit?id={book.Id}")">Edit</a> |

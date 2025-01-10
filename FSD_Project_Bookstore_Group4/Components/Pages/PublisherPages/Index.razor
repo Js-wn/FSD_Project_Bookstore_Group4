@@ -23,7 +23,8 @@
     <PropertyColumn Property="publisher => publisher.PublisherAddress" />
     <PropertyColumn Property="publisher => publisher.DateCreated" />
     <PropertyColumn Property="publisher => publisher.DateUpdate" />
-
+    <PropertyColumn Property="publisher => publisher.CreatedBy" />
+    <PropertyColumn Property="publisher => publisher.UpdatedBy" />
     <TemplateColumn Context="publisher">
         <AuthorizeView Roles="Administrator">
             <a href="@($"publishers/edit?id={publisher.Id}")">Edit</a> |

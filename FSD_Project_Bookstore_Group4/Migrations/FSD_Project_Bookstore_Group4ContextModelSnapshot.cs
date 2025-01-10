@@ -97,7 +97,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "724896b7-f634-4ee5-9563-58d4d7899fb4",
+                            ConcurrencyStamp = "b7fe12a5-953e-4bc8-bcb4-7beda0dd11f4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -105,9 +105,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ1KXzy7mMq1ykCy8IUI0o6kgTljRhJQZ5ahkl5S+39UC3XbiA72gshg/2nwmNCTDw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEpQMjiLOTLtlV838oQhsr0bnYCKs6UM27CFE6H92Y+EOqsC4g56QaAfI1Nrb5C28A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e8a341fb-2134-4b92-939e-e089332c3372",
+                            SecurityStamp = "d06250ad-59c9-4258-977a-c5f81dd91b23",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -130,11 +130,17 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<string>("AuthorName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -164,6 +170,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<string>("BookTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -172,6 +181,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.Property<int>("PublisherId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -185,6 +197,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerAddress")
                         .HasColumnType("nvarchar(max)");
@@ -213,6 +228,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
@@ -226,6 +244,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -233,6 +254,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -243,16 +267,20 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6235),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6236),
-                            GenderName = "Male"
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6281),
+                            DateUpdate = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6282),
+                            GenderName = "Male",
+                            UpdatedBy = "System"
                         },
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6238),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6238),
-                            GenderName = "Female"
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6284),
+                            DateUpdate = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6285),
+                            GenderName = "Female",
+                            UpdatedBy = "System"
                         });
                 });
 
@@ -264,6 +292,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -274,6 +305,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GenreName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -289,6 +323,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -300,6 +337,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.Property<DateTime>("OrderDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -313,6 +353,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -332,6 +375,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<string>("PublisherName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Publisher");
@@ -340,12 +386,14 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6013),
-                            DateUpdate = new DateTime(2025, 1, 8, 10, 20, 29, 720, DateTimeKind.Local).AddTicks(6023),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6068),
+                            DateUpdate = new DateTime(2025, 1, 10, 9, 47, 1, 297, DateTimeKind.Local).AddTicks(6078),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",
-                            PublisherName = "PlaceHolder"
+                            PublisherName = "PlaceHolder",
+                            UpdatedBy = "System"
                         });
                 });
 
@@ -356,6 +404,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -375,6 +426,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<string>("ReviewTest")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Review");
@@ -391,6 +445,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<float>("Cost")
                         .HasColumnType("real");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -398,6 +455,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TierName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -412,6 +472,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CutomerId")
                         .HasColumnType("int");
@@ -430,6 +493,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.Property<int>("TierId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

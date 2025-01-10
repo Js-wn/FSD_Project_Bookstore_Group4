@@ -35,16 +35,26 @@
                 <InputNumber id="tierid" @bind-Value="SubscrptionInfo.TierId" class="form-control" /> 
                 <ValidationMessage For="() => SubscrptionInfo.TierId" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="SubscrptionInfo.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => SubscrptionInfo.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dateupdate" class="form-label">DateUpdate:</label> 
                 <InputDate id="dateupdate" @bind-Value="SubscrptionInfo.DateUpdate" class="form-control" /> 
                 <ValidationMessage For="() => SubscrptionInfo.DateUpdate" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3" hidden>
+                <label for="createdby" class="form-label">CreatedBy:</label>
+                <InputDate id="createdby" @bind-Value="SubscrptionInfo.CreatedBy" class="form-control" />
+                <ValidationMessage For="() => SubscrptionInfo.CreatedBy" class="text-danger" />
+            </div>
+            <div class="mb-3" hidden>
+                <label for="updatedby" class="form-label">UpdatedBy:</label>
+                <InputDate id="updatedby" @bind-Value="SubscrptionInfo.UpdatedBy" class="form-control" />
+                <ValidationMessage For="() => SubscrptionInfo.UpdatedBy" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

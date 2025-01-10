@@ -25,16 +25,26 @@
                 <InputNumber id="customerid" @bind-Value="Order.CustomerId" class="form-control" /> 
                 <ValidationMessage For="() => Order.CustomerId" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Order.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Order.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dateupdate" class="form-label">DateUpdate:</label> 
                 <InputDate id="dateupdate" @bind-Value="Order.DateUpdate" class="form-control" /> 
                 <ValidationMessage For="() => Order.DateUpdate" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3" hidden>
+                <label for="createdby" class="form-label">CreatedBy:</label>
+                <InputDate id="createdby" @bind-Value="Order.CreatedBy" class="form-control" />
+                <ValidationMessage For="() => Order.CreatedBy" class="text-danger" />
+            </div>
+            <div class="mb-3" hidden>
+                <label for="updatedby" class="form-label">UpdatedBy:</label>
+                <InputDate id="updatedby" @bind-Value="Order.UpdatedBy" class="form-control" />
+                <ValidationMessage For="() => Order.UpdatedBy" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

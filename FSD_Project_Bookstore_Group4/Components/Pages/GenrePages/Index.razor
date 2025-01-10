@@ -21,7 +21,8 @@
     <PropertyColumn Property="genre => genre.GenreDesc" />
     <PropertyColumn Property="genre => genre.DateCreated" />
     <PropertyColumn Property="genre => genre.DateUpdate" />
-
+    <PropertyColumn Property="genre => genre.CreatedBy" />
+    <PropertyColumn Property="genre => genre.UpdatedBy" />
     <TemplateColumn Context="genre">
         <AuthorizeView Roles="Administrator">
             <a href="@($"genres/edit?id={genre.Id}")">Edit</a> |
