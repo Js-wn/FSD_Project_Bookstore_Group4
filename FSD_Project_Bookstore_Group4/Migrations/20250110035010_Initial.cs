@@ -369,8 +369,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "1f5e766f-4760-4313-ac88-f15d79ad2b1e", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEGGX/OIhAuw7l2S7WknCRYoXeyydq/8TSl5RTw2AYtm1uzrgdKo0rAnu3krLv7m+UQ==", null, false, "baf9b4e3-e2aa-4c5b-8814-adb3283f964f", false, "admin@localhost.com" },
-                    { "5436aeb6-34ac-90f0-860f-e446d23252e4", 0, "771531be-cfca-4494-96d3-61e1ccb7646b", "customer@localhost.com", true, "Customer", "User", false, null, "CUSTOMER@LOCALHOST.COM", "CUSTOMER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEFcAhvWD28bf86AoQqKhfHIrTNnYz7P0ml69PY71/qWTiM3sDaeaBdbY3SX3ScB7XA==", null, false, "302784f6-04fa-4734-8d79-ae7ba3ead872", false, "customer@localhost.com" }
+                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "cc26d72f-157b-465b-9659-9aa22c0538dd", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEE/pvzA3dMZWU/i59iaraUrlqEUGllaK/MjXjUDSAEU7D2sFUrSR9lRZk/bvuNXwqA==", null, false, "1e691eb1-d26c-4caa-95dc-d5ec4e904b72", false, "admin@localhost.com" },
+                    { "5436aeb6-34ac-90f0-860f-e446d23252e4", 0, "c5ac4dd8-2fea-4ea3-9f81-e1ad89e7463c", "customer@localhost.com", true, "Customer", "User", false, null, "CUSTOMER@LOCALHOST.COM", "CUSTOMER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEBOAgVPp2ey9ctPEDI+x4iIVuj1Pp03h7ZdfWwqJTHZq7DnE1hhkHqNKDiw7ZNbKtA==", null, false, "c3f8866c-fc6d-4abf-a964-40866050f032", false, "customer@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -378,19 +378,23 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "GenderName", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6900), new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6901), "Male", "System" },
-                    { 2, "System", new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6904), new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6904), "Female", "System" }
+                    { 1, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7311), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7312), "Male", "System" },
+                    { 2, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7314), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7315), "Female", "System" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Publisher",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "PublisherAddress", "PublisherContact", "PublisherEmail", "PublisherName", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6667), new DateTime(2025, 1, 10, 10, 5, 31, 868, DateTimeKind.Local).AddTicks(6686), "123 street", "11111111", "example@gmail.com", "PlaceHolder", "System" });
+                values: new object[] { 1, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7025), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7035), "123 street", "11111111", "example@gmail.com", "PlaceHolder", "System" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
+                values: new object[,]
+                {
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "5436aeb6-34ac-90f0-860f-e446d23252e4" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
