@@ -86,7 +86,6 @@
 
 .nav-item {
     font-size: 0.9rem;
-
 }
 
 
@@ -96,7 +95,7 @@
         background: none;
         border: none;
         border-radius: 4px;
-        height: 2.5rem;
+        height: 3rem;
         display: flex;
         align-items: center;
         line-height: 3rem;
@@ -117,13 +116,16 @@
 .nav-scrollable {
     display: none;
 }
-.navbar {
+.topnav {
     text-align: right;
-    padding: -5px;
+    padding: 4px;
 
 }
-.navbar-right{
-     
+.float-right{
+     float: right;
+}
+.float-left {
+    float: left;
 }
 .navbar-toggler:checked ~ .nav-scrollable {
     display: block;
