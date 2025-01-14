@@ -97,7 +97,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08a29d0a-d2d2-4e51-952e-2d8ba2865a2c",
+                            ConcurrencyStamp = "74f0e830-8f03-43bb-8473-b7faa3a6c266",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -105,9 +105,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMgpTePbUMW5//GeBxb6laI5JpJAglm6V+Azmp9MEb8VFsbcrOV6V8pNckCPJpc3oA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPoSVtUS+kdWBSApbt0/sdzZFW3ekDFiWaw+9To6iTOV/8zHAyaj+u93hLB/dsQTMw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cdd4e724-5653-4218-b978-79f82e8e31b0",
+                            SecurityStamp = "33f4f32c-9070-472a-b135-3cc5f3538558",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -115,7 +115,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3889eb7e-5ac4-4f03-95a8-e98660a50487",
+                            ConcurrencyStamp = "d3c70c84-c3eb-4a60-9a98-ee4acc0f6380",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Customer",
@@ -123,9 +123,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@LOCALHOST.COM",
                             NormalizedUserName = "CUSTOMER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENtLPyCzAS5cHcDLWbAD4zL+/GM91hytkEVCCxXsHaOGB5NcqIcu18AeFqbOU1F2kg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDrLtoLHNeTGi6BhWBQXzV9d6SLW9FuDUx9jVt7Eeuzo2Ztebj7XSa6CZibIPh1KHg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "24ed78f4-844c-4887-96ef-de3cfe7514ea",
+                            SecurityStamp = "9c9b7bf7-dd39-498c-a414-d0ae948c49d7",
                             TwoFactorEnabled = false,
                             UserName = "customer@localhost.com"
                         });
@@ -289,8 +289,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4808),
-                            DateUpdate = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4809),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9508),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9509),
                             GenderId = 0,
                             GenderName = "Male",
                             UpdatedBy = "System"
@@ -299,8 +299,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4811),
-                            DateUpdate = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4812),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511),
                             GenderId = 0,
                             GenderName = "Female",
                             UpdatedBy = "System"
@@ -410,8 +410,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4340),
-                            DateUpdate = new DateTime(2025, 1, 14, 9, 25, 44, 590, DateTimeKind.Local).AddTicks(4358),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9116),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9126),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -124,6 +124,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    GenderId = table.Column<int>(type: "int", nullable: false),
                     GenderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -369,23 +370,23 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "cc26d72f-157b-465b-9659-9aa22c0538dd", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEE/pvzA3dMZWU/i59iaraUrlqEUGllaK/MjXjUDSAEU7D2sFUrSR9lRZk/bvuNXwqA==", null, false, "1e691eb1-d26c-4caa-95dc-d5ec4e904b72", false, "admin@localhost.com" },
-                    { "5436aeb6-34ac-90f0-860f-e446d23252e4", 0, "c5ac4dd8-2fea-4ea3-9f81-e1ad89e7463c", "customer@localhost.com", true, "Customer", "User", false, null, "CUSTOMER@LOCALHOST.COM", "CUSTOMER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEBOAgVPp2ey9ctPEDI+x4iIVuj1Pp03h7ZdfWwqJTHZq7DnE1hhkHqNKDiw7ZNbKtA==", null, false, "c3f8866c-fc6d-4abf-a964-40866050f032", false, "customer@localhost.com" }
+                    { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "74f0e830-8f03-43bb-8473-b7faa3a6c266", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEPoSVtUS+kdWBSApbt0/sdzZFW3ekDFiWaw+9To6iTOV/8zHAyaj+u93hLB/dsQTMw==", null, false, "33f4f32c-9070-472a-b135-3cc5f3538558", false, "admin@localhost.com" },
+                    { "5436aeb6-34ac-90f0-860f-e446d23252e4", 0, "d3c70c84-c3eb-4a60-9a98-ee4acc0f6380", "customer@localhost.com", true, "Customer", "User", false, null, "CUSTOMER@LOCALHOST.COM", "CUSTOMER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEDrLtoLHNeTGi6BhWBQXzV9d6SLW9FuDUx9jVt7Eeuzo2Ztebj7XSa6CZibIPh1KHg==", null, false, "9c9b7bf7-dd39-498c-a414-d0ae948c49d7", false, "customer@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Gender",
-                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "GenderName", "UpdatedBy" },
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "GenderId", "GenderName", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7311), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7312), "Male", "System" },
-                    { 2, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7314), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7315), "Female", "System" }
+                    { 1, "System", new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9508), new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9509), 0, "Male", "System" },
+                    { 2, "System", new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511), new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511), 0, "Female", "System" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Publisher",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdate", "PublisherAddress", "PublisherContact", "PublisherEmail", "PublisherName", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7025), new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7035), "123 street", "11111111", "example@gmail.com", "PlaceHolder", "System" });
+                values: new object[] { 1, "System", new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9116), new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9126), "123 street", "11111111", "example@gmail.com", "PlaceHolder", "System" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

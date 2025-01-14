@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    [Migration("20250110035010_Initial")]
-    partial class Initial
+    [Migration("20250114014130_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,7 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc26d72f-157b-465b-9659-9aa22c0538dd",
+                            ConcurrencyStamp = "74f0e830-8f03-43bb-8473-b7faa3a6c266",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -108,9 +108,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE/pvzA3dMZWU/i59iaraUrlqEUGllaK/MjXjUDSAEU7D2sFUrSR9lRZk/bvuNXwqA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPoSVtUS+kdWBSApbt0/sdzZFW3ekDFiWaw+9To6iTOV/8zHAyaj+u93hLB/dsQTMw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1e691eb1-d26c-4caa-95dc-d5ec4e904b72",
+                            SecurityStamp = "33f4f32c-9070-472a-b135-3cc5f3538558",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -118,7 +118,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c5ac4dd8-2fea-4ea3-9f81-e1ad89e7463c",
+                            ConcurrencyStamp = "d3c70c84-c3eb-4a60-9a98-ee4acc0f6380",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Customer",
@@ -126,9 +126,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@LOCALHOST.COM",
                             NormalizedUserName = "CUSTOMER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBOAgVPp2ey9ctPEDI+x4iIVuj1Pp03h7ZdfWwqJTHZq7DnE1hhkHqNKDiw7ZNbKtA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDrLtoLHNeTGi6BhWBQXzV9d6SLW9FuDUx9jVt7Eeuzo2Ztebj7XSa6CZibIPh1KHg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c3f8866c-fc6d-4abf-a964-40866050f032",
+                            SecurityStamp = "9c9b7bf7-dd39-498c-a414-d0ae948c49d7",
                             TwoFactorEnabled = false,
                             UserName = "customer@localhost.com"
                         });
@@ -274,6 +274,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("GenderName")
                         .HasColumnType("nvarchar(max)");
 
@@ -289,8 +292,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7311),
-                            DateUpdate = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7312),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9508),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9509),
+                            GenderId = 0,
                             GenderName = "Male",
                             UpdatedBy = "System"
                         },
@@ -298,8 +302,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7314),
-                            DateUpdate = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7315),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9511),
+                            GenderId = 0,
                             GenderName = "Female",
                             UpdatedBy = "System"
                         });
@@ -408,8 +413,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7025),
-                            DateUpdate = new DateTime(2025, 1, 10, 11, 50, 9, 465, DateTimeKind.Local).AddTicks(7035),
+                            DateCreated = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9116),
+                            DateUpdate = new DateTime(2025, 1, 14, 9, 41, 29, 26, DateTimeKind.Local).AddTicks(9126),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",
