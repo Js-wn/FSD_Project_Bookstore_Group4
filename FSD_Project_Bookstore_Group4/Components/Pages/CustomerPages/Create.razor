@@ -1,4 +1,5 @@
 ﻿@page "/customers/create"
+@using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
@@ -82,6 +83,19 @@
 @code {
     [SupplyParameterFromForm]
     private Customer Customer { get; set; } = new();
+
+    private List<SelectListItem> GenderOptions { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        GenderOptions = await context.Gender
+                                      .Select(g => new SelectListItem
+                                          {
+                                              Value = g.GenderId.ToString(),
+                                              Text = g.GenderName
+                                          }).ToListAsync();
+    }
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddCustomer()
