@@ -150,6 +150,23 @@
 
         Logger.LogInformation("User created a new account with password.");
 
+        using var dbContext = await DbFactory.CreateDbContextAsync();
+        var customer = new Customer
+            {
+                CustomerFirstName = Input.FirstName,
+                CustomerLastName = Input.LastName,
+                CustomerEmail = Input.Email,
+                CustomerAddress = Input.Address,
+                CustomerContact = Input.Contact,
+                CustomerPoints = 0, // Start with 0 points
+                GenderId = Input.GenderId
+            };
+
+        dbContext.Customer.Add(customer);
+        await dbContext.SaveChangesAsync();
+
+
+
         var userId = await UserManager.GetUserIdAsync(user);
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
