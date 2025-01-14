@@ -1,19 +1,39 @@
 ﻿@page "/Search"
-@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 
-<PageTitle>SearchBooks</PageTitle>
+<PageTitle>Search</PageTitle>
 
 <h1>Search</h1>
+<div>
+    <form action="/Search" data-enhance>
+        <input type="search" name="titleFilter" />
+        <input type="submit" value="Search" />
+    </form>
+</div>
 
-
-
-<button class="btn btn-primary" @onclick="SearchBooks">Search</button>
-
+<QuickGrid Class="table" Items="FilteredBooks">
+    <PropertyColumn Property="book => book.BookTitle" />
+    <PropertyColumn Property="book => book.BookDesc" />
+    <PropertyColumn Property="book => book.BookCoverImg" />
+    <PropertyColumn Property="book => book.BookPublishDate" />
+    <PropertyColumn Property="book => book.BookPrice" />
+</QuickGrid>
 @code {
-   
+    [SupplyParameterFromQuery]
+    private string? TitleFilter { get; set; }
 
-    private void SearchBooks()
+    private IQueryable<Book> FilteredBooks =>
+        context.Book.Where(b => b.BookTitle!.Contains(TitleFilter ?? string.Empty));
+    private FSD_Project_Bookstore_Group4Context context = default!;
+
+    protected override void OnInitialized()
     {
-        
+        context = DbFactory.CreateDbContext();
     }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
