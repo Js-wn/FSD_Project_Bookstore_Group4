@@ -119,8 +119,7 @@
 .topnav {
     text-align: right;
     padding: 4px;
-    display: flex;
-    justify-content:right;
+
 }
 .float-right{
      float: right;
@@ -128,7 +127,9 @@
 .float-left {
     float: left;
 }
-
+.navbar-toggler:checked ~ .nav-scrollable {
+    display: block;
+}
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;
