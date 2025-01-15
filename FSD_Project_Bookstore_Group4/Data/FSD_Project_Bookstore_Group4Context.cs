@@ -9,18 +9,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace FSD_Project_Bookstore_Group4.Data
 {
-    public class FSD_Project_Bookstore_Group4Context : IdentityDbContext<FSD_Project_Bookstore_Group4User>
+    public class FSD_Project_Bookstore_Group4Context(DbContextOptions<FSD_Project_Bookstore_Group4Context> options) :
+IdentityDbContext<FSD_Project_Bookstore_Group4User>(options)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        // Single constructor to handle both DbContextOptions and IHttpContextAccessor
-        public FSD_Project_Bookstore_Group4Context(
-            DbContextOptions<FSD_Project_Bookstore_Group4Context> options,
-            IHttpContextAccessor httpContextAccessor) :
-            base(options)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
+
+
         public DbSet<FSD_Project_Bookstore_Group4.Domain.SubscriptionTier> SubscriptionTier { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo> SubscrptionInfo { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Customer> Customer { get; set; } = default!;
@@ -42,42 +36,5 @@ namespace FSD_Project_Bookstore_Group4.Data
             builder.ApplyConfiguration(new UserSeed());
             builder.ApplyConfiguration(new UserRoleSeed());
         }
-
-        public override int SaveChanges()
-        {
-            UpdateAuditFields();
-            return base.SaveChanges();
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            UpdateAuditFields();
-            return await base.SaveChangesAsync(cancellationToken);
-        }
-
-        private void UpdateAuditFields()
-        {
-            // Get Singapore time directly
-            var singaporeTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
-            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, singaporeTimeZone);
-
-            var currentUser = _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System";
-
-            foreach (var entry in ChangeTracker.Entries<BaseDomainModel>())
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.DateCreated = now;
-                    entry.Entity.CreatedBy = currentUser;
-                }
-                else if (entry.State == EntityState.Modified)
-                {
-                    entry.Entity.DateUpdate = now;
-                    entry.Entity.UpdatedBy = currentUser;
-                }
-            }
-        }
-
-
     }
 }
