@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    [Migration("20250114130422_bookSeed")]
-    partial class bookSeed
+    [Migration("20250115083528_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,7 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3fd29395-2df8-48db-ad2a-dfe64759aa4e",
+                            ConcurrencyStamp = "c37addc7-9b06-4ceb-b850-4b03304fa635",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -108,9 +108,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBjIQipbhdHubIKRkF0YilyD5Pw31PaWDUCN8Yux5SmmU6CbJJZNCtXD5ySuOfnk1A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP5kXjmyt+gqeAYR+RE2CFQ00q1bZQrlUVpVTMzO5dHcu+jK9B/lfbbWZq/lHizTIw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bd640aad-f300-4e7a-8d06-06cb674bc6b8",
+                            SecurityStamp = "d670fca2-2606-4726-8819-09a8950059cd",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -118,7 +118,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1a35a38-72c2-4f28-9399-775cc223cd23",
+                            ConcurrencyStamp = "eea67248-11a0-4b38-80a3-87544e2b541a",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Customer",
@@ -126,9 +126,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@LOCALHOST.COM",
                             NormalizedUserName = "CUSTOMER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFOBrBv4B7hc3er2EyMCv5adD/jUriEfIrlgSTvpccwik/O3BVXCokWbSuAGPiT5tw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBLZ+wWoEd1vocx/EYcvzgC16rBhXMf57WemffslZMqwlFdBzA/b8SsTVOkjRAQ8HA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c17721ca-f80a-4fd4-bfb5-911592cf69be",
+                            SecurityStamp = "b966d1d8-bd38-400d-a129-09241465c12d",
                             TwoFactorEnabled = false,
                             UserName = "customer@localhost.com"
                         });
@@ -176,9 +176,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BookCoverImg")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("BookDesc")
                         .HasColumnType("nvarchar(max)");
 
@@ -200,6 +197,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ImgId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PublisherId")
                         .HasColumnType("int");
 
@@ -214,26 +214,91 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         new
                         {
                             Id = 1,
-                            BookCoverImg = "",
                             BookDesc = " In one complete volume, here are the five classic novels from Douglas Adams’s beloved Hitchhiker series.\r\n\r\nNow celebrating the pivotal 42nd anniversary of The Hitchhiker’s Guide to the Galaxy, soon to be a Hulu original series!\r\n\r\nThe Hitchhiker’s Guide to the Galaxy (Nominated as one of America’s best-loved novels by PBS’s The Great American Read)\r\nSeconds before the Earth is demolished for a galactic freeway, Arthur Dent is saved by Ford Prefect, a researcher for the revised Guide. Together they stick out their thumbs to the stars and begin a wild journey through time and space.\r\n\r\nThe Restaurant at the End of the Universe\r\nThe moment before annihilation at the hands of warmongers is a curious time to crave tea. It could only happen to the cosmically displaced Arthur Dent and his comrades as they hurtle across the galaxy in a desperate search for a place to eat.\r\n\r\nLife, the Universe and Everything\r\nThe unhappy inhabitants of planet Krikkit are sick of looking at the night sky– so they plan to destroy it. The universe, that is. Now only five individuals can avert Armageddon: mild-mannered Arthur Dent and his stalwart crew.\r\n\r\nSo Long, and Thanks for All the Fish\r\nBack on Earth, Arthur Dent is ready to believe that the past eight years were all just a figment of his stressed-out imagination. But a gift-wrapped fishbowl with a cryptic inscription thrusts him back to reality. So to speak.\r\n\r\nMostly Harmless\r\nJust when Arthur Dent makes the terrible mistake of starting to enjoy life, all hell breaks loose. Can he save the Earth from total obliteration? Can he save the Guide from a hostile alien takeover? Can he save his daughter from herself?\r\n\r\nIncludes the bonus story “Young Zaphod Plays It Safe”\r\n\r\n“With droll wit, a keen eye for detail and heavy doses of insight . . . Adams makes us laugh until we cry.”―San Diego Union-Tribune\r\n\r\n“Lively, sharply satirical, brilliantly written . . . ranks with the best set pieces in Mark Twain.”―The Atlantic ",
                             BookPrice = 26.65f,
                             BookPublishDate = new DateTime(2002, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "The Ultimate Hitchhiker's Guide to the Galaxy: Five Novels in One Outrageous Volume",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1841),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1842),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1263),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1264),
+                            ImgId = 1,
                             PublisherId = 2
                         },
                         new
                         {
                             Id = 2,
-                            BookCoverImg = "",
                             BookDesc = "A masterpiece of rebellion and imprisonment where war is peace freedom is slavery and Big Brother is watching. Thought Police, Big Brother, Orwellian - these words have entered our vocabulary because of George Orwell's classic dystopian novel 1984. The story of one man's Nightmare Odyssey as he pursues a forbidden love affair through a world ruled by warring states and a power structure that controls not only information but also individual thought and memory 1984 is a prophetic haunting tale More relevant than ever before 1984 exposes the worst crimes imaginable the destruction of truth freedom and individuality. With a foreword by Thomas Pynchon. This beautiful paperback edition features deckled edges and french flaps a perfect gift for any occasion",
                             BookPrice = 9.99f,
                             BookPublishDate = new DateTime(1949, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "Nineteen Eighty-Four",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1846),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1846),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1270),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1270),
+                            ImgId = 1,
                             PublisherId = 3
+                        });
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookItem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookId = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookId = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookId = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BookId = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BookId = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -318,8 +383,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1911),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1911),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1335),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1335),
                             GenderId = 0,
                             GenderName = "Male",
                             UpdatedBy = "System"
@@ -328,8 +393,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1913),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1913),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1337),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1337),
                             GenderId = 0,
                             GenderName = "Female",
                             UpdatedBy = "System"
@@ -439,8 +504,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1523),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1535),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1175),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1184),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",
@@ -451,8 +516,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1588),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1589),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1187),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1187),
                             PublisherAddress = "6 Briset Street",
                             PublisherContact = "0207 038 5000",
                             PublisherEmail = "webqueries@macmillan.co.uk",
@@ -463,8 +528,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1591),
-                            DateUpdate = new DateTime(2025, 1, 14, 21, 4, 22, 80, DateTimeKind.Local).AddTicks(1591),
+                            DateCreated = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1189),
+                            DateUpdate = new DateTime(2025, 1, 15, 16, 35, 27, 698, DateTimeKind.Local).AddTicks(1189),
                             PublisherAddress = " 8 Viaduct Gardens",
                             PublisherContact = "+44 (0)20 7139 3000",
                             PublisherEmail = "VintagePublicity@penguinrandomhouse.co.uk",

@@ -35,6 +35,7 @@ namespace FSD_Project_Bookstore_Group4.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new BookItemSeed()); 
             builder.ApplyConfiguration(new PublisherSeed());
             builder.ApplyConfiguration(new BookSeed());
             builder.ApplyConfiguration(new GenderSeed());

@@ -24,12 +24,7 @@
                 <label for="bookdesc" class="form-label">BookDesc:</label> 
                 <InputText id="bookdesc" @bind-Value="Book.BookDesc" class="form-control" /> 
                 <ValidationMessage For="() => Book.BookDesc" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="bookcoverimg" class="form-label">BookCoverImg:</label> 
-                <InputText id="bookcoverimg" @bind-Value="Book.BookCoverImg" class="form-control" /> 
-                <ValidationMessage For="() => Book.BookCoverImg" class="text-danger" /> 
-            </div>        
+            </div>         
             <div class="mb-3">
                 <label for="bookpublishdate" class="form-label">BookPublishDate:</label> 
                 <InputDate id="bookpublishdate" @bind-Value="Book.BookPublishDate" class="form-control" /> 
@@ -44,7 +39,12 @@
                 <label for="publisherid" class="form-label">PublisherId:</label> 
                 <InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
                 <ValidationMessage For="() => Book.PublisherId" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3">
+                <label for="imgid" class="form-label">ImgId:</label>
+                <InputNumber id="imgid" @bind-Value="Book.ImgId" class="form-control" />
+                <ValidationMessage For="() => Book.ImgId" class="text-danger" />
+            </div>
             <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Book.DateCreated" class="form-control" /> 
