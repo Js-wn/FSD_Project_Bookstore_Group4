@@ -112,12 +112,7 @@
 }
 
 .nav-scrollable {
-    position: fixed;  /* Fixes the navbar to the side */
-    top: 0;
-    left: 0;
-    width: 250px;  /* Adjust width based on your sidebar's actual width */
-    height: 100vh;  /* Full viewport height */
-    overflow-y: auto;  /* Allows scrolling within the navbar if content exceeds the viewport height */
+    display: none;
 }
 
 .navbar-toggler:checked ~ .nav-scrollable {
