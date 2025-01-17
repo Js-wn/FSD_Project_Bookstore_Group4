@@ -4,6 +4,6 @@
     {
         public int OrderQty { get; set; }
         public int OrderId { get; set; }
-        public int BookItemId { get; set; }
+        public int BookId { get; set; }
     }
 }

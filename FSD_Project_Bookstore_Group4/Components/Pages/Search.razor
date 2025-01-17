@@ -14,14 +14,16 @@
         <input type="submit" value="Search" />
     </form>
 </div>
-
-<QuickGrid Class="table" Items="FilteredBooks">
-    <PropertyColumn Title="Title" Sortable="true" Property="book => book.BookTitle" />
-    <PropertyColumn Class="overflow-auto" Title="Description" Property="book => book.BookDesc" />
-    <PropertyColumn Title="Published date" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
-    <PropertyColumn Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
-</QuickGrid>
+<div class="grid">
+    <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" ItemSize="1">
+        <PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />
+        <PropertyColumn Title="Description" Property="book => book.BookDesc" />
+        <PropertyColumn Title="Published date" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
+        <PropertyColumn Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
+    </QuickGrid>
+</div>
 @code {
+    QuickGrid<Book>? grid;
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
 
