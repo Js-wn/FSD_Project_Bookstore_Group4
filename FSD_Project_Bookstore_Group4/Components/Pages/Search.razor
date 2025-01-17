@@ -16,10 +16,10 @@
 </div>
 
 <QuickGrid Class="table" Items="FilteredBooks">
-    <PropertyColumn Property="book => book.BookTitle" />
-    <PropertyColumn Property="book => book.BookDesc" />
-    <PropertyColumn Property="book => book.BookPublishDate" />
-    <PropertyColumn Property="book => book.BookPrice" />
+    <PropertyColumn Title="Title" Sortable="true" Property="book => book.BookTitle" />
+    <PropertyColumn Class="overflow-auto" Title="Description" Property="book => book.BookDesc" />
+    <PropertyColumn Title="Published date" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
+    <PropertyColumn Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
 </QuickGrid>
 @code {
     [SupplyParameterFromQuery]

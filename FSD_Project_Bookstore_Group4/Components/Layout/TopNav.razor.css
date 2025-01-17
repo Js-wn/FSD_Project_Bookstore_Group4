@@ -15,7 +15,7 @@
     padding: 0
 }
 .bgimg {
-    background-image: linear-gradient(90deg, rgb(32, 42, 68) 0%, #3a0647 100%);
+    background-image: linear-gradient(90deg, rgb(32, 42, 68) 0%, #ADD8E6 200%);
 }
     .navbar-toggler:checked {
         background-color: rgba(255, 255, 255, 0.5);
