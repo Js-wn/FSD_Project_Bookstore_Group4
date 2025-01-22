@@ -1,0 +1,114 @@
+﻿@page "/bookauthors/edit"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>BookAuthor</h2>
+<hr />
+@if (BookAuthor is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="BookAuthor" OnValidSubmit="UpdateBookAuthor" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="BookAuthor.Id" value="@BookAuthor.Id" />
+                <div class="mb-3">
+                    <label for="bookid" class="form-label">BookId:</label>
+                    <InputNumber id="bookid" @bind-Value="BookAuthor.BookId" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.BookId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="authorid" class="form-label">AuthorId:</label>
+                    <InputNumber id="authorid" @bind-Value="BookAuthor.AuthorId" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.AuthorId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="BookAuthor.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dateupdate" class="form-label">DateUpdate:</label>
+                    <InputDate id="dateupdate" @bind-Value="BookAuthor.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.DateUpdate" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="createdby" class="form-label">CreatedBy:</label>
+                    <InputText id="createdby" @bind-Value="BookAuthor.CreatedBy" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.CreatedBy" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="BookAuthor.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => BookAuthor.UpdatedBy" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/bookauthors">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private BookAuthor? BookAuthor { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        BookAuthor ??= await context.BookAuthor.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (BookAuthor is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateBookAuthor()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(BookAuthor!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!BookAuthorExists(BookAuthor!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/bookauthors");
+    }
+
+    private bool BookAuthorExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.BookAuthor.Any(e => e.Id == id);
+    }
+}

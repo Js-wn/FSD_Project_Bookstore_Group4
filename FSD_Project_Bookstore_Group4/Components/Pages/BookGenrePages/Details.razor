@@ -1,0 +1,56 @@
+﻿@page "/bookgenres/details"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>BookGenre</h2>
+    <hr />
+    @if (bookgenre is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">BookId</dt>
+            <dd class="col-sm-10">@bookgenre.BookId</dd>
+            <dt class="col-sm-2">GenreId</dt>
+            <dd class="col-sm-10">@bookgenre.GenreId</dd>
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@bookgenre.DateCreated</dd>
+            <dt class="col-sm-2">DateUpdate</dt>
+            <dd class="col-sm-10">@bookgenre.DateUpdate</dd>
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@bookgenre.CreatedBy</dd>
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@bookgenre.UpdatedBy</dd>
+        </dl>
+        <div>
+            <a href="@($"/bookgenres/edit?id={bookgenre.Id}")">Edit</a> |
+            <a href="@($"/bookgenres")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private BookGenre? bookgenre;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        bookgenre = await context.BookGenre.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (bookgenre is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

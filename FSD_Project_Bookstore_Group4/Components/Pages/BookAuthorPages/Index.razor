@@ -1,0 +1,41 @@
+﻿@page "/bookauthors"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="bookauthors/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.BookAuthor">
+    <PropertyColumn Property="bookauthor => bookauthor.BookId" />
+    <PropertyColumn Property="bookauthor => bookauthor.AuthorId" />
+    <PropertyColumn Property="bookauthor => bookauthor.DateCreated" />
+    <PropertyColumn Property="bookauthor => bookauthor.DateUpdate" />
+    <PropertyColumn Property="bookauthor => bookauthor.CreatedBy" />
+    <PropertyColumn Property="bookauthor => bookauthor.UpdatedBy" />
+
+    <TemplateColumn Context="bookauthor">
+        <a href="@($"bookauthors/edit?id={bookauthor.Id}")">Edit</a> |
+        <a href="@($"bookauthors/details?id={bookauthor.Id}")">Details</a> |
+        <a href="@($"bookauthors/delete?id={bookauthor.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private FSD_Project_Bookstore_Group4Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

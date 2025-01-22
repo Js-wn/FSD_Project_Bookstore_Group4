@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Configuration;
 namespace FSD_Project_Bookstore_Group4.Configurations.Entities
 {
-    public class BookAuthorSeed : IEntityTypeConfiguration<BookAurthor>
+    public class BookAuthorSeed : IEntityTypeConfiguration<BookAuthor>
     {
-        public void Configure(EntityTypeBuilder<BookAurthor> builder)
+        public void Configure(EntityTypeBuilder<BookAuthor> builder)
         {
             builder.HasData(
-                new BookAurthor
+                new BookAuthor
                 {
                     Id = 1,
                     DateCreated = DateTime.Now,
@@ -17,7 +17,7 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     AuthorId = 1,
                     BookId = 1,
                 },
-                new BookAurthor
+                new BookAuthor
                 {
                     Id = 2,
                     DateCreated = DateTime.Now,

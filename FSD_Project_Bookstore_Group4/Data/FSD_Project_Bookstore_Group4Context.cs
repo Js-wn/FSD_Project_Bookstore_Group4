@@ -79,6 +79,10 @@ namespace FSD_Project_Bookstore_Group4.Data
                 }
             }
         }
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookAuthor> BookAuthor { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookGenre> BookGenre { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.OrderItem> OrderItem { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.Payment> Payment { get; set; } = default!;
 
 
     }
