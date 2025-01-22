@@ -1,0 +1,68 @@
+﻿@page "/fulldetails"
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Book</h2>
+    <hr />
+    @if (book is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Title</dt>
+            <dd class="col-sm-10">@book.BookTitle</dd>
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@book.BookDesc</dd>
+            <dt class="col-sm-2">BookCoverImg</dt>
+            <dt class="col-sm-2">BookPublishDate</dt>
+            <dd class="col-sm-10">@book.BookPublishDate</dd>
+            <dt class="col-sm-2">BookPrice</dt>
+            <dd class="col-sm-10">@book.BookPrice</dd>
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@book.DateCreated</dd>
+            <dt class="col-sm-2">DateUpdate</dt>
+            <dd class="col-sm-10">@book.DateUpdate</dd>
+            <dt class="col-sm-2">PublisherName</dt>
+            <dd class="col-sm-10">@publisher.PublisherName</dd>
+            <dt class="col-sm-2">PublisherContact</dt>
+            <dd class="col-sm-10">@publisher.PublisherContact</dd>
+            <dt class="col-sm-2">PublisherEmail</dt>
+            <dd class="col-sm-10">@publisher.PublisherEmail</dd>
+            <dt class="col-sm-2">PublisherAddress</dt>
+            <dd class="col-sm-10">@publisher.PublisherAddress</dd>
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@publisher.DateCreated</dd>
+            <dt class="col-sm-2">DateUpdate</dt>
+            <dd class="col-sm-10">@publisher.DateUpdate</dd>
+        </dl>
+        <div>
+            <a href="@($"/search")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Book? book;
+    private Publisher? publisher;
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        book = await context.Book.FirstOrDefaultAsync(m => m.Id == Id);
+        publisher = await context.Publisher.FirstOrDefaultAsync(p => p.Id == book.PublisherId);
+        if (book is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}
