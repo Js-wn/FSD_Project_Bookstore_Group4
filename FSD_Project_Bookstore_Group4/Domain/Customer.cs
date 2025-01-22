@@ -10,6 +10,8 @@
         public int CustomerPoints { get; set; }
         public int GenderId { get; set; }
 
-        
+        // Navigation property for related orders
+        public List<Order> Orders { get; set; } = new List<Order>();
     }
+
 }

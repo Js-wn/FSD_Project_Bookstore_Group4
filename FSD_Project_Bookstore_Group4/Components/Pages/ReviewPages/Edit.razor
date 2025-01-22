@@ -23,9 +23,9 @@ else
                 <ValidationSummary role="alert"/>
                 <input type="hidden" name="Review.Id" value="@Review.Id" />
                 <div class="mb-3">
-                    <label for="reviewtest" class="form-label">ReviewTest:</label>
-                    <InputText id="reviewtest" @bind-Value="Review.ReviewTest" class="form-control" />
-                    <ValidationMessage For="() => Review.ReviewTest" class="text-danger" />
+                    <label for="reviewtext" class="form-label">ReviewText:</label>
+                    <InputText id="reviewtext" @bind-Value="Review.ReviewText" class="form-control" />
+                    <ValidationMessage For="() => Review.ReviewText" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="reviewrating" class="form-label">ReviewRating:</label>
