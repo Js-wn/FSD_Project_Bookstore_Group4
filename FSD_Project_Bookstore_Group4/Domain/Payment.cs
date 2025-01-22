@@ -2,7 +2,7 @@
 {
     public class Payment : BaseDomainModel
     {
-        public required string PaymentMethod { get; set; }
+        public string? PaymentMethod { get; set; }
         public DateTime PaymentDate { get; set; }
         public float PaymentAmountBefDiscount { get; set; }
         public float PaymentAmountAftDiscount { get; set; }
