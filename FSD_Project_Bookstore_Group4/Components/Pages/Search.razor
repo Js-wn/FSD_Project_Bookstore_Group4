@@ -17,15 +17,20 @@
 <div class="grid">
     <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" ItemSize="1">
         <TemplateColumn Context="book" Title="Title" >
-                <a href="@($"fulldetails?id={book.Id}")">@book.BookTitle</a>
+                <a href="@($"fulldetails?id={book.Id}")">
+                <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180"/>
+                @book.BookTitle
+                </a>
+            <button @onclick="@(() => Ordering(book))">ORDER NOW</button>
         </TemplateColumn>
         @*<PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />*@
-        <PropertyColumn Title="Description" Property="book => book.BookDesc" />
-        <PropertyColumn Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
-        <PropertyColumn Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
+        <PropertyColumn class="w-25" Title="Description" Property="book => book.BookDesc"/>
+        <PropertyColumn class="w-5" Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
+        <PropertyColumn class="w-5" Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
     </QuickGrid>
 </div>
 @code {
+    string message = string.Empty;
     QuickGrid<Book>? grid;
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
@@ -38,6 +43,7 @@
     {
         context = DbFactory.CreateDbContext();
     }
+    void Ordering(Book b) => message = $"You want to order {b.BookTitle}";
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
