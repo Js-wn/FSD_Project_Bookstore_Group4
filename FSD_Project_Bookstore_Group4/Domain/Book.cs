@@ -9,7 +9,7 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public DateTime BookPublishDate { get; set; }
         public float BookPrice { get; set; }
         public int PublisherId { get; set; }
-        public int ImgId { get; set; }
+        public string? ImgLink { get; set; }
 
     }
 }

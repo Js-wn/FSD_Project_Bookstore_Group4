@@ -16,9 +16,12 @@
 </div>
 <div class="grid">
     <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" ItemSize="1">
-        <PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />
+        <TemplateColumn Context="book" Title="Title" >
+                <a href="@($"fulldetails?id={book.Id}")">@book.BookTitle</a>
+        </TemplateColumn>
+        @*<PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />*@
         <PropertyColumn Title="Description" Property="book => book.BookDesc" />
-        <PropertyColumn Title="Published date" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
+        <PropertyColumn Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
         <PropertyColumn Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
     </QuickGrid>
 </div>
