@@ -15,18 +15,23 @@
     </form>
 </div>
 <div class="grid">
-    <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" ItemSize="1">
-        <TemplateColumn Context="book" Title="Title" >
-                <a href="@($"fulldetails?id={book.Id}")">
-                <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180"/>
-                @book.BookTitle
-                </a>
+    <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" >
+        <TemplateColumn Context="book" Title="Title" Class="w-10" >
+            <a href="@($"fulldetails?id={book.Id}")">
+            <img class=" mr-4" src="@book.ImgLink" width="200"/> <br />
+            @book.BookTitle
+            </a> <br />
+            <p><strong>Price:</strong> $@book.BookPrice<br />
+             <strong>Publish date:</strong>  @book.BookPublishDate.ToShortDateString() </p> <br />
             <button @onclick="@(() => Ordering(book))">ORDER NOW</button>
         </TemplateColumn>
-        @*<PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />*@
+        <TemplateColumn class="w-30" Context="book" Title="Description" >
+            @book.BookDesc
+        </TemplateColumn>
+        @*<PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />
         <PropertyColumn class="w-25" Title="Description" Property="book => book.BookDesc"/>
-        <PropertyColumn class="w-5" Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
-        <PropertyColumn class="w-5" Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />
+        <PropertyColumn class="w-2" Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
+        <PropertyColumn class="w-2" Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />*@
     </QuickGrid>
 </div>
 @code {
