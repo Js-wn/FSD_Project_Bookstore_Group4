@@ -4,6 +4,6 @@
     {
         public string? TierName { get; set; }
         public float Cost { get; set; }
-
+        public ICollection<SubscriptionInfo> SubscriptionInfos { get; set; }
     }
 }

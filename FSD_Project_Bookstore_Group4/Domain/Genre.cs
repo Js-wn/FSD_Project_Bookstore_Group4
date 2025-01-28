@@ -4,5 +4,6 @@
     {
         public string? GenreName { get; set; }
         public string? GenreDesc { get; set; }
+        public ICollection<BookGenre> BookGenres { get; set; }
     }
 }

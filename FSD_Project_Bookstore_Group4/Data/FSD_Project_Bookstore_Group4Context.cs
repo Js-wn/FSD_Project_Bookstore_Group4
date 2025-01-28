@@ -22,7 +22,7 @@ namespace FSD_Project_Bookstore_Group4.Data
             _httpContextAccessor = httpContextAccessor;
         }
         public DbSet<FSD_Project_Bookstore_Group4.Domain.SubscriptionTier> SubscriptionTier { get; set; } = default!;
-        public DbSet<FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo> SubscrptionInfo { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo> SubscrptionInfo { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Customer> Customer { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Gender> Gender { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Order> Order { get; set; } = default!;
@@ -31,7 +31,10 @@ namespace FSD_Project_Bookstore_Group4.Data
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Genre> Genre { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Publisher> Publisher { get; set; } = default!;
         public DbSet<FSD_Project_Bookstore_Group4.Domain.Author> Author { get; set; } = default!;
-
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookAuthor> BookAuthor { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookGenre> BookGenre { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.OrderItem> OrderItem { get; set; } = default!;
+        public DbSet<FSD_Project_Bookstore_Group4.Domain.Payment> Payment { get; set; } = default!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -79,10 +82,7 @@ namespace FSD_Project_Bookstore_Group4.Data
                 }
             }
         }
-        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookAuthor> BookAuthor { get; set; } = default!;
-        public DbSet<FSD_Project_Bookstore_Group4.Domain.BookGenre> BookGenre { get; set; } = default!;
-        public DbSet<FSD_Project_Bookstore_Group4.Domain.OrderItem> OrderItem { get; set; } = default!;
-        public DbSet<FSD_Project_Bookstore_Group4.Domain.Payment> Payment { get; set; } = default!;
+
 
 
     }

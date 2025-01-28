@@ -4,5 +4,6 @@
     {
         public int GenderId { get; set; }
         public string? GenderName { get; set; }
+        public ICollection<Customer> Customers { get; set; }
     }
 }
