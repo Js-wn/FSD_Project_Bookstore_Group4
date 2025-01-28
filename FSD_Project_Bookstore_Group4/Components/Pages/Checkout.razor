@@ -1,7 +1,89 @@
-﻿@page "/Checkout"
+﻿@page "/Checkout/{BookId:int}"
 @attribute [StreamRendering]
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@inject NavigationManager Navigation
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 
 <PageTitle>Checkout</PageTitle>
 
-<h1>Checkout Page</h1>
+<h1>Checkout</h1>
+@if (selectedBook != null)
+{
+    <div>
+        <h2>@selectedBook.BookTitle</h2>
+        <img src="@selectedBook.ImgLink" alt="Book Image" width="200" />
+        <p>@selectedBook.BookDesc</p>
+        <p><strong>Price:</strong> $@selectedBook.BookPrice</p>
 
+        <EditForm Model="@orderDetails" OnValidSubmit="ConfirmOrder" FormName="checkoutForm">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div>
+                <label>Quantity: </label>
+                <InputNumber @bind-Value="orderDetails.Quantity" />
+            </div>
+            <button type="submit">Confirm Order</button>
+        </EditForm>
+
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    [Parameter] public int BookId { get; set; }
+    private Book? selectedBook;
+    private FSD_Project_Bookstore_Group4Context context;
+    private OrderDetails orderDetails = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        context = await DbFactory.CreateDbContextAsync();
+        selectedBook = await context.Book.FindAsync(BookId);
+
+        if (selectedBook == null)
+        {
+            Navigation.NavigateTo("/Search");
+        }
+    }
+
+
+    private async Task ConfirmOrder()
+    {
+        var newOrder = new Order
+            {
+                CustomerId = 1, // Replace with the logged-in customer's ID
+                OrderDateTime = DateTime.Now,
+            };
+        context.Order.Add(newOrder);
+        await context.SaveChangesAsync();
+
+        var orderItem = new OrderItem
+            {
+                BookId = selectedBook!.Id,
+                OrderQty = orderDetails.Quantity,
+                OrderId = newOrder.Id,
+            };
+        context.OrderItem.Add(orderItem);
+        await context.SaveChangesAsync();
+
+        Navigation.NavigateTo("/ThankYou"); // Redirect after success
+    }
+
+    public class OrderDetails
+    {
+        public int Quantity { get; set; } = 1;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (context != null)
+            await context.DisposeAsync();
+    }
+}

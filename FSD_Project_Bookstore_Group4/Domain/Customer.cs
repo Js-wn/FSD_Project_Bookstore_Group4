@@ -10,8 +10,9 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public string? CustomerAddress { get; set; }
         public string? CustomerContact { get; set; }
         public int CustomerPoints { get; set; }
+
         [ForeignKey("Gender")]
-        public int GenderId { get; set; } = 1;
+        public int GenderId { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Order> Orders { get; set; }

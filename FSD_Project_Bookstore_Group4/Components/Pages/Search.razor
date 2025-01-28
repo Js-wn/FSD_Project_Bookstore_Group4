@@ -23,7 +23,7 @@
             </a> <br />
             <p><strong>Price:</strong> $@book.BookPrice<br />
              <strong>Publish date:</strong>  @book.BookPublishDate.ToShortDateString() </p> <br />
-            <button @onclick="@(() => Ordering(book))">ORDER NOW</button>
+            <a class="btn btn-primary" href="/Checkout/@book.Id">ORDER NOW</a>
         </TemplateColumn>
         <TemplateColumn class="w-30" Context="book" Title="Description" >
             @book.BookDesc

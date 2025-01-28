@@ -65,16 +65,17 @@
             </div>
 
             <div class="form-floating mb-3">
-                <select asp-for="Input.GenderId" class="form-control">
-                    <option value="">Choose...</option>
+                <InputSelect @bind-Value="Input.GenderId" class="form-control">
+                    <option value="0">Choose...</option>
                     @foreach (var gender in Genders)
                     {
                         <option value="@gender.Id">@gender.GenderName</option>
                     }
-                </select>
+                </InputSelect>
                 <label for="gender">Gender</label>
                 <ValidationMessage For="(() => Input.GenderId)" class="text-danger" />
             </div>
+
 
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
@@ -98,7 +99,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Logger.LogInformation($"Dropdown populated. GenderId: {Input.GenderId}");
+
         Genders = await FetchGendersFromDatabaseAsync();
+        foreach (var gender in Genders)
+        {
+            Logger.LogInformation($"Loaded Gender: {gender.Id} - {gender.GenderName}"); 
+        }
     }
 
     private async Task<List<Gender>> FetchGendersFromDatabaseAsync()
@@ -120,6 +127,31 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
+        Logger.LogInformation($"GenderId selected during registration: {Input.GenderId}");
+        if (Input.GenderId <= 0)
+        {
+            // Return error if no valid gender is selected
+            identityErrors = new List<IdentityError>
+        {
+            new IdentityError { Description = "Please select a valid gender." }
+        };
+            return;
+        }
+        using var dbContext = await DbFactory.CreateDbContextAsync();
+        Logger.LogInformation($"GenderId selected during registration: {Input.GenderId}");
+
+        // 2. Check if the selected GenderId exists in the database
+        var isGenderValid = await dbContext.Gender.AnyAsync(g => g.Id == Input.GenderId);
+        if (!isGenderValid)
+        {
+            // Return error if the selected GenderId is invalid
+            identityErrors = new List<IdentityError>
+        {
+            new IdentityError { Description = "Invalid gender selection. Please try again." }
+        };
+            return;
+        }
+
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -136,6 +168,9 @@
             identityErrors = result.Errors;
             return;
         }
+
+        Logger.LogInformation($"User registered successfully with GenderId: {Input.GenderId}");
+
         //create the user role if it doesn't exist
         if (!await RoleManager.RoleExistsAsync("User"))
         {
@@ -150,7 +185,6 @@
 
         Logger.LogInformation("User created a new account with password.");
 
-        using var dbContext = await DbFactory.CreateDbContextAsync();
         var customer = new Customer
             {
                 CustomerFirstName = Input.FirstName,
@@ -235,9 +269,9 @@
         [Display(Name = "Contact")]
         public string Contact { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "Please select a gender.")]
         [Display(Name = "Gender")]
-        public int GenderId { get; set; }
+        public int GenderId { get; set; } = 0;
 
 
 

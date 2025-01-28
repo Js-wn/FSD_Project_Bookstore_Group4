@@ -1,0 +1,16 @@
+﻿<button class="btn btn-primary" @onclick="OnOrderClick">ORDER NOW</button>
+
+@code {
+    [Parameter]
+    public int BookId { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnOrder { get; set; }
+
+    private async Task OnOrderClick()
+    {
+        Console.WriteLine($"OrderButton clicked. BookId: {BookId}");
+        await OnOrder.InvokeAsync(BookId);
+    }
+
+}
