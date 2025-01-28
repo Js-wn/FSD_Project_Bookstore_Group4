@@ -20,7 +20,7 @@ else
         <div class="col-md-4">
             <EditForm method="post" Model="Customer" OnValidSubmit="UpdateCustomer" FormName="edit" Enhance>
                 <DataAnnotationsValidator />
-                <ValidationSummary role="alert"/>
+                <ValidationSummary role="alert" />
                 <input type="hidden" name="Customer.Id" value="@Customer.Id" />
                 <div class="mb-3">
                     <label for="customerfirstname" class="form-label">CustomerFirstName:</label>
@@ -57,16 +57,20 @@ else
                     <InputNumber id="genderid" @bind-Value="Customer.GenderId" class="form-control" />
                     <ValidationMessage For="() => Customer.GenderId" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Customer.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Customer.DateCreated" class="text-danger" />
+
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Customer.DateCreated</label>
+                    <input type="hidden" name="Customer.datecreated" value="@Customer.DateCreated" />
                 </div>
+
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
-                    <InputDate id="dateupdate" @bind-Value="Customer.DateUpdate" class="form-control" />
+                    <input type="datetime-local" id="dateupdate" @bind="Customer.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" />
                 </div>
+
+
+
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
         </div>
@@ -92,6 +96,14 @@ else
         if (Customer is null)
         {
             NavigationManager.NavigateTo("notfound");
+        }
+        if (Customer == null)
+        {
+            Customer = new Customer();
+        }
+        if (Customer.DateUpdate == DateTime.MinValue)
+        {
+            Customer.DateUpdate = DateTime.Now;
         }
     }
 

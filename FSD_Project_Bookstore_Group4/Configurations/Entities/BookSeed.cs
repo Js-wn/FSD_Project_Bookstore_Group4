@@ -31,7 +31,20 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     BookPublishDate = new DateTime(1949, 06, 8),
                     BookPrice = 9.99f,
                     PublisherId = 3
+                },
+                new Book
+                {
+                    Id = 3,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    BookTitle = "American Psycho",
+                    BookDesc = "Patrick Bateman moves among the young and trendy in 1980s Manhattan. Young, handsome, and well educated, Bateman earns his fortune on Wall Street by day while spending his nights in ways we cannot begin to fathom. Expressing his true self through torture and murder, Bateman prefigures an apocalyptic horror that no society could bear to confront.",
+                    ImgLink = "https://m.media-amazon.com/images/I/7150fwe2f9L._SL1200_.jpg",
+                    BookPublishDate = new DateTime(1991, 03, 6),
+                    BookPrice = 23.99f,
+                    PublisherId = 1
                 }
+
 
 
                 );

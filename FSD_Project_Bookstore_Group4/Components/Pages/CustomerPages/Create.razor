@@ -15,51 +15,51 @@
     <div class="col-md-4">
         <EditForm method="post" Model="Customer" OnValidSubmit="AddCustomer" FormName="create" Enhance>
             <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/>
+            <ValidationSummary class="text-danger" role="alert" />
             <div class="mb-3">
-                <label for="customerfirstname" class="form-label">CustomerFirstName:</label> 
-                <InputText id="customerfirstname" @bind-Value="Customer.CustomerFirstName" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerFirstName" class="text-danger" /> 
-            </div>        
+                <label for="customerfirstname" class="form-label">CustomerFirstName:</label>
+                <InputText id="customerfirstname" @bind-Value="Customer.CustomerFirstName" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerFirstName" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="customerlastname" class="form-label">CustomerLastName:</label> 
-                <InputText id="customerlastname" @bind-Value="Customer.CustomerLastName" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerLastName" class="text-danger" /> 
-            </div>        
+                <label for="customerlastname" class="form-label">CustomerLastName:</label>
+                <InputText id="customerlastname" @bind-Value="Customer.CustomerLastName" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerLastName" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="customeremail" class="form-label">CustomerEmail:</label> 
-                <InputText id="customeremail" @bind-Value="Customer.CustomerEmail" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerEmail" class="text-danger" /> 
-            </div>        
+                <label for="customeremail" class="form-label">CustomerEmail:</label>
+                <InputText id="customeremail" @bind-Value="Customer.CustomerEmail" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerEmail" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="customeraddress" class="form-label">CustomerAddress:</label> 
-                <InputText id="customeraddress" @bind-Value="Customer.CustomerAddress" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerAddress" class="text-danger" /> 
-            </div>        
+                <label for="customeraddress" class="form-label">CustomerAddress:</label>
+                <InputText id="customeraddress" @bind-Value="Customer.CustomerAddress" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerAddress" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="customercontact" class="form-label">CustomerContact:</label> 
-                <InputText id="customercontact" @bind-Value="Customer.CustomerContact" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerContact" class="text-danger" /> 
-            </div>        
+                <label for="customercontact" class="form-label">CustomerContact:</label>
+                <InputText id="customercontact" @bind-Value="Customer.CustomerContact" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerContact" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="customerpoints" class="form-label">CustomerPoints:</label> 
-                <InputNumber id="customerpoints" @bind-Value="Customer.CustomerPoints" class="form-control" /> 
-                <ValidationMessage For="() => Customer.CustomerPoints" class="text-danger" /> 
-            </div>        
+                <label for="customerpoints" class="form-label">CustomerPoints:</label>
+                <InputNumber id="customerpoints" @bind-Value="Customer.CustomerPoints" class="form-control" />
+                <ValidationMessage For="() => Customer.CustomerPoints" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="genderid" class="form-label">GenderId:</label> 
-                <InputNumber id="genderid" @bind-Value="Customer.GenderId" class="form-control" /> 
-                <ValidationMessage For="() => Customer.GenderId" class="text-danger" /> 
-            </div>        
+                <label for="genderid" class="form-label">GenderId:</label>
+                <InputNumber id="genderid" @bind-Value="Customer.GenderId" class="form-control" />
+                <ValidationMessage For="() => Customer.GenderId" class="text-danger" />
+            </div>
             <div class="mb-3" hidden>
-                <label for="datecreated" class="form-label">DateCreated:</label> 
-                <InputDate id="datecreated" @bind-Value="Customer.DateCreated" class="form-control" /> 
-                <ValidationMessage For="() => Customer.DateCreated" class="text-danger" /> 
-            </div>        
+                <label for="datecreated" class="form-label">DateCreated:</label>
+                <InputDate id="datecreated" @bind-Value="Customer.DateCreated" class="form-control" />
+                <ValidationMessage For="() => Customer.DateCreated" class="text-danger" />
+            </div>
             <div class="mb-3" hidden>
-                <label for="dateupdate" class="form-label">DateUpdate:</label> 
-                <InputDate id="dateupdate" @bind-Value="Customer.DateUpdate" class="form-control" /> 
-                <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" /> 
+                <label for="dateupdate" class="form-label">DateUpdate:</label>
+                <InputDate id="dateupdate" @bind-Value="Customer.DateUpdate" class="form-control" />
+                <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" />
             </div>
             <div class="mb-3" hidden>
                 <label for="createdby" class="form-label">CreatedBy:</label>
@@ -82,7 +82,11 @@
 
 @code {
     [SupplyParameterFromForm]
-    private Customer Customer { get; set; } = new();
+    private Customer Customer { get; set; } = new Customer
+        {
+            DateCreated = DateTime.Now,
+            DateUpdate = DateTime.Now
+        };
 
     private List<SelectListItem> GenderOptions { get; set; }
 
@@ -102,6 +106,7 @@
     {
         using var context = DbFactory.CreateDbContext();
         context.Customer.Add(Customer);
+        Customer.DateUpdate = DateTime.Now;
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/customers");
     }

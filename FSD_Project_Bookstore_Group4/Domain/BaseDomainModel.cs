@@ -7,5 +7,12 @@
         public DateTime DateUpdate { get; set; }
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
+
+        protected BaseDomainModel()
+        {
+            DateUpdate = DateTime.Now;
+        }
     }
+
+
 }
