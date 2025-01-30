@@ -15,7 +15,7 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public Order Order { get; set; }
         [ForeignKey("SubscriptionTier")]
         public int TierId { get; set; }

@@ -10,7 +10,7 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         [ForeignKey("OrderItem")]
-        public int OrderItemId { get; set; }
+        public int? OrderItemId { get; set; }
         public OrderItem OrderItem { get; set; }
 
     }

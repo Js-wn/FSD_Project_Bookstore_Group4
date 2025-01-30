@@ -282,7 +282,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 column: "CustomerId",
                 principalTable: "Customer",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Payment_Order_OrderId",
@@ -314,7 +314,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                 column: "CustomerId",
                 principalTable: "Customer",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Review_OrderItem_OrderItemId",
