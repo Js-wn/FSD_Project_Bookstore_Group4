@@ -1,18 +1,27 @@
-﻿.grid {
-    height: 35rem;
-    overflow-y: auto;
-
+﻿/* Ensure no scrolling at the body level */
+body {
+    margin: 0;
+    overflow: hidden; /* Disable scrolling for the body */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Use the full viewport height */
 }
+
+/* Main container for the grid */
+.grid {
+    flex: 1; /* Allow the grid to fill available space */
+    overflow-y: auto; /* Enable scrolling inside the grid only */
+    margin: 1rem 0;
+}
+
+/* Ensure the table fits properly */
 .table {
-    max-height: 0;
+    max-height: none;
+    width: 100%; /* Ensure table width spans the container */
 }
 
-    .grid ::deep table {
-        min-width: 100%;
-
-    }
-/* Sticky header while scrolling */
-::deep thead {
+/* Sticky header for the grid */
+.grid ::deep thead {
     position: sticky;
     top: 0;
     background-color: #d8d8d8;
@@ -20,14 +29,16 @@
     z-index: 1;
 }
 
-/* For virtualized grids, it's essential that all rows have the same known height */
-::deep tr {
+/* Ensure all rows are consistent in size */
+.grid ::deep tr {
     height: 30px;
     border-bottom: 0.5px solid silver;
 }
 
-::deep tbody td {
+/* Handle table cells properly */
+.grid ::deep tbody td {
     overflow: hidden;
     max-width: 0;
     text-overflow: ellipsis;
+    white-space: nowrap; /* Prevent text wrapping */
 }

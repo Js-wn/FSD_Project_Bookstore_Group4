@@ -7,33 +7,36 @@
 
 <PageTitle>Search</PageTitle>
 
-<h1>Search</h1>
-<div>
+<div class="search-container">
+    <h1>Search</h1>
     <form action="/Search" data-enhance>
         <input type="search" name="titleFilter" />
         <input type="submit" value="Search" />
     </form>
+    <div class="grid">
+        <QuickGrid Class="table" Items="FilteredBooks" @ref="grid">
+            <TemplateColumn Context="book" Title="Title" Class="w-10">
+                <a href="@($"fulldetails?id={book.Id}")">
+                    <img class="mr-4" src="@book.ImgLink" width="200" />
+                    <br />
+                    @book.BookTitle
+                </a>
+                <br />
+                <p>
+                    <strong>Price:</strong> $@book.BookPrice
+                    <br />
+                    <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
+                </p>
+                <br />
+                <a class="btn btn-primary" href="/Checkout/@book.Id">ORDER NOW</a>
+            </TemplateColumn>
+            <TemplateColumn Class="w-30" Context="book" Title="Description">
+                @book.BookDesc
+            </TemplateColumn>
+        </QuickGrid>
+    </div>
 </div>
-<div class="grid">
-    <QuickGrid Class="table" Items="FilteredBooks" @ref="grid" >
-        <TemplateColumn Context="book" Title="Title" Class="w-10" >
-            <a href="@($"fulldetails?id={book.Id}")">
-            <img class=" mr-4" src="@book.ImgLink" width="200"/> <br />
-            @book.BookTitle
-            </a> <br />
-            <p><strong>Price:</strong> $@book.BookPrice<br />
-             <strong>Publish date:</strong>  @book.BookPublishDate.ToShortDateString() </p> <br />
-            <a class="btn btn-primary" href="/Checkout/@book.Id">ORDER NOW</a>
-        </TemplateColumn>
-        <TemplateColumn class="w-30" Context="book" Title="Description" >
-            @book.BookDesc
-        </TemplateColumn>
-        @*<PropertyColumn Title="Title" Property="book => book.BookTitle" Sortable="true" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />
-        <PropertyColumn class="w-25" Title="Description" Property="book => book.BookDesc"/>
-        <PropertyColumn class="w-2" Title="Published date" Sortable="true" Format="yyyy-MM-dd" Property="book => book.BookPublishDate.Date" />
-        <PropertyColumn class="w-2" Title="Price" Sortable="true" Format='c' Property="book => book.BookPrice" />*@
-    </QuickGrid>
-</div>
+
 @code {
     string message = string.Empty;
     QuickGrid<Book>? grid;
@@ -48,6 +51,7 @@
     {
         context = DbFactory.CreateDbContext();
     }
+
     void Ordering(Book b) => message = $"You want to order {b.BookTitle}";
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

@@ -16,24 +16,28 @@ main {
     background-image: linear-gradient(180deg, rgb(32, 42, 68) 0%, #ADD8E6 200%);
     transition: width 0.5s ease;
     overflow: hidden;
+    white-space: nowrap;
 }
 
     .sidebar:hover {
         width: 250px; /* Expanded width on hover */
     }
 
+    /* Ensure list styling is correct */
     .sidebar ul {
         list-style: none;
         padding: 0;
         margin: 0;
     }
 
+    /* Sidebar items layout */
     .sidebar li {
         display: flex;
         align-items: center;
         padding: 10px;
     }
 
+        /* Ensure icons are always visible */
         .sidebar li .icon {
             width: 75px;
             text-align: center;
@@ -41,19 +45,23 @@ main {
             color: white;
         }
 
+        /* Hide text by default */
         .sidebar li .text {
             display: none;
             color: white;
             font-size: 1rem;
             margin-left: 10px;
             white-space: nowrap;
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
 
+    /* When sidebar expands, show text */
     .sidebar:hover li .text {
-        display: block; /* Show text in expanded state */
+        display: inline; /* Changed from block to inline */
         opacity: 1;
     }
+
 
 .top-row {
     background-color: #f7f7f7;
@@ -102,3 +110,21 @@ main {
         padding-right: 1.5rem !important;
     }
 }
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
