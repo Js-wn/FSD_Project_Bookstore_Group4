@@ -1,7 +1,56 @@
-﻿@page "/Featured"
-@attribute [StreamRendering]
+﻿@page "/"
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 
-<PageTitle>Featured</PageTitle>
+<PageTitle>Featured Home Page</PageTitle>
+<h1>Welcome to TheBookStoreOverThere</h1>
+<body>
+    <div class="orbit-container">
+        <ul class="horizontal">
+            @foreach (var itembook in booklist)
+            {
+                <li>
+                    <a href="@($"fulldetails?id={itembook.Id}")">
+                        <img src="@itembook.ImgLink" alt="@itembook.BookTitle" width="100" height="100" />
+                        <p>@itembook.BookTitle</p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</body>
 
-<h1>Featured Books</h1>
+@code
+{
+    private int totalcount;
+    private Random a = new Random(); // replace from new Random(DateTime.Now.Ticks.GetHashCode());
+                                     // Since similar code is done in default constructor internally
+    private List<int> randomList = new List<int>();
+    List<Book> booklist = new List<Book>();
+    int MyNumber = 0;
+    private void NewNumber()
+    {
+        MyNumber = a.Next(1, totalcount + 1);
+        if (!randomList.Contains(MyNumber))
+            randomList.Add(MyNumber);
+    }
+    private FSD_Project_Bookstore_Group4Context context = default!;
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        totalcount = context.Book.Count();
+        while (randomList.Count < 3)
+        {
+            NewNumber();
+        }
+        foreach (int i in randomList)
+        {
+            var selectedBook = await context.Book.FirstOrDefaultAsync(b => b.Id == i);
+            booklist.Add(selectedBook);
+        }
+    }
 
+}

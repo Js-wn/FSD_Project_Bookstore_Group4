@@ -1,0 +1,77 @@
+﻿.orbit-container {
+    position: absolute; /* Allow precise positioning */
+    top: 50%; /* Center vertically in the white space */
+    left: calc(50% + 150px); /* Center horizontally in the white space and account for sidebar width */
+    transform: translate(-50%, -50%); /* Offset by 50% of element size for perfect centering */
+}
+
+ul.horizontal {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Enables positioning for orbiting items */
+    width: 400px; /* Adjust orbit circle size */
+    height: 400px;
+    perspective: 800px; /* Add perspective for 3D effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    /* Orbiting items */
+    ul.horizontal li {
+        position: absolute;
+        display: flex;
+        flex-direction: column; /* Stack the image and title vertically */
+        align-items: center;
+        text-align: center;
+        width: 100px; /* Size of each orbiting item */
+        height: 120px;
+        animation: orbit3D 8s linear infinite; /* Apply orbit animation */
+        transform-origin: 0 0 0; /* Set the transform origin */
+    }
+
+        /* Position items at equal angles around the orbit */
+        ul.horizontal li:nth-child(1) {
+            transform: rotateY(0deg) translateX(200px) rotateY(0deg); /* 1st item */
+        }
+
+        ul.horizontal li:nth-child(2) {
+            transform: rotateY(120deg) translateX(200px) rotateY(-120deg); /* 2nd item */
+        }
+
+        ul.horizontal li:nth-child(3) {
+            transform: rotateY(240deg) translateX(200px) rotateY(-240deg); /* 3rd item */
+        }
+
+    /* Link styles */
+    ul.horizontal a {
+        text-decoration: none; /* Remove underline from links */
+        color: inherit; /* Inherit text color */
+    }
+
+    /* Images */
+    ul.horizontal img {
+        width: 80px; /* Adjust image size */
+        height: auto;
+        border-radius: 10px; /* Optional: Rounded corners */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+    }
+
+    /* Titles */
+    ul.horizontal p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+/* 3D Orbit Animation */
+@keyframes orbit3D {
+    0% {
+        transform: rotateY(0deg) translateX(200px) rotateY(0deg); /* Start position */
+    }
+
+    100% {
+        transform: rotateY(360deg) translateX(200px) rotateY(-360deg); /* Full orbit */
+    }
+}
