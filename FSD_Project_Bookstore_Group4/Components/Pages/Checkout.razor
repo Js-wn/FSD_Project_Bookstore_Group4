@@ -1,84 +1,91 @@
-﻿@page "/Checkout/{BookId:int}"
+﻿@page "/Checkout"
 @attribute [StreamRendering]
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
 @inject NavigationManager Navigation
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@rendermode InteractiveServer
 
 <PageTitle>Checkout</PageTitle>
 
 <h1>Checkout</h1>
-@if (selectedBook != null)
+
+@if (CartItems.Count > 0)
 {
     <div>
-        <h2>@selectedBook.BookTitle</h2>
-        <img src="@selectedBook.ImgLink" alt="Book Image" width="200" />
-        <p>@selectedBook.BookDesc</p>
-        <p><strong>Price:</strong> $@selectedBook.BookPrice</p>
-
-        <EditForm Model="@orderDetails" OnValidSubmit="ConfirmOrder" FormName="checkoutForm">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div>
-                <label>Quantity: </label>
-                <InputNumber @bind-Value="orderDetails.Quantity" />
-            </div>
-            <button type="submit">Confirm Order</button>
-        </EditForm>
-
+        <h2>Your Cart</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in CartItems)
+                {
+                    <tr>
+                        <td>@item.Book.BookTitle</td>
+                        <td>
+                            <InputNumber @bind-Value="item.OrderQty" />
+                        </td>
+                        <td>$@(item.Book.BookPrice * item.OrderQty)</td>
+                        <td>
+                            <button class="btn btn-danger" @onclick="() => RemoveFromCart(item.BookId)">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn btn-success" @onclick="ConfirmOrder">Checkout</button>
     </div>
 }
 else
 {
-    <p>Loading...</p>
+    <p>Your cart is empty.</p>
 }
 
 @code {
-    [Parameter] public int BookId { get; set; }
-    private Book? selectedBook;
+    private List<OrderItem> CartItems = new();
     private FSD_Project_Bookstore_Group4Context context;
-    private OrderDetails orderDetails = new();
+    private Order? cartOrder;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         context = await DbFactory.CreateDbContextAsync();
-        selectedBook = await context.Book.FindAsync(BookId);
+        cartOrder = await context.Order.Include(o => o.OrderItems).ThenInclude(oi => oi.Book)
+            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
 
-        if (selectedBook == null)
+        if (cartOrder != null)
         {
-            Navigation.NavigateTo("/Search");
+            CartItems = cartOrder.OrderItems.ToList();
         }
     }
 
+    private async Task RemoveFromCart(int bookId)
+    {
+        var itemToRemove = CartItems.FirstOrDefault(i => i.BookId == bookId);
+        if (itemToRemove != null)
+        {
+            CartItems.Remove(itemToRemove);
+            context.OrderItem.Remove(itemToRemove);
+            await context.SaveChangesAsync();
+        }
+    }
 
     private async Task ConfirmOrder()
     {
-        var newOrder = new Order
-            {
-                CustomerId = 1, // Replace with the logged-in customer's ID
-                OrderDateTime = DateTime.Now,
-            };
-        context.Order.Add(newOrder);
-        await context.SaveChangesAsync();
+        if (cartOrder != null)
+        {
+            cartOrder.IsInCart = "No";
+            await context.SaveChangesAsync();
+        }
 
-        var orderItem = new OrderItem
-            {
-                BookId = selectedBook!.Id,
-                OrderQty = orderDetails.Quantity,
-                OrderId = newOrder.Id,
-            };
-        context.OrderItem.Add(orderItem);
-        await context.SaveChangesAsync();
-
-        Navigation.NavigateTo("/ThankYou"); // Redirect after success
-    }
-
-    public class OrderDetails
-    {
-        public int Quantity { get; set; } = 1;
+        Navigation.NavigateTo("/ThankYou");
     }
 
     public async ValueTask DisposeAsync()

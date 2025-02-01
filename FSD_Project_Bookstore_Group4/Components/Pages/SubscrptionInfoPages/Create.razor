@@ -1,4 +1,4 @@
-﻿@page "/subscrptioninfos/create"
+﻿@page "/SubscriptionInfos/create"
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
@@ -8,52 +8,52 @@
 
 <h1>Create</h1>
 
-<h2>SubscrptionInfo</h2>
+<h2>SubscriptionInfo</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm method="post" Model="SubscrptionInfo" OnValidSubmit="AddSubscrptionInfo" FormName="create" Enhance>
+        <EditForm method="post" Model="SubscriptionInfo" OnValidSubmit="AddSubscriptionInfo" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
             <div class="mb-3">
                 <label for="datestart" class="form-label">DateStart:</label> 
-                <InputDate id="datestart" @bind-Value="SubscrptionInfo.DateStart" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.DateStart" class="text-danger" /> 
+                <InputDate id="datestart" @bind-Value="SubscriptionInfo.DateStart" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.DateStart" class="text-danger" /> 
             </div>        
             <div class="mb-3">
                 <label for="dateend" class="form-label">DateEnd:</label> 
-                <InputDate id="dateend" @bind-Value="SubscrptionInfo.DateEnd" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.DateEnd" class="text-danger" /> 
+                <InputDate id="dateend" @bind-Value="SubscriptionInfo.DateEnd" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.DateEnd" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="cutomerid" class="form-label">CutomerId:</label> 
-                <InputNumber id="cutomerid" @bind-Value="SubscrptionInfo.CutomerId" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.CutomerId" class="text-danger" /> 
+                <label for="customerid" class="form-label">CustomerId:</label> 
+                <InputNumber id="customerid" @bind-Value="SubscriptionInfo.CustomerId" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.CustomerId" class="text-danger" /> 
             </div>        
             <div class="mb-3">
                 <label for="tierid" class="form-label">TierId:</label> 
-                <InputNumber id="tierid" @bind-Value="SubscrptionInfo.TierId" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.TierId" class="text-danger" /> 
+                <InputNumber id="tierid" @bind-Value="SubscriptionInfo.TierId" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.TierId" class="text-danger" /> 
             </div>        
             <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
-                <InputDate id="datecreated" @bind-Value="SubscrptionInfo.DateCreated" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.DateCreated" class="text-danger" /> 
+                <InputDate id="datecreated" @bind-Value="SubscriptionInfo.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.DateCreated" class="text-danger" /> 
             </div>        
             <div class="mb-3" hidden>
                 <label for="dateupdate" class="form-label">DateUpdate:</label> 
-                <InputDate id="dateupdate" @bind-Value="SubscrptionInfo.DateUpdate" class="form-control" /> 
-                <ValidationMessage For="() => SubscrptionInfo.DateUpdate" class="text-danger" /> 
+                <InputDate id="dateupdate" @bind-Value="SubscriptionInfo.DateUpdate" class="form-control" /> 
+                <ValidationMessage For="() => SubscriptionInfo.DateUpdate" class="text-danger" /> 
             </div>
             <div class="mb-3" hidden>
                 <label for="createdby" class="form-label">CreatedBy:</label>
-                <InputText id="createdby" @bind-Value="SubscrptionInfo.CreatedBy" class="form-control" />
-                <ValidationMessage For="() => SubscrptionInfo.CreatedBy" class="text-danger" />
+                <InputText id="createdby" @bind-Value="SubscriptionInfo.CreatedBy" class="form-control" />
+                <ValidationMessage For="() => SubscriptionInfo.CreatedBy" class="text-danger" />
             </div>
             <div class="mb-3" hidden>
                 <label for="updatedby" class="form-label">UpdatedBy:</label>
-                <InputText id="updatedby" @bind-Value="SubscrptionInfo.UpdatedBy" class="form-control" />
-                <ValidationMessage For="() => SubscrptionInfo.UpdatedBy" class="text-danger" />
+                <InputText id="updatedby" @bind-Value="SubscriptionInfo.UpdatedBy" class="form-control" />
+                <ValidationMessage For="() => SubscriptionInfo.UpdatedBy" class="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
@@ -61,19 +61,19 @@
 </div>
 
 <div>
-    <a href="/subscrptioninfos">Back to List</a>
+    <a href="/SubscriptionInfos">Back to List</a>
 </div>
 
 @code {
     [SupplyParameterFromForm]
-    private SubscriptionInfo SubscrptionInfo { get; set; } = new();
+    private SubscriptionInfo SubscriptionInfo { get; set; } = new();
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task AddSubscrptionInfo()
+    private async Task AddSubscriptionInfo()
     {
         using var context = DbFactory.CreateDbContext();
-        context.SubscrptionInfo.Add(SubscrptionInfo);
+        context.SubscriptionInfo.Add(SubscriptionInfo);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/subscrptioninfos");
+        NavigationManager.NavigateTo("/SubscriptionInfos");
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/subscrptioninfos/edit"
+﻿@page "/SubscriptionInfos/edit"
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
@@ -8,9 +8,9 @@
 
 <h1>Edit</h1>
 
-<h2>SubscrptionInfo</h2>
+<h2>SubscriptionInfo</h2>
 <hr />
-@if (SubscrptionInfo is null)
+@if (SubscriptionInfo is null)
 {
     <p><em>Loading...</em></p>
 }
@@ -18,39 +18,39 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm method="post" Model="SubscrptionInfo" OnValidSubmit="UpdateSubscrptionInfo" FormName="edit" Enhance>
+            <EditForm method="post" Model="SubscriptionInfo" OnValidSubmit="UpdateSubscriptionInfo" FormName="edit" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary role="alert"/>
-                <input type="hidden" name="SubscrptionInfo.Id" value="@SubscrptionInfo.Id" />
+                <input type="hidden" name="SubscriptionInfo.Id" value="@SubscriptionInfo.Id" />
                 <div class="mb-3">
                     <label for="datestart" class="form-label">DateStart:</label>
-                    <InputDate id="datestart" @bind-Value="SubscrptionInfo.DateStart" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.DateStart" class="text-danger" />
+                    <InputDate id="datestart" @bind-Value="SubscriptionInfo.DateStart" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.DateStart" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="dateend" class="form-label">DateEnd:</label>
-                    <InputDate id="dateend" @bind-Value="SubscrptionInfo.DateEnd" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.DateEnd" class="text-danger" />
+                    <InputDate id="dateend" @bind-Value="SubscriptionInfo.DateEnd" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.DateEnd" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="cutomerid" class="form-label">CutomerId:</label>
-                    <InputNumber id="cutomerid" @bind-Value="SubscrptionInfo.CutomerId" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.CutomerId" class="text-danger" />
+                    <label for="customerid" class="form-label">CustomerId:</label>
+                    <InputNumber id="customerid" @bind-Value="SubscriptionInfo.CustomerId" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.CustomerId" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="tierid" class="form-label">TierId:</label>
-                    <InputNumber id="tierid" @bind-Value="SubscrptionInfo.TierId" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.TierId" class="text-danger" />
+                    <InputNumber id="tierid" @bind-Value="SubscriptionInfo.TierId" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.TierId" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="SubscrptionInfo.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.DateCreated" class="text-danger" />
+                    <InputDate id="datecreated" @bind-Value="SubscriptionInfo.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.DateCreated" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
-                    <InputDate id="dateupdate" @bind-Value="SubscrptionInfo.DateUpdate" class="form-control" />
-                    <ValidationMessage For="() => SubscrptionInfo.DateUpdate" class="text-danger" />
+                    <InputDate id="dateupdate" @bind-Value="SubscriptionInfo.DateUpdate" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionInfo.DateUpdate" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
@@ -59,7 +59,7 @@ else
 }
 
 <div>
-    <a href="/subscrptioninfos">Back to List</a>
+    <a href="/SubscriptionInfos">Back to List</a>
 </div>
 
 @code {
@@ -67,14 +67,14 @@ else
     private int Id { get; set; }
 
     [SupplyParameterFromForm]
-    private SubscriptionInfo? SubscrptionInfo { get; set; }
+    private SubscriptionInfo? SubscriptionInfo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        SubscrptionInfo ??= await context.SubscrptionInfo.FirstOrDefaultAsync(m => m.Id == Id);
+        SubscriptionInfo ??= await context.SubscriptionInfo.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (SubscrptionInfo is null)
+        if (SubscriptionInfo is null)
         {
             NavigationManager.NavigateTo("notfound");
         }
@@ -82,10 +82,10 @@ else
 
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task UpdateSubscrptionInfo()
+    private async Task UpdateSubscriptionInfo()
     {
         using var context = DbFactory.CreateDbContext();
-        context.Attach(SubscrptionInfo!).State = EntityState.Modified;
+        context.Attach(SubscriptionInfo!).State = EntityState.Modified;
 
         try
         {
@@ -93,7 +93,7 @@ else
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!SubscrptionInfoExists(SubscrptionInfo!.Id))
+            if (!SubscriptionInfoExists(SubscriptionInfo!.Id))
             {
                 NavigationManager.NavigateTo("notfound");
             }
@@ -103,12 +103,12 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/subscrptioninfos");
+        NavigationManager.NavigateTo("/SubscriptionInfos");
     }
 
-    private bool SubscrptionInfoExists(int id)
+    private bool SubscriptionInfoExists(int id)
     {
         using var context = DbFactory.CreateDbContext();
-        return context.SubscrptionInfo.Any(e => e.Id == id);
+        return context.SubscriptionInfo.Any(e => e.Id == id);
     }
 }

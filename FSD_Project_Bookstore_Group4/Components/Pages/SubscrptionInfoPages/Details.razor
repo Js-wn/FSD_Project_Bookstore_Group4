@@ -1,4 +1,4 @@
-﻿@page "/subscrptioninfos/details"
+﻿@page "/SubscriptionInfos/details"
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
@@ -9,36 +9,36 @@
 <h1>Details</h1>
 
 <div>
-    <h2>SubscrptionInfo</h2>
+    <h2>SubscriptionInfo</h2>
     <hr />
-    @if (subscrptioninfo is null)
+    @if (SubscriptionInfo is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
         <dl class="row">
             <dt class="col-sm-2">DateStart</dt>
-            <dd class="col-sm-10">@subscrptioninfo.DateStart</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.DateStart</dd>
             <dt class="col-sm-2">DateEnd</dt>
-            <dd class="col-sm-10">@subscrptioninfo.DateEnd</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.DateEnd</dd>
             <dt class="col-sm-2">CutomerId</dt>
-            <dd class="col-sm-10">@subscrptioninfo.CutomerId</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.CustomerId</dd>
             <dt class="col-sm-2">TierId</dt>
-            <dd class="col-sm-10">@subscrptioninfo.TierId</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.TierId</dd>
             <dt class="col-sm-2">DateCreated</dt>
-            <dd class="col-sm-10">@subscrptioninfo.DateCreated</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.DateCreated</dd>
             <dt class="col-sm-2">DateUpdate</dt>
-            <dd class="col-sm-10">@subscrptioninfo.DateUpdate</dd>
+            <dd class="col-sm-10">@SubscriptionInfo.DateUpdate</dd>
         </dl>
         <div>
-            <a href="@($"/subscrptioninfos/edit?id={subscrptioninfo.Id}")">Edit</a> |
-            <a href="@($"/subscrptioninfos")">Back to List</a>
+            <a href="@($"/SubscriptionInfos/edit?id={SubscriptionInfo.Id}")">Edit</a> |
+            <a href="@($"/SubscriptionInfos")">Back to List</a>
         </div>
     }
 </div>
 
 @code {
-    private SubscriptionInfo? subscrptioninfo;
+    private SubscriptionInfo? SubscriptionInfo;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -46,9 +46,9 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        subscrptioninfo = await context.SubscrptionInfo.FirstOrDefaultAsync(m => m.Id == Id);
+        SubscriptionInfo = await context.SubscriptionInfo.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (subscrptioninfo is null)
+        if (SubscriptionInfo is null)
         {
             NavigationManager.NavigateTo("notfound");
         }

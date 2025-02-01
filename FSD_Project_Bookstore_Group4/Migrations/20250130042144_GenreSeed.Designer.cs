@@ -743,7 +743,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.ToTable("Review");
                 });
 
-            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", b =>
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1080,7 +1080,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", "SubscrptionInfo")
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo", "SubscrptionInfo")
                         .WithMany()
                         .HasForeignKey("SubscrptionInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1118,16 +1118,16 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Navigation("OrderItem");
                 });
 
-            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", b =>
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo", b =>
                 {
                     b.HasOne("FSD_Project_Bookstore_Group4.Domain.Customer", "Customer")
-                        .WithMany("SubscriptionInfos")
+                        .WithMany("SubscrptionInfos")
                         .HasForeignKey("CutomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", "SubscriptionTier")
-                        .WithMany("SubscriptionInfos")
+                        .WithMany("SubscrptionInfos")
                         .HasForeignKey("TierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1208,7 +1208,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("SubscriptionInfos");
+                    b.Navigation("SubscrptionInfos");
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Gender", b =>
@@ -1235,7 +1235,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", b =>
                 {
-                    b.Navigation("SubscriptionInfos");
+                    b.Navigation("SubscrptionInfos");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿@page "/subscrptioninfos"
+﻿@page "/SubscrptionInfos"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
@@ -13,23 +13,23 @@
 <h1>Index</h1>
 
 <p>
-    <a href="subscrptioninfos/create">Create New</a>
+    <a href="SubscrptionInfos/create">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.SubscrptionInfo">
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateStart" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateEnd" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.CutomerId" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.TierId" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateCreated" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.DateUpdate" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.CreatedBy" />
-    <PropertyColumn Property="subscrptioninfo => subscrptioninfo.UpdatedBy" />
-    <TemplateColumn Context="subscrptioninfo">
+<QuickGrid Class="table" Items="context.SubscriptionInfo">
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.DateStart" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.DateEnd" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.CustomerId" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.TierId" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.DateCreated" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.DateUpdate" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.CreatedBy" />
+    <PropertyColumn Property="SubscriptionInfo => SubscriptionInfo.UpdatedBy" />
+    <TemplateColumn Context="SubscriptionInfo">
         <AuthorizeView Roles="Administrator">
-            <a href="@($"subscrptioninfos/edit?id={subscrptioninfo.Id}")">Edit</a> |
-            <a href="@($"subscrptioninfos/details?id={subscrptioninfo.Id}")">Details</a> |
-            <a href="@($"subscrptioninfos/delete?id={subscrptioninfo.Id}")">Delete</a>
+            <a href="@($"SubscriptionInfos/edit?id={SubscriptionInfo.Id}")">Edit</a> |
+            <a href="@($"SubscriptionInfos/details?id={SubscriptionInfo.Id}")">Details</a> |
+            <a href="@($"SubscriptionInfos/delete?id={SubscriptionInfo.Id}")">Delete</a>
         </AuthorizeView>
     </TemplateColumn>
 </QuickGrid>

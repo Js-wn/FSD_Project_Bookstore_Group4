@@ -4,8 +4,12 @@
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
 
 <PageTitle>Search</PageTitle>
+
+
 
 <div class="search-container">
     <h1>Search</h1>
@@ -28,23 +32,37 @@
                     <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
                 </p>
                 <br />
-                <a class="btn btn-primary" href="/Checkout/@book.Id">ORDER NOW</a>
+                <!-- Fixed Button: Uses async method -->
+                <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.Id))">
+                    Add to Cart
+                </button>
             </TemplateColumn>
             <TemplateColumn Class="w-30" Context="book" Title="Description">
                 @book.BookDesc
             </TemplateColumn>
         </QuickGrid>
     </div>
+
+    @if (showPopup)
+    {
+        <div class="popup-message">
+            <p>✅ Added to Cart!</p>
+        </div>
+    }
+
 </div>
 
 @code {
-    string message = string.Empty;
     QuickGrid<Book>? grid;
+    private bool showPopup = false;
+    private CancellationTokenSource? popupCancellationToken;
+
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
 
     private IQueryable<Book> FilteredBooks =>
         context.Book.Where(b => b.BookTitle!.Contains(TitleFilter ?? string.Empty));
+
     private FSD_Project_Bookstore_Group4Context context = default!;
 
     protected override void OnInitialized()
@@ -52,7 +70,82 @@
         context = DbFactory.CreateDbContext();
     }
 
-    void Ordering(Book b) => message = $"You want to order {b.BookTitle}";
+    private async Task AddToCart(int bookId)
+    {
+        Console.WriteLine($"Attempting to add book {bookId} to cart...");
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+        using var newContext = DbFactory.CreateDbContext();  // ✅ NEW DbContext Instance
+
+        var cartOrder = await newContext.Order
+            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
+
+        if (cartOrder == null)
+        {
+            cartOrder = new Order
+                {
+                    CustomerId = 1, // Replace with actual logged-in user ID
+                    IsInCart = "Yes",
+                    OrderDateTime = DateTime.Now
+                };
+
+            newContext.Order.Add(cartOrder);
+            await newContext.SaveChangesAsync();
+        }
+
+        var existingOrderItem = await newContext.OrderItem
+            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId);
+
+        if (existingOrderItem != null)
+        {
+            existingOrderItem.OrderQty++;
+        }
+        else
+        {
+            var orderItem = new OrderItem
+                {
+                    OrderId = cartOrder.Id,
+                    BookId = bookId,
+                    OrderQty = 1
+                };
+            newContext.OrderItem.Add(orderItem);
+        }
+
+        await newContext.SaveChangesAsync();
+        popupCancellationToken?.Cancel();
+        popupCancellationToken = new CancellationTokenSource();
+
+        showPopup = true;
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(2000, popupCancellationToken.Token);
+
+            if (!popupCancellationToken.IsCancellationRequested)
+            {
+                showPopup = false;
+                StateHasChanged();
+
+                // ✅ Safe Page Refresh to Update UI
+                Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // ✅ Ignore if task was canceled (no crash)
+        }
+    }
+
+    public void Dispose()
+    {
+        popupCancellationToken?.Cancel();
+        popupCancellationToken?.Dispose();
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (context != null)
+            await context.DisposeAsync();
+    }
 }

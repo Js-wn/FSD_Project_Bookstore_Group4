@@ -8,9 +8,9 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public DateTime PaymentDate { get; set; }
         public float PaymentAmountBefDiscount { get; set; }
         public float PaymentAmountAftDiscount { get; set; }
-        [ForeignKey("SubscriptionInfo")]
+        [ForeignKey("SubscrptionInfo")]
         public int SubscriptionId { get; set; }
-        public SubscriptionInfo SubscrptionInfo { get; set; }
+        public SubscriptionInfo SubscriptionInfo { get; set; }
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }

@@ -1,0 +1,75 @@
+﻿@page "/SubscriptionPage"
+@attribute [StreamRendering]
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@inject NavigationManager Navigation
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@rendermode InteractiveServer
+
+<PageTitle>Subscription</PageTitle>
+
+<h1>Subscription</h1>
+
+@if (isSubscribed)
+{
+    <p><strong>You are subscribed!</strong> 🎉</p>
+    <p>Your subscription is active from <strong>@subscription!.DateStart.ToShortDateString()</strong> to <strong>@subscription!.DateEnd.ToShortDateString()</strong>.</p>
+    <p>You receive a <strong>15% discount</strong> on all purchases!</p>
+}
+else
+{
+    <p><strong>Subscribe for just $20/month</strong> and get <strong>15% off</strong> on all purchases!</p>
+    <button class="btn btn-primary" @onclick="Subscribe">Subscribe Now</button>
+}
+
+@code {
+    private SubscriptionInfo? subscription;
+    private bool isSubscribed = false;
+    private int currentUserId = 1; // 🔹 Replace with actual logged-in user ID
+
+    private async Task CheckSubscriptionStatus()
+    {
+        await using var context = DbFactory.CreateDbContext();
+        subscription = await context.SubscriptionInfo
+            .Include(s => s.SubscriptionTier)
+            .FirstOrDefaultAsync(s => s.CustomerId == currentUserId && s.DateEnd >= DateTime.Now);
+
+        isSubscribed = subscription != null;
+    }
+
+    private async Task Subscribe()
+    {
+        await using var context = DbFactory.CreateDbContext();
+
+        // Check if already subscribed
+        if (isSubscribed)
+        {
+            return;
+        }
+
+        // 🔹 Check if the customer exists before inserting the subscription
+        var customerExists = await context.Customer.AnyAsync(c => c.Id == currentUserId);
+        if (!customerExists)
+        {
+            // ❌ Prevent adding subscription if customer doesn't exist
+            Console.WriteLine($"Error: Customer with ID {currentUserId} does not exist.");
+            return;
+        }
+
+        // Create new subscription
+        var newSubscription = new SubscriptionInfo
+            {
+                CustomerId = currentUserId,
+                TierId = 1, // Assume Tier 1 for now
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddMonths(1)
+            };
+
+        context.SubscriptionInfo.Add(newSubscription);
+        await context.SaveChangesAsync();
+
+        await CheckSubscriptionStatus(); // Refresh UI
+    }
+}
