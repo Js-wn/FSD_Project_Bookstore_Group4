@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    [Migration("20250122015623_reviewtext")]
-    partial class reviewtext
+    [Migration("20250203003330_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,7 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ed29e83-c6b5-4f56-b1f7-7c237f0e3a20",
+                            ConcurrencyStamp = "551af800-28f5-464f-8166-10558812ff9e",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -108,9 +108,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEXVW/7Qh2hRodWX5/UT2SoV/+1ZX+IC+B+i50x1MdQz5hZ6walsGK/68mUp0XaCJg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOsTwd13d/uXQFY9V2pq5NqU6B+t4UBfKhmR8GOPZwbrohDfJ7iAIURk3doCIwepWQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a61d292-d270-4f76-9961-942c7738f24b",
+                            SecurityStamp = "3a00206d-51e3-4c0a-8a1d-f5d91ae25c15",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -118,7 +118,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c323f38c-edb4-4981-9be2-20bd82342cd9",
+                            ConcurrencyStamp = "3e771698-1fbb-4535-a741-a65e61a6d224",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Customer",
@@ -126,9 +126,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@LOCALHOST.COM",
                             NormalizedUserName = "CUSTOMER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHcJN+2/9ztZNMj8EjMO4ozCHqwsdY8f6Efy6On9fysbAeBlsY+j3aCtbg3MCLNMOQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPAFM0XLOvNqqof6FE8s2yTP8aH5U4pYRwbWR3vla1f230ulL1nhfgvvtbcKUJhvBQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc2dbede-0626-4b7c-9e99-b0d0782a6403",
+                            SecurityStamp = "951b2705-3b70-40a7-a7be-98613ed7ab85",
                             TwoFactorEnabled = false,
                             UserName = "customer@localhost.com"
                         });
@@ -174,8 +174,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1952, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "Douglas Noel Adams was an English author, humourist, and screenwriter, best known as the creator of The Hitchhiker's Guide to the Galaxy. Originally a 1978 BBC radio comedy, The Hitchhiker's Guide to the Galaxy developed into a \"trilogy\" of five books which sold more than 15 million copies in his lifetime.",
                             AuthorName = "Douglas Adams",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 353, DateTimeKind.Local).AddTicks(351),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 353, DateTimeKind.Local).AddTicks(368)
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9274),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9274)
                         },
                         new
                         {
@@ -183,8 +183,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "Eric Arthur Blair was an English novelist, poet, essayist, journalist and critic who wrote under the pen name of George Orwell. His work is characterised by lucid prose, social criticism, opposition to all totalitarianism, and support of democratic socialism.",
                             AuthorName = "George Orwell",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 353, DateTimeKind.Local).AddTicks(376),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 353, DateTimeKind.Local).AddTicks(377)
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9281),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9282)
                         });
                 });
 
@@ -217,8 +217,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ImgId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImgLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PublisherId")
                         .HasColumnType("int");
@@ -227,6 +227,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Book");
 
@@ -238,9 +240,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPrice = 26.65f,
                             BookPublishDate = new DateTime(2002, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "The Ultimate Hitchhiker's Guide to the Galaxy: Five Novels in One Outrageous Volume",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(699),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(700),
-                            ImgId = 1,
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7425),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7425),
+                            ImgLink = "https://m.media-amazon.com/images/I/91Mu7rVLIFL.jpg",
                             PublisherId = 2
                         },
                         new
@@ -250,14 +252,26 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPrice = 9.99f,
                             BookPublishDate = new DateTime(1949, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "Nineteen Eighty-Four",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(708),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(708),
-                            ImgId = 1,
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7434),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7434),
+                            ImgLink = "https://m.media-amazon.com/images/I/612ADI+BVlL.jpg",
                             PublisherId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookDesc = "Patrick Bateman moves among the young and trendy in 1980s Manhattan. Young, handsome, and well educated, Bateman earns his fortune on Wall Street by day while spending his nights in ways we cannot begin to fathom. Expressing his true self through torture and murder, Bateman prefigures an apocalyptic horror that no society could bear to confront.",
+                            BookPrice = 23.99f,
+                            BookPublishDate = new DateTime(1991, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookTitle = "American Psycho",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7437),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7437),
+                            ImgLink = "https://m.media-amazon.com/images/I/7150fwe2f9L._SL1200_.jpg",
+                            PublisherId = 1
                         });
                 });
 
-            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookAurthor", b =>
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookAuthor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,7 +299,11 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookAurthor");
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookAuthor");
 
                     b.HasData(
                         new
@@ -293,16 +311,173 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 1,
                             AuthorId = 1,
                             BookId = 1,
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 354, DateTimeKind.Local).AddTicks(759),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 354, DateTimeKind.Local).AddTicks(762)
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9471),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9471)
                         },
                         new
                         {
                             Id = 2,
                             AuthorId = 2,
                             BookId = 2,
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 354, DateTimeKind.Local).AddTicks(765),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 354, DateTimeKind.Local).AddTicks(766)
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9475),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9475)
+                        });
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookGenre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("BookGenre");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookId = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9827),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9828),
+                            GenreId = 1,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookId = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9830),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9831),
+                            GenreId = 3,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookId = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9833),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9833),
+                            GenreId = 4,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BookId = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9835),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9836),
+                            GenreId = 1,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BookId = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9838),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9838),
+                            GenreId = 5,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BookId = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9840),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9840),
+                            GenreId = 6,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BookId = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9842),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9843),
+                            GenreId = 7,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            BookId = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9845),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9845),
+                            GenreId = 1,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            BookId = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9847),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9847),
+                            GenreId = 8,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            BookId = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9849),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9850),
+                            GenreId = 9,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            BookId = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9852),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9852),
+                            GenreId = 10,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            BookId = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9854),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9854),
+                            GenreId = 11,
+                            UpdatedBy = "System"
                         });
                 });
 
@@ -344,10 +519,17 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderItemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("OrderItemId");
 
                     b.ToTable("Customer");
                 });
@@ -387,8 +569,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(902),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(903),
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7593),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7593),
                             GenderId = 0,
                             GenderName = "Male",
                             UpdatedBy = "System"
@@ -397,8 +579,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(905),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(905),
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7596),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7597),
                             GenderId = 0,
                             GenderName = "Female",
                             UpdatedBy = "System"
@@ -434,6 +616,118 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genre");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9624),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9625),
+                            GenreDesc = "Fiction is any creative work, chiefly any narrative work, portraying individuals, events, or places that are imaginary or in ways that are imaginary.",
+                            GenreName = "Fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9628),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9628),
+                            GenreDesc = "Non-fiction (or nonfiction) is any document or media content that attempts, in good faith, to convey information only about the real world, rather than being grounded in imagination.",
+                            GenreName = "Non-fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9630),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9631),
+                            GenreDesc = "Science fiction (sometimes shortened to sci-fi or abbreviated SF) is a genre of speculative fiction which typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
+                            GenreName = "Science fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9632),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9633),
+                            GenreDesc = "Comedy is a genre that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.",
+                            GenreName = "Comedy",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9635),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9636),
+                            GenreDesc = "Utopian and dystopian fiction are subgenres of speculative fiction that explore social and political structures. Utopian fiction portrays a setting that agrees with the author's ethos, having various attributes of another reality intended to appeal to readers. ",
+                            GenreName = "Dystopian Fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9637),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9653),
+                            GenreDesc = "Political fiction employs narrative to comment on political events, systems and theories. Works of political fiction, such as political novels, often \"directly criticize an existing society or present an alternative, even fantastic, reality\".",
+                            GenreName = "Political fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9668),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9669),
+                            GenreDesc = "Social science fiction is a subgenre of science fiction, usually (but not necessarily) soft science fiction, concerned less with technology or space opera and more with speculation about society. In other words, it \"absorbs and discusses anthropology\" and speculates about human behavior and interactions.",
+                            GenreName = "Social science fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9671),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9671),
+                            GenreDesc = "Transgressive fiction is a genre of literature which focuses on characters who feel confined by the norms and expectations of society and who break free of those confines in unusual or illicit ways.",
+                            GenreName = "Transgressive fiction",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9673),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9673),
+                            GenreDesc = "Satire is a genre of the visual, literary, and performing arts, usually in the form of fiction and less frequently non-fiction, in which vices, follies, abuses, and shortcomings are held up to ridicule, often with the intent of exposing or shaming the perceived flaws of individuals, corporations, government, or society itself into improvement.",
+                            GenreName = "Satire",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9675),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9676),
+                            GenreDesc = "Black comedy, also known as black humor, bleak comedy, dark comedy, dark humor, gallows humor or morbid humor, is a style of comedy that makes light of subject matter that is generally considered taboo, particularly subjects that are normally considered serious or painful to discuss.",
+                            GenreName = "Black comedy",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9677),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 29, 46, DateTimeKind.Local).AddTicks(9678),
+                            GenreDesc = "Horror is a genre of speculative fiction that is intended to disturb, frighten, or scare.[1] Horror is often divided into the sub-genres of psychological horror and supernatural horror.",
+                            GenreName = "Horror",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Order", b =>
@@ -456,6 +750,10 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IsInCart")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("OrderDateTime")
                         .HasColumnType("datetime2");
 
@@ -467,6 +765,104 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderQty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PaymentAmountAftDiscount")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PaymentAmountBefDiscount")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("SubscriptionInfoId");
+
+                    b.HasIndex("TierId");
+
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Publisher", b =>
@@ -510,8 +906,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(416),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(432),
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7181),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7182),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",
@@ -522,8 +918,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(439),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(440),
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7187),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7187),
                             PublisherAddress = "6 Briset Street",
                             PublisherContact = "0207 038 5000",
                             PublisherEmail = "webqueries@macmillan.co.uk",
@@ -534,8 +930,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(442),
-                            DateUpdate = new DateTime(2025, 1, 22, 9, 56, 22, 254, DateTimeKind.Local).AddTicks(442),
+                            DateCreated = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7190),
+                            DateUpdate = new DateTime(2025, 2, 3, 8, 33, 28, 878, DateTimeKind.Local).AddTicks(7190),
                             PublisherAddress = " 8 Viaduct Gardens",
                             PublisherContact = "+44 (0)20 7139 3000",
                             PublisherEmail = "VintagePublicity@penguinrandomhouse.co.uk",
@@ -564,7 +960,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.Property<DateTime>("DateUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderItemId")
+                    b.Property<int?>("OrderItemId")
                         .HasColumnType("int");
 
                     b.Property<float>("ReviewRating")
@@ -578,7 +974,52 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderItemId");
+
                     b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TierId");
+
+                    b.ToTable("SubscriptionInfo");
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", b =>
@@ -610,43 +1051,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionTier");
-                });
-
-            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscrptionInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CutomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TierId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscrptionInfo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -808,6 +1212,70 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Book", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Publisher", "Publisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookAuthor", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Author", "Author")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Book", "Book")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.BookGenre", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Book", "Book")
+                        .WithMany("BookGenres")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Genre", "Genre")
+                        .WithMany("BookGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Customer", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Gender", "Gender")
+                        .WithMany("Customers")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.OrderItem", null)
+                        .WithMany("Customers")
+                        .HasForeignKey("OrderItemId");
+
+                    b.Navigation("Gender");
+                });
+
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Order", b =>
                 {
                     b.HasOne("FSD_Project_Bookstore_Group4.Domain.Customer", "Customer")
@@ -817,6 +1285,94 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.OrderItem", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Book", "Book")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Payment", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", "SubscriptionInfo")
+                        .WithMany()
+                        .HasForeignKey("SubscriptionInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", "SubscriptionTier")
+                        .WithMany()
+                        .HasForeignKey("TierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("SubscriptionInfo");
+
+                    b.Navigation("SubscriptionTier");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Review", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Customer", "Customer")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.OrderItem", "OrderItem")
+                        .WithMany("Reviews")
+                        .HasForeignKey("OrderItemId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("OrderItem");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", b =>
+                {
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.Customer", "Customer")
+                        .WithMany("SubscriptionInfos")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", "SubscriptionTier")
+                        .WithMany("SubscriptionInfos")
+                        .HasForeignKey("TierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("SubscriptionTier");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -870,9 +1426,59 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Book", b =>
+                {
+                    b.Navigation("BookAuthors");
+
+                    b.Navigation("BookGenres");
+
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Customer", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("SubscriptionInfos");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Gender", b =>
+                {
+                    b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Genre", b =>
+                {
+                    b.Navigation("BookGenres");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.OrderItem", b =>
+                {
+                    b.Navigation("Customers");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Publisher", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", b =>
+                {
+                    b.Navigation("SubscriptionInfos");
                 });
 #pragma warning restore 612, 618
         }
