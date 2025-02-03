@@ -8,19 +8,21 @@
 <PageTitle>Featured Home Page</PageTitle>
 <h1>Welcome to TheBookStoreOverThere</h1>
 <body>
-    <div class="orbit-container">
-        <ul class="horizontal">
+
+    <ul class="horizontal">
+            
             @foreach (var itembook in booklist)
             {
-                <li>
-                    <a href="@($"fulldetails?id={itembook.Id}")">
-                        <img src="@itembook.ImgLink" alt="@itembook.BookTitle" width="100" height="100" />
-                        <p>@itembook.BookTitle</p>
-                    </a>
-                </li>
+          
+                <a href="@($"fulldetails?id={@itembook.Id}")">
+                <li display: block><img class="w-8 h-6 mr-4" src="@itembook.ImgLink" width="180" /></li>
+                        @*<li display: block> @itembook.BookTitle</li>*@
+                </a>
+            
             }
+            
         </ul>
-    </div>
+
 </body>
 
 @code

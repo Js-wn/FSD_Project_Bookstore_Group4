@@ -1,0 +1,86 @@
+﻿@page "/books/addgenres"
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>AddGenre</PageTitle>
+
+<h1>AddGenre</h1>
+
+<h2>Book</h2>
+<hr />
+<ul>
+    @foreach (var gnames in genrnames)
+    {
+        <li>@gnames</li>
+    }
+</ul>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="BookGenre" OnValidSubmit="addGenre" FormName="createGenre" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/> 
+            <div class="mb-3">
+                <label for="genreid" class="form-label">GenreId:</label>
+                <InputSelect id="genreid" @bind-Value="BookGenre.GenreId" class="form-control">
+                    <option value="">-- Select Genre --</option>
+                    @if (Genres != null)
+                    {
+                        foreach (var genres in Genres)
+                    {
+                            <option value="@genres.Id">@genres.GenreName</option>
+                    }
+                    }
+                </InputSelect>
+                
+                
+                @*<InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
+                <ValidationMessage For="() => Book.PublisherId" class="text-danger" /> *@
+        </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/books">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private BookGenre BookGenre { get; set; } = new();
+    private FSD_Project_Bookstore_Group4Context context = default!;
+    private IList<Publisher> Publishers;
+    private IList<Author> Authors;
+    private IList<Genre> Genres;
+    private List<BookGenre> genres;
+    List<string> genrnames = new List<string>();
+    private int Id { get; set; }
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task addGenre()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.BookGenre.Add(BookGenre);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/addgenres?id=" + Id);
+    }
+    //Declare and initialize CarRentalManagementContext and IList
+
+    //OnInitialized method to get all Makes, Models and Colours
+    protected override async Task OnInitializedAsync()
+    {
+        context = DbFactory.CreateDbContext();
+        Publishers = context.Publisher.ToList();
+        Authors = context.Author.ToList();
+        Genres = context.Genre.ToList();
+        genres = context.BookGenre.Where(bg => bg.BookId == Id).ToList();
+        foreach (BookGenre a in genres)
+        {
+            var genr = await context.Genre.FirstOrDefaultAsync(g => g.Id == a.GenreId);
+            genrnames.Add(genr.GenreName);
+        }
+    }
+}

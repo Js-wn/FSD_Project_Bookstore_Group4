@@ -26,16 +26,24 @@
             <dt class="col-sm-2">DateUpdate</dt>
             <dd class="col-sm-10">@order.DateUpdate</dd>
         </dl>
+        <ul>
+            @foreach (var or in orderList)
+            {
+                <li>@or</li>
+            }
+        </ul>
         <div>
             <a href="@($"/orders/edit?id={order.Id}")">Edit</a> |
             <a href="@($"/orders")">Back to List</a>
         </div>
+
     }
 </div>
 
 @code {
     private Order? order;
-
+    private List<OrderItem> orders;
+    List<string> orderList = new List<string>();
     [SupplyParameterFromQuery]
     private int Id { get; set; }
 
@@ -43,10 +51,15 @@
     {
         using var context = DbFactory.CreateDbContext();
         order = await context.Order.FirstOrDefaultAsync(m => m.Id == Id);
-
+        orders = context.OrderItem.Where(ba => ba.OrderId == Id).ToList();
         if (order is null)
         {
             NavigationManager.NavigateTo("notfound");
+        }
+        foreach (OrderItem a in orders)
+        {
+            var bk = await context.Book.FirstOrDefaultAsync(g => g.Id == a.BookId);
+            orderList.Add(a.OrderQty+"x | "+bk.BookTitle);
         }
     }
 }
