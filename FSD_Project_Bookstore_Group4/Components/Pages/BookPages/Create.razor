@@ -38,14 +38,14 @@
             </div>        
             <div class="mb-3">
                 <label for="publisherid" class="form-label">PublisherId:</label> 
-                <InputSelect id="publsiherid" @bind-Value="Book.PublisherId" class="form-control">
-                    <option value="">-- Select Publisher --</option>
+                <InputSelect id="publisherid" @bind-Value="Book.PublisherId" class="form-control">
+                    <option value="0">-- Select Publisher --</option>
                     @if (Publishers != null)
                     {
                         foreach (var publisher in Publishers)
-                    {
+                        {
                             <option value="@publisher.Id">@publisher.PublisherName</option>
-                    }
+                        }
                     }
                 </InputSelect>
                 

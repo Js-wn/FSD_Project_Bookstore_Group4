@@ -6,6 +6,6 @@
         public string? PublisherContact { get; set; }
         public string? PublisherEmail { get; set; }
         public string? PublisherAddress { get; set; }
-        public ICollection<Book> Books { get; set; }
+        public ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }

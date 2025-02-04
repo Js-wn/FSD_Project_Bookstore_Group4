@@ -5,6 +5,6 @@
         public string? AuthorName { get; set; }
         public DateTime AurthorDOB { get; set; }
         public string? AuthorBio { get; set; }
-        public ICollection<BookAuthor> BookAuthors { get; set; }
+        public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
     }
 }
