@@ -3,8 +3,11 @@
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @rendermode InteractiveServer
 
 <PageTitle>Search</PageTitle>
@@ -60,30 +63,47 @@
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
 
+    private FSD_Project_Bookstore_Group4Context user = default;
+
+    [SupplyParameterFromQuery]
+    private string? customerid { get; set; }
+
+    private Customer? customer;
+
     private IQueryable<Book> FilteredBooks =>
         context.Book.Where(b => b.BookTitle!.Contains(TitleFilter ?? string.Empty));
 
     private FSD_Project_Bookstore_Group4Context context = default!;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+        if (!string.IsNullOrEmpty(customerid))
+        {
+            customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);
+        }
     }
 
     private async Task AddToCart(int bookId)
     {
         Console.WriteLine($"Attempting to add book {bookId} to cart...");
 
-        using var newContext = DbFactory.CreateDbContext();  // ✅ NEW DbContext Instance
+        using var newContext = DbFactory.CreateDbContext();
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var claimsPrincipal = authState.User;
+        var userId = UserManager.GetUserId(claimsPrincipal);
+
+        var customer = await newContext.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
 
         var cartOrder = await newContext.Order
-            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
 
         if (cartOrder == null)
         {
             cartOrder = new Order
                 {
-                    CustomerId = 1, // Replace with actual logged-in user ID
+                    CustomerId = customer.Id, // Link to the customer
                     IsInCart = "Yes",
                     OrderDateTime = DateTime.Now
                 };
@@ -126,13 +146,13 @@
                 showPopup = false;
                 StateHasChanged();
 
-                // ✅ Safe Page Refresh to Update UI
+
                 Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
             }
         }
         catch (TaskCanceledException)
         {
-            // ✅ Ignore if task was canceled (no crash)
+
         }
     }
 

@@ -3,10 +3,13 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
+@using Microsoft.AspNetCore.Identity
 @using FSD_Project_Bookstore_Group4.Data
 @inject NavigationManager Navigation
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @rendermode InteractiveServer
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Checkout</PageTitle>
 
@@ -57,14 +60,40 @@ else
     protected override async Task OnInitializedAsync()
     {
         context = await DbFactory.CreateDbContextAsync();
-        cartOrder = await context.Order.Include(o => o.OrderItems).ThenInclude(oi => oi.Book)
-            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
 
+        // Get the currently logged-in user's ID
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            // If no user is logged in, return early
+            return;
+        }
+
+        // Retrieve the customer using the logged-in user's ID
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+
+        if (customer == null)
+        {
+            // If no matching customer is found, return early
+            return;
+        }
+
+        // Fetch the cart for the logged-in user
+        cartOrder = await context.Order
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Book)
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
+
+        // If a cart exists, populate the CartItems list
         if (cartOrder != null)
         {
             CartItems = cartOrder.OrderItems.ToList();
         }
     }
+
 
     private async Task RemoveFromCart(int bookId)
     {

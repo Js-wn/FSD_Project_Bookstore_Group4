@@ -4,6 +4,7 @@ namespace FSD_Project_Bookstore_Group4.Domain
 {
     public class Customer : BaseDomainModel
     {
+        public string? AuthCustId { get; set; }
         public string? CustomerFirstName { get; set; }
         public string? CustomerLastName { get; set; }
         public string? CustomerEmail { get; set; }
@@ -17,7 +18,7 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<SubscriptionInfo> SubscriptionInfos { get; set; }
-        public bool HasActiveSubscription => SubscriptionInfos.Any(s => s.DateEnd > DateTime.Now);
+        public bool ComputedHasActiveSubscription => SubscriptionInfos?.Any(s => s.DateEnd > DateTime.Now) ?? false;
     }
 }
 

@@ -162,7 +162,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Author");
+                    b.ToTable("Author", (string)null);
 
                     b.HasData(
                         new
@@ -227,7 +227,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Book", (string)null);
 
                     b.HasData(
                         new
@@ -300,7 +300,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookAuthor");
+                    b.ToTable("BookAuthor", (string)null);
 
                     b.HasData(
                         new
@@ -353,7 +353,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("BookGenre");
+                    b.ToTable("BookGenre", (string)null);
 
                     b.HasData(
                         new
@@ -528,7 +528,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("OrderItemId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Gender", b =>
@@ -559,7 +559,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gender");
+                    b.ToTable("Gender", (string)null);
 
                     b.HasData(
                         new
@@ -612,7 +612,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genre", (string)null);
 
                     b.HasData(
                         new
@@ -761,7 +761,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.OrderItem", b =>
@@ -799,7 +799,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Payment", b =>
@@ -859,7 +859,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("TierId");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.Publisher", b =>
@@ -896,7 +896,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publisher", (string)null);
 
                     b.HasData(
                         new
@@ -975,7 +975,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("OrderItemId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionInfo", b =>
@@ -1016,7 +1016,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasIndex("TierId");
 
-                    b.ToTable("SubscriptionInfo");
+                    b.ToTable("SubscriptionInfo", (string)null);
                 });
 
             modelBuilder.Entity("FSD_Project_Bookstore_Group4.Domain.SubscriptionTier", b =>
@@ -1047,7 +1047,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionTier");
+                    b.ToTable("SubscriptionTier", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
