@@ -24,7 +24,12 @@
                 <label for="cost" class="form-label">Cost:</label> 
                 <InputNumber id="cost" @bind-Value="SubscriptionTier.Cost" class="form-control" /> 
                 <ValidationMessage For="() => SubscriptionTier.Cost" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <InputNumber id="description" @bind-Value="SubscriptionTier.Description" class="form-control" />
+                <ValidationMessage For="() => SubscriptionTier.Description" class="text-danger" />
+            </div>
             <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="SubscriptionTier.DateCreated" class="form-control" /> 
