@@ -10,7 +10,7 @@
 <body>
 
     <ul class="horizontal">
-        @if (booklist != null)
+        @if (booklist.Count != 0)
         {
             @foreach (var itembook in booklist)
             {
@@ -55,7 +55,7 @@
         {
             bookids.Add(a.Id);
         }
-        while (randomList.Count < 3)
+        while (randomList.Count < 5 && randomList.Count < totalcount)
         {
             NewNumber();
         }

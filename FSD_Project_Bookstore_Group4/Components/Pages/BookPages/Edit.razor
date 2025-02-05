@@ -3,7 +3,7 @@
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager NavigationManager
-
+@rendermode InteractiveServer
 <PageTitle>Edit</PageTitle>
 
 <h1>Edit</h1>
@@ -63,12 +63,16 @@ else
                     <ValidationMessage For="() => Book.DateUpdate" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
+
             </EditForm>
+            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addauthors?id=" + Id))">Edit Authors</button><br />
+            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addgenres?id=" + Id))">Edit Genres</button><br />
         </div>
     </div>
 }
 
 <div>
+    
     <a href="/books">Back to List</a>
 </div>
 

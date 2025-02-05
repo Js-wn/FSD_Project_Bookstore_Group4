@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Components.QuickGrid
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager NavigationManager
-
+@rendermode InteractiveServer
 <PageTitle>Details</PageTitle>
 
 <h1>Details</h1>
@@ -18,7 +18,10 @@
         <p><em>Loading...</em></p>
     }
     else {
-        <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180" />
+        <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180" /><br />
+        <button class="btn btn-primary" @onclick="@(async () => await AddToCart(@Id))">
+            Add to Cart
+        </button>
         <dl class="row">
 
             <dt class="col-sm-2">Title</dt>
@@ -53,6 +56,7 @@
                 <li>@gnames</li>
             }
         </ul>
+        
         <div>
             <a href="@($"/search")">Back to List</a>
         </div>
@@ -71,6 +75,8 @@
     [SupplyParameterFromQuery]
     private int Id { get; set; }
     private FSD_Project_Bookstore_Group4Context context = default!;
+    private bool showPopup = false;
+    private CancellationTokenSource? popupCancellationToken;
 
 
     protected override async Task OnInitializedAsync()
@@ -96,6 +102,71 @@
         if (book is null)
         {
             NavigationManager.NavigateTo("notfound");
+        }
+    }
+    private async Task AddToCart(int bookId)
+    {
+        Console.WriteLine($"Attempting to add book {bookId} to cart...");
+
+        using var newContext = DbFactory.CreateDbContext();  // ✅ NEW DbContext Instance
+
+        var cartOrder = await newContext.Order
+            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
+
+        if (cartOrder == null)
+        {
+            cartOrder = new Order
+                {
+                    CustomerId = 1, // Replace with actual logged-in user ID
+                    IsInCart = "Yes",
+                    OrderDateTime = DateTime.Now
+                };
+
+            newContext.Order.Add(cartOrder);
+            await newContext.SaveChangesAsync();
+        }
+
+        var existingOrderItem = await newContext.OrderItem
+            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId);
+
+        if (existingOrderItem != null)
+        {
+            existingOrderItem.OrderQty++;
+        }
+        else
+        {
+            var orderItem = new OrderItem
+                {
+                    OrderId = cartOrder.Id,
+                    BookId = bookId,
+                    OrderQty = 1
+                };
+            newContext.OrderItem.Add(orderItem);
+        }
+
+        await newContext.SaveChangesAsync();
+        popupCancellationToken?.Cancel();
+        popupCancellationToken = new CancellationTokenSource();
+
+        showPopup = true;
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(2000, popupCancellationToken.Token);
+
+            if (!popupCancellationToken.IsCancellationRequested)
+            {
+                showPopup = false;
+                StateHasChanged();
+
+                // ✅ Safe Page Refresh to Update UI
+                NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // ✅ Ignore if task was canceled (no crash)
         }
     }
 }

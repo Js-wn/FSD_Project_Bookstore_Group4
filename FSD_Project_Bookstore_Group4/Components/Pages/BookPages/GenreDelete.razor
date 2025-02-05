@@ -1,0 +1,88 @@
+﻿@page "/book/bookgenres/delete"
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this Genre?</p>
+<div>
+    <h2>BookGenre</h2>
+    <hr />
+    @if (bookgenre is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <dl class="row">
+
+            <dt class="col-sm-2">Title</dt>
+            <dd class="col-sm-10">@book.BookTitle</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">BookId</dt>
+            <dd class="col-sm-10">@bookgenre.BookId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">GenreId</dt>
+            <dd class="col-sm-10">@bookgenre.GenreId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@bookgenre.DateCreated</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DateUpdate</dt>
+            <dd class="col-sm-10">@bookgenre.DateUpdate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@bookgenre.CreatedBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@bookgenre.UpdatedBy</dd>
+        </dl>
+        <EditForm method="post" Model="bookgenre" OnValidSubmit="DeleteBookGenre" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(bookgenre is null)">Delete</button> |
+        </EditForm>
+        <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addgenres?id=" + Id))">Back</button>
+        
+
+
+    }
+</div>
+
+@code {
+    private FSD_Project_Bookstore_Group4Context context = default!;
+    private BookGenre? bookgenre;
+    private Book? book;
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        using var context = DbFactory.CreateDbContext();
+        bookgenre = await context.BookGenre.FirstOrDefaultAsync(m => m.Id == Id);
+        book = await context.Book.FirstOrDefaultAsync(m => m.Id == bookgenre.BookId);
+
+        if (bookgenre is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteBookGenre()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.BookGenre.Remove(bookgenre!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/books/addgenres?id=" + Id);
+    }
+}

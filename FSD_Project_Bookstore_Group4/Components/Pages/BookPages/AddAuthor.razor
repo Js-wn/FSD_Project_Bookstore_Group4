@@ -1,13 +1,13 @@
-﻿@page "/books/addgenres"
+﻿@page "/books/addauthors"
 @using FSD_Project_Bookstore_Group4.Data
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
-<PageTitle>AddGenre</PageTitle>
+<PageTitle>AddAuthor</PageTitle>
 
-<h1>AddGenre</h1>
+<h1>AddAuthor</h1>
 
 <h2>Book</h2>
 <hr />
@@ -21,18 +21,18 @@
                 <dt class="col-sm-2">Title</dt>
                 <dd class="col-sm-10">@book.BookTitle</dd>
             </dl>
-            <p><b>Genre(s) added</b>
+            <p><b>Author(s) added</b>
                 <ul>
-                    @if (listOfGenreItem.Count != 0)
+                    @if (listOfAuthorItem.Count != 0)
                     {
-                        foreach (var genritem in listOfGenreItem)
+                        foreach (var genritem in listOfAuthorItem)
                         {
-                            <li>@genritem.GenreName <a href="@($"book/bookgenres/delete?id={genritem.BookGenreId}")">Delete</a></li>
+                            <li>@genritem.AuthorName <a href="@($"/book/bookauthors/delete?id={genritem.BookAuthorId}")">Delete</a></li>
                         }
                     }
                     else
                     {
-                        <p>No Genres added yet</p>
+                        <p>No Authors added yet</p>
                     }
                 </ul>
 
@@ -40,18 +40,18 @@
 
             </p>
 
-            <EditForm method="post" Model="BookGenre" OnValidSubmit="addGenre" FormName="createGenre" Enhance>
+            <EditForm method="post" Model="BookAuthor" OnValidSubmit="addAuthor" FormName="createGenre" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert"/> 
                 <div class="mb-3">
-                    <label for="genreid" class="form-label">GenreId:</label>
-                    <InputSelect id="genreid" @bind-Value="BookGenre.GenreId" class="form-control">
-                        <option value="">-- Select Genre --</option>
+                    <label for="authorid" class="form-label">AuthorId:</label>
+                    <InputSelect id="authorid" @bind-Value="BookAuthor.AuthorId" class="form-control">
+                        <option value="">-- Select Author --</option>
                         @if (Genres != null)
                         {
-                            foreach (var genres in Genres)
+                            foreach (var auths in Authors)
                             {
-                                <option value="@genres.Id">@genres.GenreName</option>
+                                <option value="@auths.Id">@auths.AuthorName</option>
                             }
                         }
 
@@ -63,8 +63,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </EditForm>
-            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addauthors?id=" + Id))">Back</button>
-            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books" + Id))">Complete</button>
+            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/edit?id=" + Id))">Back</button>
+            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addgenres?id=" + Id))">Next</button>
+           
         </div>
     </div>
 }
@@ -78,39 +79,38 @@ else
 
 @code {
     [SupplyParameterFromForm]
-    private BookGenre BookGenre { get; set; } = new();
+    private BookAuthor BookAuthor { get; set; } = new();
     private FSD_Project_Bookstore_Group4Context context = default!;
     private IList<Publisher> Publishers;
     private IList<Author> Authors;
     private IList<Genre> Genres;
     private List<BookAuthor> authors;
-    private List<BookGenre> genres;
     private Book? book;
     [SupplyParameterFromQuery]
     private int Id { get; set; }
-    public class GenreItem
+    public class AuthorItem
     {
-        public string GenreName { get; set; }
-        public int BookGenreId { get; set; }
-        public GenreItem(string _GenreName, int _BookGenreId)
+        public string AuthorName { get; set; }
+        public int BookAuthorId { get; set; }
+        public AuthorItem(string _AuthorName, int _BookAutorId)
         {
-            GenreName = _GenreName;
-            BookGenreId = _BookGenreId;
+            AuthorName = _AuthorName;
+            BookAuthorId = _BookAutorId;
         }
     }
 
 
 
-    List<GenreItem> listOfGenreItem = new List<GenreItem>();
+    List<AuthorItem> listOfAuthorItem = new List<AuthorItem>();
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
-    private async Task addGenre()
+    private async Task addAuthor()
     {
-        BookGenre.BookId = Id;
+        BookAuthor.BookId = Id;
         using var context = DbFactory.CreateDbContext();
-        context.BookGenre.Add(BookGenre);
+        context.BookAuthor.Add(BookAuthor);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/books/addgenres?id=" + Id);
+        NavigationManager.NavigateTo("/books/addauthors?id=" + Id);
     }
     //Declare and initialize CarRentalManagementContext and IList
 
@@ -122,14 +122,13 @@ else
         Authors = context.Author.ToList();
         Genres = context.Genre.ToList();
         book = await context.Book.FirstOrDefaultAsync(m => m.Id == Id);
-        authors = context.BookAuthor.Where(ba => ba.BookId == Id).ToList();
-        genres = context.BookGenre.Where(bg => bg.BookId == Id).ToList();
-        foreach (BookGenre a in genres)
+        authors = context.BookAuthor.Where(bg => bg.BookId == Id).ToList();
+        foreach (BookAuthor a in authors)
         {
 
-            var genr = await context.Genre.FirstOrDefaultAsync(g => g.Id == a.GenreId);
-            GenreItem item = new GenreItem(genr.GenreName, a.Id);
-            listOfGenreItem.Add(item);
+            var auth = await context.Author.FirstOrDefaultAsync(g => g.Id == a.AuthorId);
+            AuthorItem item = new AuthorItem(auth.AuthorName, a.Id);
+            listOfAuthorItem.Add(item);
         }
     }
 }
