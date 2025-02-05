@@ -94,7 +94,7 @@
 </div>
 
 @code {
-
+    string? userId;
     private List<Gender> Genders { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
@@ -104,7 +104,7 @@
         Genders = await FetchGendersFromDatabaseAsync();
         foreach (var gender in Genders)
         {
-            Logger.LogInformation($"Loaded Gender: {gender.Id} - {gender.GenderName}"); 
+            Logger.LogInformation($"Loaded Gender: {gender.Id} - {gender.GenderName}");
         }
     }
 
@@ -185,8 +185,15 @@
 
         Logger.LogInformation("User created a new account with password.");
 
+
+
+
+
+        userId = await UserManager.GetUserIdAsync(user);
+
         var customer = new Customer
             {
+                AuthCustId = userId,
                 CustomerFirstName = Input.FirstName,
                 CustomerLastName = Input.LastName,
                 CustomerEmail = Input.Email,
@@ -198,10 +205,6 @@
 
         dbContext.Customer.Add(customer);
         await dbContext.SaveChangesAsync();
-
-
-
-        var userId = await UserManager.GetUserIdAsync(user);
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         /*
