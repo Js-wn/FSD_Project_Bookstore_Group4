@@ -1,4 +1,5 @@
 ﻿@page "/books/create"
+@using FSD_Project_Bookstore_Group4.Data
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
@@ -37,8 +38,20 @@
             </div>
             <div class="mb-3">
                 <label for="publisherid" class="form-label">PublisherId:</label>
-                <InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" />
-                <ValidationMessage For="() => Book.PublisherId" class="text-danger" />
+                <InputSelect id="publsiherid" @bind-Value="Book.PublisherId" class="form-control">
+                    <option value="">-- Select Publisher --</option>
+                    @if (Publishers != null)
+                    {
+                        foreach (var publisher in Publishers)
+                        {
+                            <option value="@publisher.Id">@publisher.PublisherName</option>
+                        }
+                    }
+                </InputSelect>
+
+
+                @*<InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
+                <ValidationMessage For="() => Book.PublisherId" class="text-danger" /> *@
             </div>
             <div class="mb-3">
                 <label for="imglink" class="form-label">ImgLink:</label>
@@ -65,7 +78,7 @@
                 <InputText id="updatedby" @bind-Value="Book.UpdatedBy" class="form-control" />
                 <ValidationMessage For="() => Book.UpdatedBy" class="text-danger" />
             </div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Next</button>
         </EditForm>
     </div>
 </div>
@@ -77,13 +90,26 @@
 @code {
     [SupplyParameterFromForm]
     private Book Book { get; set; } = new();
-
+    private FSD_Project_Bookstore_Group4Context context = default!;
+    private IList<Publisher> Publishers;
+    private IList<Author> Authors;
+    private IList<Genre> Genres;
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddBook()
     {
         using var context = DbFactory.CreateDbContext();
         context.Book.Add(Book);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/books");
+        NavigationManager.NavigateTo("/books/addgenres?id="+Book.Id);
+    }
+    //Declare and initialize CarRentalManagementContext and IList
+
+    //OnInitialized method to get all Makes, Models and Colours
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+        Publishers = context.Publisher.ToList();
+        Authors = context.Author.ToList();
+        Genres = context.Genre.ToList();
     }
 }

@@ -11,40 +11,65 @@
 
 <h2>Book</h2>
 <hr />
-<ul>
-    @foreach (var gnames in genrnames)
-    {
-        <li>@gnames</li>
-    }
-</ul>
+@if (book != null)
+{
+    <div class="row">
+        <div class="col-md-4">  
+            <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180" />
+            <dl class="row">
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="BookGenre" OnValidSubmit="addGenre" FormName="createGenre" Enhance>
-            <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/> 
-            <div class="mb-3">
-                <label for="genreid" class="form-label">GenreId:</label>
-                <InputSelect id="genreid" @bind-Value="BookGenre.GenreId" class="form-control">
-                    <option value="">-- Select Genre --</option>
-                    @if (Genres != null)
+                <dt class="col-sm-2">Title</dt>
+                <dd class="col-sm-10">@book.BookTitle</dd>
+            </dl>
+            <p><b>Genre(s) added</b>
+                <ul>
+                    @if (genrnames.Count != 0)
                     {
-                        foreach (var genres in Genres)
+                        foreach (var gnames in genrnames)
+                        {
+                            <li>@gnames></li>
+                        }
+                    }
+                    else
                     {
-                            <option value="@genres.Id">@genres.GenreName</option>
+                        <p>No Genres added yet</p>
                     }
-                    }
-                </InputSelect>
-                
-                
-                @*<InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
+                </ul>
+
+
+
+            </p>
+
+            <EditForm method="post" Model="BookGenre" OnValidSubmit="addGenre" FormName="createGenre" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert"/> 
+                <div class="mb-3">
+                    <label for="genreid" class="form-label">GenreId:</label>
+                    <InputSelect id="genreid" @bind-Value="BookGenre.GenreId" class="form-control">
+                        <option value="">-- Select Genre --</option>
+                        @if (Genres != null)
+                        {
+                            foreach (var genres in Genres)
+                            {
+                                <option value="@genres.Id">@genres.GenreName</option>
+                            }
+                        }
+
+                    </InputSelect>
+
+
+                    @*<InputNumber id="publisherid" @bind-Value="Book.PublisherId" class="form-control" /> 
                 <ValidationMessage For="() => Book.PublisherId" class="text-danger" /> *@
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </EditForm>
         </div>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </EditForm>
     </div>
-</div>
-
+}
+else
+{
+    <p>Book does not exist</p>
+}
 <div>
     <a href="/books">Back to List</a>
 </div>
@@ -56,12 +81,16 @@
     private IList<Publisher> Publishers;
     private IList<Author> Authors;
     private IList<Genre> Genres;
+    private List<BookAuthor> authors;
     private List<BookGenre> genres;
+    private Book? book;
     List<string> genrnames = new List<string>();
+    [SupplyParameterFromQuery]
     private int Id { get; set; }
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task addGenre()
     {
+        BookGenre.BookId = Id;
         using var context = DbFactory.CreateDbContext();
         context.BookGenre.Add(BookGenre);
         await context.SaveChangesAsync();
@@ -76,6 +105,8 @@
         Publishers = context.Publisher.ToList();
         Authors = context.Author.ToList();
         Genres = context.Genre.ToList();
+        book = await context.Book.FirstOrDefaultAsync(m => m.Id == Id);
+        authors = context.BookAuthor.Where(ba => ba.BookId == Id).ToList();
         genres = context.BookGenre.Where(bg => bg.BookId == Id).ToList();
         foreach (BookGenre a in genres)
         {

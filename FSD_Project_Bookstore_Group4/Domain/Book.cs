@@ -13,8 +13,6 @@ namespace FSD_Project_Bookstore_Group4.Domain
         [ForeignKey("Publisher")]
         public int PublisherId { get; set; }
         public Publisher Publisher { get; set; }
-        public ICollection<BookGenre> BookGenres { get; set; }
-        public ICollection<BookAuthor> BookAuthors { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

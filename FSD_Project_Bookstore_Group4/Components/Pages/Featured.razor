@@ -10,32 +10,35 @@
 <body>
 
     <ul class="horizontal">
-            
+        @if (booklist != null)
+        {
             @foreach (var itembook in booklist)
             {
-          
+
                 <a href="@($"fulldetails?id={@itembook.Id}")">
-                <li display: block><img class="w-8 h-6 mr-4" src="@itembook.ImgLink" width="180" /></li>
-                        @*<li display: block> @itembook.BookTitle</li>*@
+                    <li display: block><img class="w-8 h-6 mr-4" src="@itembook.ImgLink" width="180" /></li>
+                    @*<li display: block> @itembook.BookTitle</li>*@
                 </a>
-            
+
             }
-            
-        </ul>
+        }
+    </ul>
 
 </body>
 
 @code
 {
+    private IList<Book> Books;
     private int totalcount;
     private Random a = new Random(); // replace from new Random(DateTime.Now.Ticks.GetHashCode());
                                      // Since similar code is done in default constructor internally
     private List<int> randomList = new List<int>();
-    List<Book> booklist = new List<Book>();
+    private List<int> bookids = new List<int>();
+    private List<Book> booklist = new List<Book>();
     int MyNumber = 0;
     private void NewNumber()
     {
-        MyNumber = a.Next(1, totalcount + 1);
+        MyNumber = a.Next(0 , totalcount);
         if (!randomList.Contains(MyNumber))
             randomList.Add(MyNumber);
     }
@@ -43,14 +46,23 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
+        Books = context.Book.ToList();
+        randomList.Clear();
+        booklist.Clear();
+
         totalcount = context.Book.Count();
+        foreach (Book a in Books)
+        {
+            bookids.Add(a.Id);
+        }
         while (randomList.Count < 3)
         {
             NewNumber();
         }
         foreach (int i in randomList)
         {
-            var selectedBook = await context.Book.FirstOrDefaultAsync(b => b.Id == i);
+            
+            var selectedBook = await context.Book.FirstOrDefaultAsync(b => b.Id == bookids[i]);
             booklist.Add(selectedBook);
         }
     }
