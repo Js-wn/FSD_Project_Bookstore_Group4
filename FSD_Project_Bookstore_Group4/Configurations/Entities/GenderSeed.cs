@@ -28,6 +28,26 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     CreatedBy = "System",
                     UpdatedBy = "System"
 
+                },
+                new Gender
+                {
+                    Id = 3,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    GenderName = "Attack-Helicopter",
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+
+                },
+                new Gender
+                {
+                    Id = 4,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    GenderName = "Toaster",
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+
                 }
 
             );

@@ -48,7 +48,7 @@ namespace FSD_Project_Bookstore_Group4.Data
             builder.ApplyConfiguration(new BookAuthorSeed());
             builder.ApplyConfiguration(new GenreSeed());
             builder.ApplyConfiguration(new BookGenreSeed());
-            
+            builder.ApplyConfiguration(new SubscriptionTierSeed());
         }
 
         public override int SaveChanges()

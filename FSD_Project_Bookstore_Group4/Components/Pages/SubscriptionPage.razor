@@ -4,8 +4,11 @@
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
 @inject NavigationManager Navigation
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @rendermode InteractiveServer
 
 <PageTitle>Subscription</PageTitle>
@@ -16,30 +19,74 @@
 {
     <p><strong>You are subscribed!</strong> 🎉</p>
     <p>Your subscription is active from <strong>@subscription!.DateStart.ToShortDateString()</strong> to <strong>@subscription!.DateEnd.ToShortDateString()</strong>.</p>
-    <p>You receive a <strong>15% discount</strong> on all purchases!</p>
+    <p>You receive a <strong>@subscription.SubscriptionTier.Description</strong></p>
 }
 else
 {
-    <p><strong>Subscribe for just $20/month</strong> and get <strong>15% off</strong> on all purchases!</p>
-    <button class="btn btn-primary" @onclick="Subscribe">Subscribe Now</button>
+    <p><strong>Subscribe now for one of the following tiers!</strong></p>
+
+    <div class="subscription-tier-grid">
+        @foreach (var tier in subscriptionTiers)
+        {
+            <div class="subscription-tier-card">
+                <h3>@tier.TierName</h3>
+                <p><strong>Cost:</strong> $@tier.Cost</p>
+                <p>@tier.Description</p>
+                <button class="btn btn-primary" @onclick="() => Subscribe(tier.Id)">Subscribe Now</button>
+            </div>
+        }
+    </div>
 }
 
 @code {
     private SubscriptionInfo? subscription;
     private bool isSubscribed = false;
-    private int currentUserId = 1; // 🔹 Replace with actual logged-in user ID
+    private List<SubscriptionTier> subscriptionTiers = new List<SubscriptionTier>();
+    private string? customerid; // customer ID as string
+
+    [SupplyParameterFromQuery]
+    private string? CustomerIdFromQuery { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Check if customer ID exists from query parameter or if we need to get it from the logged-in user
+        customerid = CustomerIdFromQuery;
+
+        if (string.IsNullOrEmpty(customerid))
+        {
+            // Retrieve logged-in user ID from AuthenticationStateProvider
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var claimsPrincipal = authState.User;
+            customerid = UserManager.GetUserId(claimsPrincipal); // Fetch the logged-in user's ID (string)
+        }
+
+        // Proceed with fetching subscription details using the customerid
+        await LoadSubscriptionTiers();
+        await CheckSubscriptionStatus();
+    }
+
+    private async Task LoadSubscriptionTiers()
+    {
+        await using var context = DbFactory.CreateDbContext();
+        subscriptionTiers = await context.SubscriptionTier.ToListAsync();
+    }
 
     private async Task CheckSubscriptionStatus()
     {
         await using var context = DbFactory.CreateDbContext();
+        // We now use the string customerid
         subscription = await context.SubscriptionInfo
             .Include(s => s.SubscriptionTier)
-            .FirstOrDefaultAsync(s => s.CustomerId == currentUserId && s.DateEnd >= DateTime.Now);
+            .FirstOrDefaultAsync(s => s.Customer.AuthCustId == customerid && s.DateEnd >= DateTime.Now);
 
         isSubscribed = subscription != null;
+
+        // Log to verify that the subscription is found correctly
+        Console.WriteLine($"Subscription found: {isSubscribed}, Start: {subscription?.DateStart}, End: {subscription?.DateEnd}");
     }
 
-    private async Task Subscribe()
+
+    private async Task Subscribe(int tierId)
     {
         await using var context = DbFactory.CreateDbContext();
 
@@ -49,27 +96,44 @@ else
             return;
         }
 
-        // 🔹 Check if the customer exists before inserting the subscription
-        var customerExists = await context.Customer.AnyAsync(c => c.Id == currentUserId);
+        // Ensure the customer exists using AuthCustId (string)
+        var customerExists = await context.Customer.AnyAsync(c => c.AuthCustId == customerid);
         if (!customerExists)
         {
-            // ❌ Prevent adding subscription if customer doesn't exist
-            Console.WriteLine($"Error: Customer with ID {currentUserId} does not exist.");
+            Console.WriteLine($"Error: Customer with ID {customerid} does not exist.");
             return;
         }
 
-        // Create new subscription
+        // Get selected tier
+        var selectedTier = await context.SubscriptionTier.FirstOrDefaultAsync(t => t.Id == tierId);
+        if (selectedTier == null)
+        {
+            return;
+        }
+
+        // Fetch customer entity
+        var customerEntity = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);
+
+        // Create new subscription for the user
         var newSubscription = new SubscriptionInfo
             {
-                CustomerId = currentUserId,
-                TierId = 1, // Assume Tier 1 for now
+                CustomerId = customerEntity?.Id ?? 0,  // Use 0 if null
+                TierId = tierId,
                 DateStart = DateTime.Now,
                 DateEnd = DateTime.Now.AddMonths(1)
             };
 
         context.SubscriptionInfo.Add(newSubscription);
+
+        // Update the customer's subscription status in the database
+        customerEntity.HasActiveSubscription = true;  // Set to true after subscription
+
         await context.SaveChangesAsync();
 
-        await CheckSubscriptionStatus(); // Refresh UI
+        // Refresh the subscription status
+        await CheckSubscriptionStatus(); // Refresh the subscription status on the UI
+    
+        // Optionally, you can navigate to a confirmation page or the same page to show updated status
+        Navigation.NavigateTo("/SubscriptionPage"); // Refresh the page to reflect the updated subscription status
     }
 }

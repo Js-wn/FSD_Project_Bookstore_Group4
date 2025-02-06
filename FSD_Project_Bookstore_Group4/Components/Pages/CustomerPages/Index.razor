@@ -17,13 +17,14 @@
 </p>
 
 <QuickGrid Class="table" Items="context.Customer">
-    <PropertyColumn Property="customer => customer.CustomerFirstName" />
-    <PropertyColumn Property="customer => customer.CustomerLastName" />
-    <PropertyColumn Property="customer => customer.CustomerEmail" />
-    <PropertyColumn Property="customer => customer.CustomerAddress" />
-    <PropertyColumn Property="customer => customer.CustomerContact" />
-    <PropertyColumn Property="customer => customer.CustomerPoints" />
-    <PropertyColumn Property="customer => customer.GenderId" />
+    <PropertyColumn Property="customer => customer.CustomerFirstName" Title="FirstName" />
+    <PropertyColumn Property="customer => customer.CustomerLastName" Title="LastName" />
+    <PropertyColumn Property="customer => customer.CustomerEmail" Title="Email" />
+    <PropertyColumn Property="customer => customer.CustomerAddress" Title="Address" />
+    <PropertyColumn Property="customer => customer.CustomerContact" Title="Contact" />
+    <PropertyColumn Property="customer => customer.CustomerPoints" Title="Points" />
+    <PropertyColumn Property="customer => customer.HasActiveSubscription" Title="Has Active Subscription" />
+    <PropertyColumn Property="customer => customer.GenderId" Title="Gender" />
     <PropertyColumn Property="customer => customer.DateCreated" />
     <PropertyColumn Property="customer => customer.DateUpdate" />
     <PropertyColumn Property="customer => customer.CreatedBy" />
@@ -42,6 +43,7 @@
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
