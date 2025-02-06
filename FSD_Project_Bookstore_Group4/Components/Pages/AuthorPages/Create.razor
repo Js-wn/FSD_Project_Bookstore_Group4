@@ -31,6 +31,11 @@
                 <ValidationMessage For="() => Author.AuthorBio" class="text-danger" /> 
             </div>        
             <div class="mb-3">
+                <label for="imglink" class="form-label">ImgLink:</label>
+                <InputText id="imglink" @bind-Value="Author.ImgLink" class="form-control" />
+                <ValidationMessage For="() => Author.ImgLink" class="text-danger" />
+            </div>
+            <div class="mb-3">
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Author.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Author.DateCreated" class="text-danger" /> 

@@ -1,0 +1,85 @@
+﻿@page "/authordetails"
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Author</h2>
+    <hr />
+    @if (author is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <img class="w-8 h-6 mr-4" src="@author.ImgLink" width="180" /><br />
+        <dl class="row">
+
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@author.AuthorName</dd>
+            <dt class="col-sm-2">Date of Birth</dt>
+            <dd class="col-sm-10">@author.AurthorDOB</dd>
+            <dt class="col-sm-2">Biography</dt>
+            <dd class="col-sm-10">@author.AuthorBio</dd>
+
+
+        </dl>
+        <p><b>Book(s) written</b></p>
+        <ul>
+            @foreach (var bks in bklist)
+            {
+                <a href="@($"fulldetails?id={bks.Id}")">
+                <li>@bks.BookTitle</li>
+                </a>
+            }
+        </ul>
+       
+        
+        <div>
+            <a href="@($"/search")">Back to List</a>
+        </div>
+
+
+    }
+</div>
+
+@code {
+    private Author? author;
+    private Publisher? publisher;
+    private List<BookAuthor> books;
+    List<Book> bklist = new List<Book>();
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+    private FSD_Project_Bookstore_Group4Context context = default!;
+    private bool showPopup = false;
+    private CancellationTokenSource? popupCancellationToken;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        using var context = DbFactory.CreateDbContext();
+        author = await context.Author.FirstOrDefaultAsync(m => m.Id == Id);
+        books = context.BookAuthor.Where(ba => ba.AuthorId == Id).ToList();
+        
+        foreach (BookAuthor i in books)
+        {
+            var bk = await context.Book.FirstOrDefaultAsync(a => a.Id == i.BookId);
+            bklist.Add(bk);
+        }
+
+        
+        if (author is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+    
+    
+}

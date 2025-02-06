@@ -46,14 +46,21 @@
         <ul>
             @foreach (var anames in authnames)
             {
-                <li>@anames</li>
+                
+                <li>
+                    <a href="@($"authordetails?id={anames.Id}")">
+                    @anames.AuthorName
+                    </a>
+                </li>
+                
             }
         </ul>
         <p><b>Genre(s)</b></p>
         <ul>
             @foreach (var gnames in genrnames)
             {
-                <li>@gnames</li>
+                <li>@gnames.GenreName</li>
+                
             }
         </ul>
         
@@ -70,8 +77,8 @@
     private Publisher? publisher;
     private List<BookAuthor> authors;
     private List<BookGenre> genres;
-    List<string> authnames = new List<string>();
-    List<string> genrnames = new List<string>();
+    List<Author> authnames = new List<Author>();
+    List<Genre> genrnames = new List<Genre>();
     [SupplyParameterFromQuery]
     private int Id { get; set; }
     private FSD_Project_Bookstore_Group4Context context = default!;
@@ -90,13 +97,13 @@
         foreach (BookAuthor i in authors)
         {
             var auth = await context.Author.FirstOrDefaultAsync(a => a.Id == i.AuthorId);
-            authnames.Add(auth.AuthorName);
+            authnames.Add(auth);
         }
         genres = context.BookGenre.Where(bg => bg.BookId == Id).ToList();
         foreach (BookGenre a in genres)
         {
             var genr = await context.Genre.FirstOrDefaultAsync(g => g.Id == a.GenreId);
-            genrnames.Add(genr.GenreName);
+            genrnames.Add(genr);
         }
         
         if (book is null)
