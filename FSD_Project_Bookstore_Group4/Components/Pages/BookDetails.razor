@@ -18,6 +18,7 @@
         <p><em>Loading...</em></p>
     }
     else {
+
         <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180" /><br />
         <button class="btn btn-primary" @onclick="@(async () => await AddToCart(@Id))">
             Add to Cart
@@ -69,6 +70,12 @@
         </div>
 
 
+    }
+    @if (showPopup)
+    {
+        <div class="popup-message">
+            <p>✅ Added to Cart!</p>
+        </div>
     }
 </div>
 
