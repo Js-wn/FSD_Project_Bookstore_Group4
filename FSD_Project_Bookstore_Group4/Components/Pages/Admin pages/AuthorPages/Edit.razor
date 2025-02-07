@@ -42,15 +42,23 @@ else
                     <InputText id="imglink" @bind-Value="Author.ImgLink" class="form-control" />
                     <ValidationMessage For="() => Author.ImgLink" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Author.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Author.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Author.DateCreated</label>
+                    <input type="hidden" name="Author.datecreated" value="@Author.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="Author.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Author.DateUpdate" class="text-danger" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Author.CreatedBy</label>
+                    <input type="hidden" name="Author.createdby" value="@Author.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Author.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Author.UpdatedBy" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>

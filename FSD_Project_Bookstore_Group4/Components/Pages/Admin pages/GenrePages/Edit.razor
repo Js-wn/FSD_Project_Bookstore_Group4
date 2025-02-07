@@ -32,15 +32,23 @@ else
                     <InputText id="genredesc" @bind-Value="Genre.GenreDesc" class="form-control" />
                     <ValidationMessage For="() => Genre.GenreDesc" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Genre.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Genre.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Genre.DateCreated</label>
+                    <input type="hidden" name="Genre.datecreated" value="@Genre.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="Genre.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Genre.DateUpdate" class="text-danger" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Genre.CreatedBy</label>
+                    <input type="hidden" name="Genre.createdby" value="@Genre.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Genre.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Genre.UpdatedBy" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>

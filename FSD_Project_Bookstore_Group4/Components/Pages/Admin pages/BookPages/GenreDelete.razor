@@ -51,7 +51,7 @@
         <EditForm method="post" Model="bookgenre" OnValidSubmit="DeleteBookGenre" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(bookgenre is null)">Delete</button> |
         </EditForm>
-        <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addgenres?id=" + Id))">Back</button>
+        <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addgenres?id=" + book.Id))">Back</button>
         
 
 

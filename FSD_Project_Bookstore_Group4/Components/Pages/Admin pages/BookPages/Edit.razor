@@ -52,15 +52,23 @@ else
                     <InputText id="imglink" @bind-Value="Book.ImgLink" class="form-control" />
                     <ValidationMessage For="() => Book.ImgLink" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Book.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Book.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Book.DateCreated</label>
+                    <input type="hidden" name="Book.datecreated" value="@Book.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="Book.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Book.DateUpdate" class="text-danger" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Book.CreatedBy</label>
+                    <input type="hidden" name="Book.createdby" value="@Book.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Book.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Book.UpdatedBy" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
 

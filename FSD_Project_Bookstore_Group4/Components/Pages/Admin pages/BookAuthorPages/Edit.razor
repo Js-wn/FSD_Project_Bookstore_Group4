@@ -32,22 +32,21 @@ else
                     <InputNumber id="authorid" @bind-Value="BookAuthor.AuthorId" class="form-control" />
                     <ValidationMessage For="() => BookAuthor.AuthorId" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="BookAuthor.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => BookAuthor.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @BookAuthor.DateCreated</label>
+                    <input type="hidden" name="BookAuthor.datecreated" value="@BookAuthor.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="BookAuthor.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => BookAuthor.DateUpdate" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="createdby" class="form-label">CreatedBy:</label>
-                    <InputText id="createdby" @bind-Value="BookAuthor.CreatedBy" class="form-control" />
-                    <ValidationMessage For="() => BookAuthor.CreatedBy" class="text-danger" />
+
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @BookAuthor.CreatedBy</label>
+                    <input type="hidden" name="BookAuthor.createdby" value="@BookAuthor.CreatedBy" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="updatedby" class="form-label">UpdatedBy:</label>
                     <InputText id="updatedby" @bind-Value="BookAuthor.UpdatedBy" class="form-control" />
                     <ValidationMessage For="() => BookAuthor.UpdatedBy" class="text-danger" />
