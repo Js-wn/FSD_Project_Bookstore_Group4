@@ -42,25 +42,24 @@ else
     private SubscriptionInfo? subscription;
     private bool isSubscribed = false;
     private List<SubscriptionTier> subscriptionTiers = new List<SubscriptionTier>();
-    private string? customerid; // customer ID as string
+    private string? customerid; 
 
     [SupplyParameterFromQuery]
     private string? CustomerIdFromQuery { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        // Check if customer ID exists from query parameter or if we need to get it from the logged-in user
+        
         customerid = CustomerIdFromQuery;
 
         if (string.IsNullOrEmpty(customerid))
         {
-            // Retrieve logged-in user ID from AuthenticationStateProvider
+            
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var claimsPrincipal = authState.User;
-            customerid = UserManager.GetUserId(claimsPrincipal); // Fetch the logged-in user's ID (string)
+            customerid = UserManager.GetUserId(claimsPrincipal); 
         }
 
-        // Proceed with fetching subscription details using the customerid
         await LoadSubscriptionTiers();
         await CheckSubscriptionStatus();
     }
@@ -74,14 +73,13 @@ else
     private async Task CheckSubscriptionStatus()
     {
         await using var context = DbFactory.CreateDbContext();
-        // We now use the string customerid
         subscription = await context.SubscriptionInfo
             .Include(s => s.SubscriptionTier)
             .FirstOrDefaultAsync(s => s.Customer.AuthCustId == customerid && s.DateEnd >= DateTime.Now);
 
         isSubscribed = subscription != null;
 
-        // Log to verify that the subscription is found correctly
+        
         Console.WriteLine($"Subscription found: {isSubscribed}, Start: {subscription?.DateStart}, End: {subscription?.DateEnd}");
     }
 
@@ -90,13 +88,13 @@ else
     {
         await using var context = DbFactory.CreateDbContext();
 
-        // Check if already subscribed
+        
         if (isSubscribed)
         {
             return;
         }
 
-        // Ensure the customer exists using AuthCustId (string)
+        
         var customerExists = await context.Customer.AnyAsync(c => c.AuthCustId == customerid);
         if (!customerExists)
         {
@@ -104,20 +102,20 @@ else
             return;
         }
 
-        // Get selected tier
+        
         var selectedTier = await context.SubscriptionTier.FirstOrDefaultAsync(t => t.Id == tierId);
         if (selectedTier == null)
         {
             return;
         }
 
-        // Fetch customer entity
+        
         var customerEntity = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);
 
-        // Create new subscription for the user
+        
         var newSubscription = new SubscriptionInfo
             {
-                CustomerId = customerEntity?.Id ?? 0,  // Use 0 if null
+                CustomerId = customerEntity?.Id ?? 0,  
                 TierId = tierId,
                 DateStart = DateTime.Now,
                 DateEnd = DateTime.Now.AddMonths(1)
@@ -125,15 +123,15 @@ else
 
         context.SubscriptionInfo.Add(newSubscription);
 
-        // Update the customer's subscription status in the database
-        customerEntity.HasActiveSubscription = true;  // Set to true after subscription
+        
+        customerEntity.HasActiveSubscription = true;  
 
         await context.SaveChangesAsync();
 
-        // Refresh the subscription status
-        await CheckSubscriptionStatus(); // Refresh the subscription status on the UI
+        
+        await CheckSubscriptionStatus(); 
     
-        // Optionally, you can navigate to a confirmation page or the same page to show updated status
-        Navigation.NavigateTo("/SubscriptionPage"); // Refresh the page to reflect the updated subscription status
+       
+        Navigation.NavigateTo("/SubscriptionPage");
     }
 }

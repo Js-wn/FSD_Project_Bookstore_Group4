@@ -62,10 +62,9 @@ else
                     <InputNumber id="tierid" @bind-Value="Payment.TierId" class="form-control" />
                     <ValidationMessage For="() => Payment.TierId" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Payment.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Payment.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Payment.DateCreated</label>
+                    <input type="hidden" name="Payment.datecreated" value="@Payment.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
@@ -78,6 +77,15 @@ else
                     <ValidationMessage For="() => Payment.CreatedBy" class="text-danger" />
                 </div>
                 <div class="mb-3">
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Payment.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Payment.UpdatedBy" class="text-danger" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Payment.CreatedBy</label>
+                    <input type="hidden" name="Payment.createdby" value="@Payment.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
                     <label for="updatedby" class="form-label">UpdatedBy:</label>
                     <InputText id="updatedby" @bind-Value="Payment.UpdatedBy" class="form-control" />
                     <ValidationMessage For="() => Payment.UpdatedBy" class="text-danger" />

@@ -69,6 +69,15 @@ else
                     <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" />
                 </div>
 
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Customer.CreatedBy</label>
+                    <input type="hidden" name="Customer.createdby" value="@Customer.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Customer.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Customer.UpdatedBy" class="text-danger" />
+                </div>
 
 
                 <button type="submit" class="btn btn-primary">Save</button>

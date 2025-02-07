@@ -32,15 +32,27 @@ else
                     <InputNumber id="customerid" @bind-Value="Order.CustomerId" class="form-control" />
                     <ValidationMessage For="() => Order.CustomerId" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Order.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Order.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Order.DateCreated</label>
+                    <input type="hidden" name="Order.datecreated" value="@Order.DateCreated" />
                 </div>
                 <div class="mb-3">
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="Order.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Order.DateUpdate" class="text-danger" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="isincart" class="form-label">IsInCart: @Order.IsInCart</label>
+                    <input type="hidden" name="Order.isincart" value="@Order.IsInCart" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Order.CreatedBy</label>
+                    <input type="hidden" name="Order.createdby" value="@Order.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Order.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Order.UpdatedBy" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
