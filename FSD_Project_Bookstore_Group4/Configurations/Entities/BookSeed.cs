@@ -18,7 +18,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     ImgLink = "https://m.media-amazon.com/images/I/91Mu7rVLIFL.jpg",
                     BookPublishDate = new DateTime(2002,04,30),
                     BookPrice = 26.65f,
-                    PublisherId = 2
+                    PublisherId = 2,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Book
                 {
@@ -30,7 +32,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     ImgLink = "https://m.media-amazon.com/images/I/612ADI+BVlL.jpg",
                     BookPublishDate = new DateTime(1949, 06, 8),
                     BookPrice = 9.99f,
-                    PublisherId = 3
+                    PublisherId = 3,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Book
                 {
@@ -42,7 +46,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     ImgLink = "https://m.media-amazon.com/images/I/7150fwe2f9L._SL1200_.jpg",
                     BookPublishDate = new DateTime(1991, 03, 6),
                     BookPrice = 23.99f,
-                    PublisherId = 1
+                    PublisherId = 1,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Book
                 {
@@ -54,7 +60,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     ImgLink = "https://m.media-amazon.com/images/I/61wRoaVqXyL._SY385_.jpg",
                     BookPublishDate = new DateTime(2018,2,2),
                     BookPrice = 41.07f,
-                    PublisherId = 1
+                    PublisherId = 1,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Book
                 {
@@ -66,7 +74,9 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/The_Meaning_of_Liff_1983_cover_with_sticker.jpg/800px-The_Meaning_of_Liff_1983_cover_with_sticker.jpg",
                     BookPublishDate = new DateTime(1983,11,11),
                     BookPrice = 13.99f,
-                    PublisherId = 1
+                    PublisherId = 2,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 },
                 new Book
                 {
@@ -79,6 +89,8 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     BookPublishDate = new DateTime(1945,08,17),
                     BookPrice = 5.99f,
                     PublisherId = 3,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 }
 
 
