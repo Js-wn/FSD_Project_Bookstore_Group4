@@ -19,7 +19,6 @@ namespace FSD_Project_Bookstore_Group4.Domain
         public ICollection<Order> Orders { get; set; }
         public ICollection<SubscriptionInfo> SubscriptionInfos { get; set; }
         public bool HasActiveSubscription { get; set; }
-        public bool ComputedHasActiveSubscription => SubscriptionInfos?.Any(s => s.DateEnd > DateTime.Now) ?? false;
     }
 }
 
