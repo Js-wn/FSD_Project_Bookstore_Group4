@@ -4,6 +4,7 @@ using FSD_Project_Bookstore_Group4.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    partial class FSD_Project_Bookstore_Group4ContextModelSnapshot : ModelSnapshot
+    [Migration("20250207152851_tryFixSubInfo")]
+    partial class tryFixSubInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,11 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-
-
-
-                            ConcurrencyStamp = "57e08428-97d3-4b69-b0ba-afa8b0f9be59",
-
+                            ConcurrencyStamp = "0cf731d8-e56b-45e3-9b51-12e5b203f4f4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -109,7 +108,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-
                             PasswordHash = "AQAAAAIAAYagAAAAELsXapAqbsonKgqqLXj8aYPctVLgjwEArmzC+EXFWKgnmC3d0ZsgGH7uVGMxj1pBdA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "67a92b90-71e9-4272-9e2c-c08f21c67798",
@@ -120,7 +118,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "7c8c0c6a-9768-4dfa-b8b0-126d14529398",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
@@ -190,10 +187,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "Eric Arthur Blair was an English novelist, poet, essayist, journalist and critic who wrote under the pen name of George Orwell. His work is characterised by lucid prose, social criticism, opposition to all totalitarianism, and support of democratic socialism.",
                             AuthorName = "George Orwell",
-
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6207),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6208),
-
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/George_Orwell_press_photo.jpg/1024px-George_Orwell_press_photo.jpg"
                         },
                         new
@@ -202,21 +197,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1956),
                             AuthorBio = "David Alderton is an English writer specialising in pets and natural history topics. Growing up in a home surrounded by pets, he originally trained to become a veterinary surgeon. An allergic dermatitis acquired in his final year of study forced a change of career however, and so led him into the field of writing about pets and their care. He has since become a regular contributor of articles on this subject to a wide range of newspapers and magazines in the UK and abroad, and also participates frequently in radio and television programmes.",
                             AuthorName = "David Alderton",
-
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6214),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6215),
-
                             ImgLink = "https://m.media-amazon.com/images/S/amzn-author-media-prod/m84i99ih3q7o6ec59b5ftmhijp._SX272_CR0%2C0%2C272%2C272_.jpg"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AurthorDOB = new DateTime(1951, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            AuthorBio = "John Hardress Wilfred Lloyd is a British comedy writer and television producer. ",
-                            AuthorName = "John Lloyd",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5699),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5699),
-                            ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/John_lloyd_secret_comedy_podcast.jpg/1280px-John_lloyd_secret_comedy_podcast.jpg"
                         });
                 });
 
@@ -274,7 +257,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookTitle = "The Ultimate Hitchhiker's Guide to the Galaxy: Five Novels in One Outrageous Volume",
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 17, DateTimeKind.Local).AddTicks(6277),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 17, DateTimeKind.Local).AddTicks(6280),
-
                             ImgLink = "https://m.media-amazon.com/images/I/91Mu7rVLIFL.jpg",
                             PublisherId = 2
                         },
@@ -313,30 +295,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 17, DateTimeKind.Local).AddTicks(6316),
                             ImgLink = "https://m.media-amazon.com/images/I/61wRoaVqXyL._SY385_.jpg",
                             PublisherId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BookDesc = "The book is a \"dictionary of things that there aren't any words for yet\". Rather than inventing new words, Adams and Lloyd picked a number of existing place-names and assigned interesting meanings to them, meanings that can be regarded as on the verge of social existence and ready to become recognisable entities.",
-                            BookPrice = 13.99f,
-                            BookPublishDate = new DateTime(1983, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookTitle = "The Meaning of Liff",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 72, DateTimeKind.Local).AddTicks(4358),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 72, DateTimeKind.Local).AddTicks(4359),
-                            ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/The_Meaning_of_Liff_1983_cover_with_sticker.jpg/800px-The_Meaning_of_Liff_1983_cover_with_sticker.jpg",
-                            PublisherId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BookDesc = "Animal Farm is a satirical allegorical novella, in the form of a beast fable, by George Orwell, first published in England on 17 August 1945. It tells the story of a group of anthropomorphic farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy. Ultimately, the rebellion is betrayed, and under the dictatorship of a pig named Napoleon, the farm ends up in a state far worse than before. ",
-                            BookPrice = 5.99f,
-                            BookPublishDate = new DateTime(1945, 8, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookTitle = "Animal Farm",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 72, DateTimeKind.Local).AddTicks(4361),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 72, DateTimeKind.Local).AddTicks(4361),
-                            ImgLink = "https://upload.wikimedia.org/wikipedia/commons/f/fb/Animal_Farm_-_1st_edition.jpg",
-                            PublisherId = 3
                         });
                 });
 
@@ -380,7 +338,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 1,
                             AuthorId = 1,
                             BookId = 1,
-
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6833),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6834)
                         },
@@ -389,7 +346,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 2,
                             AuthorId = 2,
                             BookId = 2,
-
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6840),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6841)
                         },
@@ -398,32 +354,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 3,
                             AuthorId = 3,
                             BookId = 4,
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5806),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5807)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AuthorId = 1,
-                            BookId = 5,
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5808),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5808)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AuthorId = 4,
-                            BookId = 5,
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5818),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5818)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AuthorId = 2,
-                            BookId = 6,
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5820),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(5834)
+                            DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6845),
+                            DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(6846)
                         });
                 });
 
@@ -580,46 +512,6 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             DateCreated = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(7759),
                             DateUpdate = new DateTime(2025, 2, 7, 23, 28, 48, 298, DateTimeKind.Local).AddTicks(7760),
                             GenreId = 11,
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            BookId = 6,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6109),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6109),
-                            GenreId = 6,
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            BookId = 6,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6110),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6111),
-                            GenreId = 9,
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            BookId = 6,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6112),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6112),
-                            GenreId = 1,
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            BookId = 5,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6113),
-                            DateUpdate = new DateTime(2025, 2, 7, 21, 43, 13, 213, DateTimeKind.Local).AddTicks(6114),
-                            GenreId = 4,
                             UpdatedBy = "System"
                         });
                 });

@@ -1,0 +1,167 @@
+﻿@page "/PaymentPage"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using FSD_Project_Bookstore_Group4.Domain
+@using Microsoft.AspNetCore.Identity
+@using FSD_Project_Bookstore_Group4.Data
+@inject NavigationManager Navigation
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@rendermode InteractiveServer
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Payment</PageTitle>
+
+<h1>Payment</h1>
+
+@if (CartItems.Count > 0)
+{
+    <div>
+        <h2>Your Order</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in CartItems)
+                {
+                    <tr>
+                        <td>@item.Book.BookTitle</td>
+                        <td>@item.OrderQty</td>
+                        <td>$@((item.Book.BookPrice * item.OrderQty).ToString("0.00"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Total: $@TotalPrice.ToString("0.00")</h3>
+        @if (HasActiveSubscription)
+        {
+            <h4>Subscription Discount: @(SubscriptionDiscount * 100)%</h4>
+            <h3>Final Price: $@DiscountedTotal.ToString("0.00")</h3>
+        }
+
+        <label for="paymentMethod">Payment Method:</label>
+        <select @bind="PaymentMethod" class="form-control">
+            <option value="Visa">Visa</option>
+            <option value="Mastercard">Mastercard</option>
+        </select>
+
+        <button class="btn btn-primary mt-3" @onclick="ConfirmOrder">Confirm Order</button>
+    </div>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
+
+@code {
+    private List<OrderItem> CartItems = new();
+    private double TotalPrice;
+    private double DiscountedTotal;
+    private double SubscriptionDiscount = 0;
+    private bool HasActiveSubscription = false;
+    private string PaymentMethod = "Visa";
+    private Order? cartOrder;
+    private Customer? customer;
+    public int? subscriptionId;
+    public int? tierId;
+    public double discount;
+
+    [SupplyParameterFromQuery]
+    private double totalPrice { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var context = await DbFactory.CreateDbContextAsync();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+
+
+
+
+        customer = await context.Customer
+            .Include(c => c.SubscriptionInfos)
+            .ThenInclude(si => si.SubscriptionTier)
+            .FirstOrDefaultAsync(c => c.AuthCustId == userId);
+
+        if (customer == null) return;
+
+        cartOrder = await context.Order
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Book)
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
+
+        if (cartOrder != null)
+        {
+            CartItems = cartOrder.OrderItems.ToList();
+        }
+
+        // Check Active Subscription
+        var activeSubscription = customer.SubscriptionInfos
+            .FirstOrDefault(si => si.DateEnd >= DateTime.Now);
+
+        subscriptionId = activeSubscription?.Id;
+        tierId = activeSubscription?.TierId;
+        discount = activeSubscription?.SubscriptionTier.Discount ?? 0;
+
+        if (activeSubscription != null)
+        {
+            HasActiveSubscription = true;
+            SubscriptionDiscount = activeSubscription.SubscriptionTier.Discount;
+        }
+
+        // Calculate Prices
+        TotalPrice = totalPrice;
+        DiscountedTotal = HasActiveSubscription ? TotalPrice * (1 - SubscriptionDiscount) : TotalPrice;
+    }
+
+    private async Task ConfirmOrder()
+    {
+        await using var context = await DbFactory.CreateDbContextAsync();
+
+        if (cartOrder == null || customer == null)
+        {
+            Console.WriteLine("Error: Cart order or customer is null.");
+            return;
+        }   
+
+
+
+        // Calculate final price
+        double totalPrice = cartOrder.OrderItems.Sum(item => item.Book.BookPrice * item.OrderQty);
+        double discountedTotal = totalPrice * (1 - discount);
+
+        // Create Payment Record
+        var newPayment = new Payment
+            {
+                CustomerId = customer.Id,
+                OrderId = cartOrder.Id,
+                PaymentMethod = PaymentMethod,
+                PaymentDate = DateTime.Now,
+                PaymentAmountBefDiscount = (float)Math.Round(totalPrice, 2),
+                PaymentAmountAftDiscount = (float)Math.Round(discountedTotal, 2),
+                SubscriptionId = subscriptionId,
+                TierId = tierId,
+                DateCreated = DateTime.Now,
+                CreatedBy = $"{customer.CustomerFirstName} {customer.CustomerLastName}"
+            };
+
+        context.Payment.Add(newPayment);
+
+        // Confirm Order
+        cartOrder.IsInCart = "No";
+        context.Attach(cartOrder!).State = EntityState.Modified;
+        await context.SaveChangesAsync();
+
+        Console.WriteLine($"Order confirmed. Payment ID: {newPayment.Id}, SubscriptionID: {subscriptionId}");
+        Navigation.NavigateTo("/ThankYou");
+    }
+
+}
