@@ -15,7 +15,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
             migrationBuilder.AddColumn<string>(
                table: "Customer",
                name: "AuthCustId",
-               type: "nvarchar(max)"
+               type: "nvarchar(max)",
+               nullable: true
                );
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",

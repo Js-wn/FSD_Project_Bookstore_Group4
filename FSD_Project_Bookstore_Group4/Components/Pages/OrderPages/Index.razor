@@ -26,9 +26,12 @@
     <PropertyColumn Property="order => order.CreatedBy" />
     <PropertyColumn Property="order => order.UpdatedBy" />
     <TemplateColumn Context="order">
-        <a href="@($"orders/edit?id={order.Id}")">Edit</a> |
         <a href="@($"orders/details?id={order.Id}")">Details</a> |
+        <AuthorizeView Roles="Administrator">
+        <a href="@($"orders/edit?id={order.Id}")">Edit</a> |
         <a href="@($"orders/delete?id={order.Id}")">Delete</a>
+        </AuthorizeView>
+
     </TemplateColumn>
 </QuickGrid>
 
