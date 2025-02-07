@@ -49,13 +49,13 @@
         <ul>
             @foreach (var anames in authnames)
             {
-                
+
                 <li>
                     <a href="@($"authordetails?id={anames.Id}")">
-                    @anames.AuthorName
+                        @anames.AuthorName
                     </a>
                 </li>
-                
+
             }
         </ul>
         <p><b>Genre(s)</b></p>
@@ -63,10 +63,29 @@
             @foreach (var gnames in genrnames)
             {
                 <li>@gnames.GenreName</li>
-                
+
             }
         </ul>
-        
+        <p><b>Review(s)</b></p>
+        <ul>
+            @if (reviews.Count>0)
+            {
+
+                @foreach (var revs in reviews)
+                {
+                    <li>
+                        @revs.Username
+                        <strong>Rating:</strong> @revs.Rating
+                        @revs.Revtext
+                    </li>
+
+                }
+            }
+            else
+            {
+                <li>No reviews</li>
+            }
+        </ul>
         <div>
             <a href="@($"/search")">Back to List</a>
         </div>
@@ -86,14 +105,27 @@
     private Publisher? publisher;
     private List<BookAuthor> authors;
     private List<BookGenre> genres;
+    private List<OrderItem> orders;
     List<Author> authnames = new List<Author>();
     List<Genre> genrnames = new List<Genre>();
+    List<ReviewItem> reviews = new List<ReviewItem>();
     [SupplyParameterFromQuery]
     private int Id { get; set; }
     private FSD_Project_Bookstore_Group4Context context = default!;
     private bool showPopup = false;
     private CancellationTokenSource? popupCancellationToken;
-
+    public class ReviewItem
+    {
+        public string Username { get; set; }
+        public float Rating { get; set; }
+        public string Revtext { get; set; }
+        public ReviewItem(string _Username, float _Rating, string _Revtext)
+        {
+            Username = _Username;
+            Rating = _Rating;
+            Revtext = _Revtext;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,7 +134,7 @@
         book = await context.Book.FirstOrDefaultAsync(m => m.Id == Id);
         publisher = await context.Publisher.FirstOrDefaultAsync(p => p.Id == book.PublisherId);
         authors = context.BookAuthor.Where(ba => ba.BookId == Id).ToList();
-        
+        orders = context.OrderItem.Where(ba => ba.BookId == Id).ToList();
         foreach (BookAuthor i in authors)
         {
             var auth = await context.Author.FirstOrDefaultAsync(a => a.Id == i.AuthorId);
@@ -113,6 +145,13 @@
         {
             var genr = await context.Genre.FirstOrDefaultAsync(g => g.Id == a.GenreId);
             genrnames.Add(genr);
+        }
+        foreach (OrderItem review in orders)
+        {
+            var rev = await context.Review.FirstOrDefaultAsync(r => r.OrderItemId == review.Id);
+            var cust = await context.Customer.FirstOrDefaultAsync(c => c.Id == rev.CustomerId);
+            ReviewItem item = new ReviewItem(cust.CustomerFirstName, rev.ReviewRating, rev.ReviewText);
+            reviews.Add(item);
         }
         
         if (book is null)

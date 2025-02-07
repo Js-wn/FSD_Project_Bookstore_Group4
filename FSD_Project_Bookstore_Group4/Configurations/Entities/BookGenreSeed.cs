@@ -143,8 +143,47 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     CreatedBy = "System",
                     UpdatedBy = "System"
 
+                },
+                new BookGenre
+                {
+                    Id = 13,
+                    BookId = 6,
+                    GenreId = 6,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+                },
+                new BookGenre
+                {
+                    Id = 14,
+                    BookId = 6,
+                    GenreId = 9,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+                },
+                new BookGenre
+                {
+                    Id = 15,
+                    BookId = 6,
+                    GenreId = 1,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
+                },
+                new BookGenre
+                {
+                    Id = 16,
+                    BookId = 5,
+                    GenreId = 4,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 }
-
 
             );
         }

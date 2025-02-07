@@ -55,6 +55,30 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     BookPublishDate = new DateTime(2018,2,2),
                     BookPrice = 41.07f,
                     PublisherId = 1
+                },
+                new Book
+                {
+                    Id = 5,
+                    DateCreated= DateTime.Now,
+                    DateUpdate = DateTime.Now,  
+                    BookTitle = "The Meaning of Liff",
+                    BookDesc= "The book is a \"dictionary of things that there aren't any words for yet\". Rather than inventing new words, Adams and Lloyd picked a number of existing place-names and assigned interesting meanings to them, meanings that can be regarded as on the verge of social existence and ready to become recognisable entities.",
+                    ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/The_Meaning_of_Liff_1983_cover_with_sticker.jpg/800px-The_Meaning_of_Liff_1983_cover_with_sticker.jpg",
+                    BookPublishDate = new DateTime(1983,11,11),
+                    BookPrice = 13.99f,
+                    PublisherId = 1
+                },
+                new Book
+                {
+                    Id = 6,
+                    DateCreated= DateTime.Now,
+                    DateUpdate= DateTime.Now,
+                    BookTitle = "Animal Farm",
+                    BookDesc = "Animal Farm is a satirical allegorical novella, in the form of a beast fable, by George Orwell, first published in England on 17 August 1945. It tells the story of a group of anthropomorphic farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy. Ultimately, the rebellion is betrayed, and under the dictatorship of a pig named Napoleon, the farm ends up in a state far worse than before. ",
+                    ImgLink = "https://upload.wikimedia.org/wikipedia/commons/f/fb/Animal_Farm_-_1st_edition.jpg",
+                    BookPublishDate = new DateTime(1945,08,17),
+                    BookPrice = 5.99f,
+                    PublisherId = 3,
                 }
 
 
