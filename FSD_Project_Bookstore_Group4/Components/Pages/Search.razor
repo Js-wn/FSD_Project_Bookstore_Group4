@@ -21,32 +21,40 @@
         <input type="submit" value="Search" />
     </form>
     <div class="grid">
-
-        <QuickGrid Class="table" Items="FilteredBooks" @ref="grid">
-            <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
-                <h3><strong> $@book.BookPrice</strong></h3>
-            </TemplateColumn>
-            <TemplateColumn Context="book" Title="Title" Class="w-30" Sortable="true" SortBy="@titleSort">
-                <a href="@($"fulldetails?id={book.Id}")">
-                    <img class="mr-4" src="@book.ImgLink" width="200" />
+        @if (FilteredBooks.ToList().Count() >0)
+        {
+            <QuickGrid Class="table" Items="FilteredBooks" @ref="grid">    
+                <TemplateColumn Context="book" Title="Title" Class="w-20" Sortable="true" SortBy="@titleSort">
+                    <a href="@($"fulldetails?id={book.Id}")">
+                        <img class="mr-4" src="@book.ImgLink" width="200" />
+                        <br />
+                        <h4>
+                        @book.BookTitle
+                        </h4>
+                    </a>
                     <br />
-                    @book.BookTitle
-                </a>
-                <br />
-                <p>
-                    <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
-                </p>
+                    <p>
+                        <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
+                    </p>
 
-                <!-- Fixed Button: Uses async method -->
-                <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.Id))">
-                    Add to Cart
-                </button>
-            </TemplateColumn>
-            <TemplateColumn Class="w-200" Context="book" Title="Description">
+                    <!-- Fixed Button: Uses async method -->
+                    <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.Id))">
+                        Add to Cart
+                    </button>
+                </TemplateColumn>
+                <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
+                    <h3><strong> $@book.BookPrice</strong></h3>
+                </TemplateColumn>
+                <TemplateColumn Class="w-200" Context="book" Title="Description">
 
-                @ShortDesc(book.BookDesc)
-            </TemplateColumn>
-        </QuickGrid>
+                    @ShortDesc(book.BookDesc)
+                </TemplateColumn>
+            </QuickGrid>
+        }
+        else
+        {
+            <h2>No results found</h2>
+        }
     </div>
 
     @if (showPopup)
@@ -96,6 +104,7 @@
 
 
         context = DbFactory.CreateDbContext();
+        Books = FilteredBooks.ToList();
         if (!string.IsNullOrEmpty(customerid))
         {
             customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);

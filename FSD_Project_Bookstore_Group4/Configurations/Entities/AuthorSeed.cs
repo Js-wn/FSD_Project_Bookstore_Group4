@@ -38,6 +38,16 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     AurthorDOB = new DateTime(1956),
                     ImgLink = "https://m.media-amazon.com/images/S/amzn-author-media-prod/m84i99ih3q7o6ec59b5ftmhijp._SX272_CR0%2C0%2C272%2C272_.jpg"
 
+                },
+                new Author
+                {
+                    Id=4,
+                    DateCreated = DateTime.Now, 
+                    DateUpdate = DateTime.Now,
+                    AuthorName = "John Lloyd",
+                    AuthorBio = "John Hardress Wilfred Lloyd is a British comedy writer and television producer. ",
+                    AurthorDOB= new DateTime(1951,09,30),
+                    ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/John_lloyd_secret_comedy_podcast.jpg/1280px-John_lloyd_secret_comedy_podcast.jpg"
                 }
 
 
