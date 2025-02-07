@@ -44,7 +44,7 @@
                 }
             </tbody>
         </table>
-        <button class="btn btn-success" @onclick="ConfirmOrder">Checkout</button>
+        <button class="btn btn-success" @onclick="ProceedToPayment">Proceed to Payment</button>
     </div>
 }
 else
@@ -106,15 +106,10 @@ else
         }
     }
 
-    private async Task ConfirmOrder()
+    private void ProceedToPayment()
     {
-        if (cartOrder != null)
-        {
-            cartOrder.IsInCart = "No";
-            await context.SaveChangesAsync();
-        }
-
-        Navigation.NavigateTo("/ThankYou");
+        double totalPrice = CartItems.Sum(item => item.Book.BookPrice * item.OrderQty);
+        Navigation.NavigateTo($"/PaymentPage?totalPrice={totalPrice}");
     }
 
     public async ValueTask DisposeAsync()

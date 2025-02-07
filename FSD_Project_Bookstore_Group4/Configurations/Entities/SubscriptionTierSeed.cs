@@ -14,6 +14,7 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     DateCreated = DateTime.Now,
                     DateUpdate = DateTime.Now,
                     TierName = "Basic",
+                    Discount = 0.15,
                     Cost = 15,
                 }
             );
