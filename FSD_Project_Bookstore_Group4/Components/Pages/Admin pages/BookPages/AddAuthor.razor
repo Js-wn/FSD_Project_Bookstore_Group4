@@ -111,6 +111,7 @@ else
         context.BookAuthor.Add(BookAuthor);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/books/addauthors?id=" + Id);
+        await context.SaveChangesAsync();
     }
     //Declare and initialize CarRentalManagementContext and IList
 

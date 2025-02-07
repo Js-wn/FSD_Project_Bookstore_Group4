@@ -64,7 +64,7 @@
                 <button type="submit" class="btn btn-primary">Add</button>
             </EditForm>
             <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books/addauthors?id=" + Id))">Back</button>
-            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books" + Id))">Complete</button>
+            <button class="btn btn-primary" @onclick="@( async  () =>  NavigationManager.NavigateTo("/books?id=" + Id))">Complete</button>
         </div>
     </div>
 }
@@ -111,6 +111,7 @@ else
         context.BookGenre.Add(BookGenre);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/books/addgenres?id=" + Id);
+        await context.SaveChangesAsync();
     }
     //Declare and initialize CarRentalManagementContext and IList
 
