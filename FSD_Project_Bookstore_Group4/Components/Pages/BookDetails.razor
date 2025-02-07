@@ -20,9 +20,11 @@
     else {
 
         <img class="w-8 h-6 mr-4" src="@book.ImgLink" width="180" /><br />
+
         <button class="btn btn-primary" @onclick="@(async () => await AddToCart(@Id))">
             Add to Cart
         </button>
+
         <dl class="row">
 
             <dt class="col-sm-2">Title</dt>

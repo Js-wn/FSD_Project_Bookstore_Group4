@@ -24,6 +24,14 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     DateUpdate = DateTime.Now,
                     AuthorId = 2,
                     BookId = 2,
+                },
+                new BookAuthor
+                {
+                    Id = 3,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    AuthorId = 3,
+                    BookId = 4,
                 }
 
 

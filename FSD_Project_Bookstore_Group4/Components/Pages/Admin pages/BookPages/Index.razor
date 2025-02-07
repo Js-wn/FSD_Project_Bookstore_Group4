@@ -17,6 +17,13 @@
 </p>
 
 <QuickGrid Class="table" Items="context.Book">
+    <TemplateColumn Context="book">
+        <AuthorizeView Roles="Administrator">
+            <a href="@($"books/edit?id={book.Id}")">Edit</a> |
+            <a href="@($"books/details?id={book.Id}")">Details</a> |
+            <a href="@($"books/delete?id={book.Id}")">Delete</a>
+        </AuthorizeView>
+    </TemplateColumn>
     <PropertyColumn Property="book => book.BookTitle" />
     <PropertyColumn Property="book => book.BookDesc" />
     <PropertyColumn Property="book => book.BookPublishDate" />
@@ -27,13 +34,7 @@
     <PropertyColumn Property="book => book.DateUpdate" />
     <PropertyColumn Property="book => book.CreatedBy" />
     <PropertyColumn Property="book => book.UpdatedBy" />
-    <TemplateColumn Context="book">
-        <AuthorizeView Roles="Administrator">
-            <a href="@($"books/edit?id={book.Id}")">Edit</a> |
-            <a href="@($"books/details?id={book.Id}")">Details</a> |
-            <a href="@($"books/delete?id={book.Id}")">Delete</a>
-        </AuthorizeView>
-    </TemplateColumn>
+    
 </QuickGrid>
 
 @code {

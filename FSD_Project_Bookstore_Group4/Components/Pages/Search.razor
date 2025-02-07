@@ -21,8 +21,12 @@
         <input type="submit" value="Search" />
     </form>
     <div class="grid">
+
         <QuickGrid Class="table" Items="FilteredBooks" @ref="grid">
-            <TemplateColumn Context="book" Title="Title" Class="w-10">
+            <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
+                <h3><strong> $@book.BookPrice</strong></h3>
+            </TemplateColumn>
+            <TemplateColumn Context="book" Title="Title" Class="w-30" Sortable="true" SortBy="@titleSort">
                 <a href="@($"fulldetails?id={book.Id}")">
                     <img class="mr-4" src="@book.ImgLink" width="200" />
                     <br />
@@ -30,18 +34,17 @@
                 </a>
                 <br />
                 <p>
-                    <strong>Price:</strong> $@book.BookPrice
-                    <br />
                     <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
                 </p>
-                <br />
+
                 <!-- Fixed Button: Uses async method -->
                 <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.Id))">
                     Add to Cart
                 </button>
             </TemplateColumn>
-            <TemplateColumn Class="w-30" Context="book" Title="Description">
-                @book.BookDesc
+            <TemplateColumn Class="w-200" Context="book" Title="Description">
+
+                @ShortDesc(book.BookDesc)
             </TemplateColumn>
         </QuickGrid>
     </div>
@@ -56,33 +59,49 @@
 </div>
 
 @code {
+    private List<Book> Books;
     QuickGrid<Book>? grid;
     private bool showPopup = false;
     private CancellationTokenSource? popupCancellationToken;
 
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
-
     private FSD_Project_Bookstore_Group4Context user = default;
 
     [SupplyParameterFromQuery]
     private string? customerid { get; set; }
 
     private Customer? customer;
-
+    GridSort<Book> titleSort = GridSort<Book>
+        .ByDescending(x => x.BookTitle);
+    GridSort<Book> pricesort = GridSort<Book>
+        .ByDescending(x => x.BookPrice);
     private IQueryable<Book> FilteredBooks =>
         context.Book.Where(b => b.BookTitle!.Contains(TitleFilter ?? string.Empty));
+    private static string? ShortDesc(string desc)
+    {
+        string shorten = new string(desc.Take(1000).ToArray());
+        if (desc.Length > 1000)
+        {
+            shorten= shorten+ "...";
+        }
+        return shorten;
+    }
+
 
     private FSD_Project_Bookstore_Group4Context context = default!;
-
     protected override async void OnInitialized()
     {
+
+
+
         context = DbFactory.CreateDbContext();
         if (!string.IsNullOrEmpty(customerid))
         {
             customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);
         }
     }
+
 
     private async Task AddToCart(int bookId)
     {

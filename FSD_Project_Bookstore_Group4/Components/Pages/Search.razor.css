@@ -20,6 +20,11 @@ body {
     width: 100%; /* Ensure table width spans the container */
 }
 
+.small {
+    width: 2px;
+    max-width: 2px;
+}
+
 /* Sticky header for the grid */
 .grid ::deep thead {
     position: sticky;
@@ -36,12 +41,7 @@ body {
 }
 
 /* Handle table cells properly */
-.grid ::deep tbody td {
-    overflow: hidden;
-    max-width: 0;
-    text-overflow: ellipsis;
-    white-space: normal; /* Prevent text wrapping */
-}
+
 
 .popup-message {
     position: fixed;

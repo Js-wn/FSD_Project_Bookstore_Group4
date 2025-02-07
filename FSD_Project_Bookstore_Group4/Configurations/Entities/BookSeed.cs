@@ -43,6 +43,18 @@ namespace FSD_Project_Bookstore_Group4.Configurations.Entities
                     BookPublishDate = new DateTime(1991, 03, 6),
                     BookPrice = 23.99f,
                     PublisherId = 1
+                },
+                new Book
+                {
+                    Id = 4,
+                    DateCreated = DateTime.Now,
+                    DateUpdate = DateTime.Now,
+                    BookTitle= "Complete Illustrated Encyclopedia of Birds of the World: A Detailed Visual Reference Guide to 1600 Birds and Their Habitats, Shown in More Than 1800 Pictures",
+                    BookDesc= "Features the birds of the Americas, Europe, Africa, Asia, Australia and the Polar regions, with analyses of size, shape, plumage, habitat, breeding, nests, eggs and food. Explores key habitats such as the ocean, seashore, estuaries, lakes, ponds and rivers, woodland, open country, and cities and gardens.",
+                    ImgLink = "https://m.media-amazon.com/images/I/61wRoaVqXyL._SY385_.jpg",
+                    BookPublishDate = new DateTime(2018,2,2),
+                    BookPrice = 41.07f,
+                    PublisherId = 1
                 }
 
 
