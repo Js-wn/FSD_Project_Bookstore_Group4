@@ -8,19 +8,24 @@
 <PageTitle>Featured Home Page</PageTitle>
 <h1>Welcome to TheBookStoreOverThere</h1>
 <body>
-
+    <br />
+    <h2><strong>Top rated books</strong></h2>
     <ul class="horizontal">
-        @if (booklist.Count != 0)
+        @if (searchlist.Count != 0)
         {
-            @foreach (var itembook in booklist)
+            @foreach (var itembook in searchlist.OrderBy(s => s.avgrating).Reverse())
             {
 
-                <a href="@($"fulldetails?id={@itembook.Id}")">
-                    <li display: block><img class="w-8 h-6 mr-4" src="@itembook.ImgLink" width="180" /></li>
+                <a href="@($"fulldetails?id={@itembook.bkid}")">
+                    <li display: block><img class="w-8 h-6 mr-4" src="@itembook.img" width="360" /></li>
                     @*<li display: block> @itembook.BookTitle</li>*@
                 </a>
 
             }
+        }
+        else
+        {
+            <p>No Books</p>
         }
     </ul>
 
@@ -34,6 +39,7 @@
                                      // Since similar code is done in default constructor internally
     private List<int> randomList = new List<int>();
     private List<int> bookids = new List<int>();
+    private List<SearchItem> searchlist = new List<SearchItem>();
     private List<Book> booklist = new List<Book>();
     int MyNumber = 0;
     private void NewNumber()
@@ -41,6 +47,28 @@
         MyNumber = a.Next(0 , totalcount);
         if (!randomList.Contains(MyNumber))
             randomList.Add(MyNumber);
+    }
+    public class SearchItem
+    {
+        public int bkid { get; set; }
+        public string title { get; set; }
+        public string img { get; set; }
+        public DateTime published { get; set; }
+        public string desc { get; set; }
+        public float price { get; set; }
+        public float avgrating { get; set; }
+        public int totalrevs { get; set; }
+        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, float _avgrating, int _totalrevs)
+        {
+            bkid = _Id;
+            title = _title;
+            img = _img;
+            published = _published;
+            desc = _desc;
+            price = _price;
+            avgrating = _avgrating;
+            totalrevs = _totalrevs;
+        }
     }
     private FSD_Project_Bookstore_Group4Context context = default!;
     protected override async Task OnInitializedAsync()
@@ -51,6 +79,46 @@
         booklist.Clear();
 
         totalcount = context.Book.Count();
+        foreach (Book item in Books)
+        {
+
+            var count = 0;
+            var totalrating = 0f;
+            var avgrating = 0f;
+            var orders = context.OrderItem.Where(ba => ba.BookId == item.Id).ToList();
+            if (orders.Count > 0)
+            {
+                foreach (OrderItem ord in orders)
+                {
+
+                    var rev = await context.Review.FirstOrDefaultAsync(r => r.OrderItemId == ord.Id);
+                    if (rev != null)
+                    {
+                        count += 1;
+                        totalrating += rev.ReviewRating;
+
+                    }
+
+
+                }
+                if (count > 0)
+                {
+                    avgrating = totalrating / count;
+                }
+            }
+            else
+            {
+                count = 0;
+                avgrating = 0f;
+            }
+
+            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, avgrating, count);
+
+
+
+            searchlist.Add(search);
+        }
+        @*
         foreach (Book a in Books)
         {
             bookids.Add(a.Id);
@@ -65,6 +133,7 @@
             var selectedBook = await context.Book.FirstOrDefaultAsync(b => b.Id == bookids[i]);
             booklist.Add(selectedBook);
         }
+        *@
     }
 
 }
