@@ -26,7 +26,8 @@
         </button>
 
         <dl class="row">
-
+            <dt class="col-sm-2">Ratings</dt>
+            <dd class="col-sm-10">@totalrating out of 10 (@reviews.Count() review(s))</dd>
             <dt class="col-sm-2">Title</dt>
             <dd class="col-sm-10">@book.BookTitle</dd>
             <dt class="col-sm-2">Description</dt>
@@ -106,6 +107,7 @@
     private List<BookAuthor> authors;
     private List<BookGenre> genres;
     private List<OrderItem> orders;
+    private float totalrating;
     List<Author> authnames = new List<Author>();
     List<Genre> genrnames = new List<Genre>();
     List<ReviewItem> reviews = new List<ReviewItem>();
@@ -146,12 +148,20 @@
             var genr = await context.Genre.FirstOrDefaultAsync(g => g.Id == a.GenreId);
             genrnames.Add(genr);
         }
-        foreach (OrderItem review in orders)
+        foreach (OrderItem ord in orders)
         {
-            var rev = await context.Review.FirstOrDefaultAsync(r => r.OrderItemId == review.Id);
-            var cust = await context.Customer.FirstOrDefaultAsync(c => c.Id == rev.CustomerId);
-            ReviewItem item = new ReviewItem(cust.CustomerFirstName, rev.ReviewRating, rev.ReviewText);
-            reviews.Add(item);
+            var rev = await context.Review.FirstOrDefaultAsync(r => r.OrderItemId == ord.Id);
+            if (rev != null)
+            {
+                var cust = await context.Customer.FirstOrDefaultAsync(c => c.Id == rev.CustomerId);
+                ReviewItem item = new ReviewItem(cust.CustomerFirstName, rev.ReviewRating, rev.ReviewText);
+                reviews.Add(item);
+            }
+        }
+        totalrating = 0;
+        foreach (ReviewItem revs in reviews)
+        {
+            totalrating = totalrating + (revs.Rating / reviews.Count());
         }
         
         if (book is null)
