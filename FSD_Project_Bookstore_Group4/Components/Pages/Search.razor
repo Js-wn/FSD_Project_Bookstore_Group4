@@ -34,14 +34,7 @@
                     </a>
 
                     <p>
-                        <strong>Rating: </strong>
-                        @if (book.totalrevs>0){
-                        <p>@book.avgrating (reviews: @book.totalrevs)</p>
-                        }
-                        else
-                            {
-                        <p>No reviews</p>
-                            }
+                        
                         <strong>Publish date:</strong> @book.published.ToShortDateString()
                     </p>
 
@@ -49,6 +42,21 @@
                     <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.bkid))">
                         Add to Cart
                     </button>
+                </TemplateColumn>
+                <TemplateColumn Context="book" Title="Rating" Class="w-10" Sortable="true" SortBy="@ratingsort">
+                    
+                    @if (book.totalrevs > 0)
+                    {
+                        <h3>
+                        @book.avgrating/10 
+                        </h3>
+                        <h4>(reviews: @book.totalrevs)</h4>
+                    }
+                    else
+                    {
+                        <H3>No reviews</H3>
+                    }
+                    
                 </TemplateColumn>
                 <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
                     <h3><strong> $@book.price</strong></h3>
@@ -92,6 +100,8 @@
         .ByDescending(x => x.title);
     GridSort<SearchItem> pricesort = GridSort<SearchItem>
         .ByDescending(x => x.price);
+    GridSort<SearchItem> ratingsort = GridSort<SearchItem>
+    .ByDescending(x => x.avgrating);
     private IQueryable<SearchItem>? FilteredBooks  =>
         searchlist?.AsQueryable().Where(b => b.title!.Contains(TitleFilter ?? string.Empty));
     private static string? ShortDesc(string desc)
