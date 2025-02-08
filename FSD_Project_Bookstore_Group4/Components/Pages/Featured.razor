@@ -17,7 +17,41 @@
             {
 
                 <a href="@($"fulldetails?id={@itembook.bkid}")">
-                    <li display: block><img class="w-8 h-6 mr-4" src="@itembook.img" width="360" /></li>
+                    <li display: block><img class="w-8 h-6 mr-4" src="@itembook.img" width="210" /></li>
+                    @*<li display: block> @itembook.BookTitle</li>*@
+                </a>
+
+            }
+        }
+        else
+        {
+            <p>No Books</p>
+        }
+    </ul>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2><strong> Newest additions</strong></h2>
+    <ul class="horizontal">
+        @if (searchlist.Count != 0)
+        {
+            @foreach (var itembook in searchlist.OrderBy(s => s.timeadded).Reverse())
+            {
+
+                <a href="@($"fulldetails?id={@itembook.bkid}")">
+                <li display: block><img class="w-8 h-6 mr-4" src="@itembook.img" width="210" /></li>
                     @*<li display: block> @itembook.BookTitle</li>*@
                 </a>
 
@@ -58,7 +92,8 @@
         public float price { get; set; }
         public float avgrating { get; set; }
         public int totalrevs { get; set; }
-        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, float _avgrating, int _totalrevs)
+        public DateTime timeadded { get; set; }
+        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, float _avgrating, int _totalrevs, DateTime _timeadded)
         {
             bkid = _Id;
             title = _title;
@@ -68,6 +103,7 @@
             price = _price;
             avgrating = _avgrating;
             totalrevs = _totalrevs;
+            timeadded = _timeadded;
         }
     }
     private FSD_Project_Bookstore_Group4Context context = default!;
@@ -112,7 +148,7 @@
                 avgrating = 0f;
             }
 
-            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, avgrating, count);
+            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, avgrating, count, item.DateCreated);
 
 
 
