@@ -21,33 +21,41 @@
         <input type="submit" value="Search" />
     </form>
     <div class="grid">
-        @if (FilteredBooks.ToList().Count() >0)
+        @if (FilteredBooks.Count()>0)
         {
             <QuickGrid Class="table" Items="FilteredBooks" @ref="grid">    
                 <TemplateColumn Context="book" Title="Title" Class="w-20" Sortable="true" SortBy="@titleSort">
-                    <a href="@($"fulldetails?id={book.Id}")">
-                        <img class="mr-4" src="@book.ImgLink" width="200" />
+                    <a href="@($"fulldetails?id={book.bkid}")">
+                        <img class="mr-4" src="@book.img" width="200" />
                         <br />
                         <h4>
-                        @book.BookTitle
+                            @book.title
                         </h4>
                     </a>
-                    <br />
+
                     <p>
-                        <strong>Publish date:</strong> @book.BookPublishDate.ToShortDateString()
+                        <strong>Rating: </strong>
+                        @if (book.totalrevs>0){
+                        <p>@book.avgrating (reviews: @book.totalrevs)</p>
+                        }
+                        else
+                            {
+                        <p>No reviews</p>
+                            }
+                        <strong>Publish date:</strong> @book.published.ToShortDateString()
                     </p>
 
                     <!-- Fixed Button: Uses async method -->
-                    <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.Id))">
+                    <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.bkid))">
                         Add to Cart
                     </button>
                 </TemplateColumn>
                 <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
-                    <h3><strong> $@book.BookPrice</strong></h3>
+                    <h3><strong> $@book.price</strong></h3>
                 </TemplateColumn>
                 <TemplateColumn Class="w-200" Context="book" Title="Description">
 
-                    @ShortDesc(book.BookDesc)
+                    @ShortDesc(book.desc)
                 </TemplateColumn>
             </QuickGrid>
         }
@@ -67,25 +75,25 @@
 </div>
 
 @code {
-    private List<Book> Books;
-    QuickGrid<Book>? grid;
+    private IList<Book> Books;
+    QuickGrid<SearchItem>? grid;
     private bool showPopup = false;
     private CancellationTokenSource? popupCancellationToken;
-
     [SupplyParameterFromQuery]
     private string? TitleFilter { get; set; }
     private FSD_Project_Bookstore_Group4Context user = default;
-
+    private float totalrating;
     [SupplyParameterFromQuery]
     private string? customerid { get; set; }
+    private List<SearchItem> searchlist = new List<SearchItem>();
 
     private Customer? customer;
-    GridSort<Book> titleSort = GridSort<Book>
-        .ByDescending(x => x.BookTitle);
-    GridSort<Book> pricesort = GridSort<Book>
-        .ByDescending(x => x.BookPrice);
-    private IQueryable<Book> FilteredBooks =>
-        context.Book.Where(b => b.BookTitle!.Contains(TitleFilter ?? string.Empty));
+    GridSort<SearchItem> titleSort = GridSort<SearchItem>
+        .ByDescending(x => x.title);
+    GridSort<SearchItem> pricesort = GridSort<SearchItem>
+        .ByDescending(x => x.price);
+    private IQueryable<SearchItem>? FilteredBooks  =>
+        searchlist?.AsQueryable().Where(b => b.title!.Contains(TitleFilter ?? string.Empty));
     private static string? ShortDesc(string desc)
     {
         string shorten = new string(desc.Take(1000).ToArray());
@@ -96,15 +104,76 @@
         return shorten;
     }
 
-
+    public class SearchItem
+    {
+        public int bkid { get; set; }
+        public string title { get; set; }
+        public string img { get; set; }
+        public DateTime published { get; set; }
+        public string desc { get; set; }
+        public float price { get; set; }
+        public float avgrating { get; set; }
+        public int totalrevs { get; set; }
+        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, float _avgrating, int _totalrevs)
+        {
+            bkid = _Id;
+            title = _title;
+            img = _img;
+            published = _published;
+            desc = _desc;
+            price = _price;
+            avgrating = _avgrating;
+            totalrevs = _totalrevs;
+        }
+    }
     private FSD_Project_Bookstore_Group4Context context = default!;
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
 
 
 
+
         context = DbFactory.CreateDbContext();
-        Books = FilteredBooks.ToList();
+        Books = context.Book.ToList();
+        foreach (Book item in Books)
+        {
+
+            var count = 0;
+            var totalrating = 0f;
+            var avgrating = 0f;
+            var orders = context.OrderItem.Where(ba => ba.BookId == item.Id).ToList();
+            if (orders.Count>0)
+            {
+                foreach (OrderItem ord in orders)
+                {
+
+                    var rev = await context.Review.FirstOrDefaultAsync(r => r.OrderItemId == ord.Id);
+                    if (rev != null)
+                    {
+                        count += 1;
+                        totalrating += rev.ReviewRating;
+
+                    }
+
+
+                }
+                if (count > 0)
+                {
+                    avgrating = totalrating / count;
+                }
+            }
+            else
+            {
+                count = 0;
+                avgrating = 0f;
+            }
+            
+            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, avgrating, count);
+            
+   
+
+            searchlist.Add(search);
+        }
         if (!string.IsNullOrEmpty(customerid))
         {
             customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);

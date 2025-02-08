@@ -3,8 +3,11 @@
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @using Microsoft.AspNetCore.Components.QuickGrid
+@using Microsoft.AspNetCore.Identity
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager NavigationManager
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @rendermode InteractiveServer
 <PageTitle>Details</PageTitle>
 
@@ -27,7 +30,13 @@
 
         <dl class="row">
             <dt class="col-sm-2">Ratings</dt>
-            <dd class="col-sm-10">@totalrating out of 10 (@reviews.Count() review(s))</dd>
+            @if (reviews.Count()>0){
+                <dd class="col-sm-10">@avgrating out of 10 (@reviews.Count() review(s))</dd>
+            }
+            else
+            {
+                <dd class="col-sm-10">No reviews</dd>
+            }
             <dt class="col-sm-2">Title</dt>
             <dd class="col-sm-10">@book.BookTitle</dd>
             <dt class="col-sm-2">Description</dt>
@@ -107,7 +116,7 @@
     private List<BookAuthor> authors;
     private List<BookGenre> genres;
     private List<OrderItem> orders;
-    private float totalrating;
+    private float avgrating;
     List<Author> authnames = new List<Author>();
     List<Genre> genrnames = new List<Genre>();
     List<ReviewItem> reviews = new List<ReviewItem>();
@@ -158,10 +167,10 @@
                 reviews.Add(item);
             }
         }
-        totalrating = 0;
+        avgrating = 0;
         foreach (ReviewItem revs in reviews)
         {
-            totalrating = totalrating + (revs.Rating / reviews.Count());
+            avgrating = avgrating + (revs.Rating / reviews.Count());
         }
         
         if (book is null)
@@ -173,16 +182,22 @@
     {
         Console.WriteLine($"Attempting to add book {bookId} to cart...");
 
-        using var newContext = DbFactory.CreateDbContext();  // ✅ NEW DbContext Instance
+        using var newContext = DbFactory.CreateDbContext();
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var claimsPrincipal = authState.User;
+        var userId = UserManager.GetUserId(claimsPrincipal);
+
+        var customer = await newContext.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
 
         var cartOrder = await newContext.Order
-            .FirstOrDefaultAsync(o => o.CustomerId == 1 && o.IsInCart == "Yes");
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
 
         if (cartOrder == null)
         {
             cartOrder = new Order
                 {
-                    CustomerId = 1, // Replace with actual logged-in user ID
+                    CustomerId = customer.Id, // Link to the customer
                     IsInCart = "Yes",
                     OrderDateTime = DateTime.Now
                 };
@@ -225,13 +240,26 @@
                 showPopup = false;
                 StateHasChanged();
 
-                // ✅ Safe Page Refresh to Update UI
+
                 NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
             }
         }
         catch (TaskCanceledException)
         {
-            // ✅ Ignore if task was canceled (no crash)
+
         }
+    }
+
+    public void Dispose()
+    {
+        popupCancellationToken?.Cancel();
+        popupCancellationToken?.Dispose();
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (context != null)
+            await context.DisposeAsync();
     }
 }
