@@ -47,23 +47,37 @@
     {
         context = DbFactory.CreateDbContext();
 
-
-        
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         var userId = UserManager.GetUserId(user);
 
         var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+        loggedInCustomerId = customer?.Id;
 
-        loggedInCustomerId = customer.Id;
+        
+        bool isAdmin = user.IsInRole("Administrator");
 
-        customerReviews = await context.Review
-        .Include(r => r.Customer)  
-        .Include(r => r.OrderItem)
-            .ThenInclude(oi => oi.Book)  
-        .Where(r => r.CustomerId == loggedInCustomerId)
-        .ToListAsync();
+        
+        if (isAdmin)
+        {
+            customerReviews = await context.Review
+                .Include(r => r.Customer)
+                .Include(r => r.OrderItem)
+                    .ThenInclude(oi => oi.Book)
+                .ToListAsync();
+        }
+        else
+        {
+            customerReviews = await context.Review
+                .Include(r => r.Customer)
+                .Include(r => r.OrderItem)
+                    .ThenInclude(oi => oi.Book)
+                .Where(r => r.CustomerId == loggedInCustomerId)
+                .ToListAsync();
+        }
+
     }
+
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }

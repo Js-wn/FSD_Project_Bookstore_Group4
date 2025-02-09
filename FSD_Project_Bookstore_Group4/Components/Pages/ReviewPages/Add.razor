@@ -67,7 +67,6 @@ else
     {
         using var context = DbFactory.CreateDbContext();
 
-        // Get authenticated user
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         var userId = UserManager.GetUserId(user);
@@ -79,7 +78,7 @@ else
             return;
         }
 
-        // Check if the customer has purchased this book
+        //check whether customer purchased the book
         var orderItem = await context.OrderItem
             .Include(oi => oi.Book)
             .Include(oi => oi.Order)
@@ -91,18 +90,17 @@ else
             return;
         }
 
-        // ✅ **Check if a review already exists**
+        
         var existingReview = await context.Review
-            .FirstOrDefaultAsync(r => r.CustomerId == customer.Id && r.OrderItemId == OrderItemId);
+            .FirstOrDefaultAsync(r => r.CustomerId == customer.Id && r.OrderItemId == OrderItemId); //check if reviewed
 
         if (existingReview is not null)
         {
-            // ✅ Redirect back since they have already reviewed this book
-            Navigation.NavigateTo($"/orders/details?id={orderItem.OrderId}");
+            Navigation.NavigateTo($"/orders/details?id={orderItem.OrderId}"); //redirect if already reviewed
             return;
         }
 
-        // ✅ Initialize review object if no review exists
+        //if review doesnt exist then create new review
         OrderId = orderItem.OrderId;
         BookTitle = orderItem.Book.BookTitle;
         Review = new Review

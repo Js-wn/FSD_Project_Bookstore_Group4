@@ -26,6 +26,8 @@ else
         <dd class="col-sm-10">@order.OrderDateTime</dd>
         <dt class="col-sm-2">Customer</dt>
         <dd class="col-sm-10">@customerName</dd>
+        <dt class="col-sm-2">Total Cost</dt>
+        <dd class="col-sm-10">@totalCost.ToString()</dd>
         <dt class="col-sm-2">Created On</dt>
         <dd class="col-sm-10">@order.DateCreated</dd>
         <dt class="col-sm-2">Last Updated</dt>
@@ -37,24 +39,25 @@ else
         @foreach (var orderItem in orders)
         {
             <li>
-                @orderItem.OrderQty x | @orderItem.Book.BookTitle | 
-                @if (!reviewedBookIds.Contains(orderItem.BookId))
+                @orderItem.OrderQty x | @orderItem.Book.BookTitle |
+
+                @if (!gIsAdmin)
                 {
-                    if (!reviewedBookIds.Contains(orderItem.BookId))
+                    @if (!reviewedBookIds.Contains(orderItem.BookId))
                     {
                         <button class="btn btn-primary btn-sm" @onclick="() => AddReview(orderItem.BookId, orderItem.Id)">
                             Write Review
                         </button>
                     }
-
-                }
-                else
-                {
-                    <span class="text-muted">(Reviewed)</span>
+                    else
+                    {
+                        <span class="text-muted">(Reviewed)</span>
+                    }
                 }
             </li>
         }
     </ul>
+
 
     <div>
         <a href="@($"/orders")">Back to List</a>
@@ -69,6 +72,10 @@ else
     [SupplyParameterFromQuery]
     private int Id { get; set; }
 
+    public bool gIsAdmin;
+
+    private float totalCost = 0;
+
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
@@ -77,31 +84,68 @@ else
         var user = authState.User;
         var userId = UserManager.GetUserId(user);
 
-        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
-        if (customer != null)
+        var isAdmin = user.IsInRole("Administrator");
+        gIsAdmin = isAdmin;
+
+        Customer? customer = null;
+        if (!isAdmin)
         {
-            customerName = $"{customer.CustomerFirstName} {customer.CustomerLastName}";
+            customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+            if (customer != null)
+            {
+                customerName = $"{customer.CustomerFirstName} {customer.CustomerLastName}";
+            }
         }
 
-        order = await context.Order.FirstOrDefaultAsync(o => o.Id == Id);
+        order = await context.Order
+            .Include(o => o.Customer)
+            .FirstOrDefaultAsync(o => o.Id == Id);
+
         if (order is null)
         {
             Navigation.NavigateTo("notfound");
             return;
         }
 
-        // Fetch order items and books
+
+        if (isAdmin)
+        {
+            customerName = $"{order.Customer.CustomerFirstName} {order.Customer.CustomerLastName}";
+        }
+
+
         orders = await context.OrderItem
             .Where(oi => oi.OrderId == Id)
             .Include(oi => oi.Book)
             .ToListAsync();
 
-        // Fetch existing reviews for books in this order
-        reviewedBookIds = await context.Review
-            .Where(r => r.CustomerId == customer.Id && orders.Select(oi => oi.BookId).Contains(r.OrderItem.BookId))
-            .Select(r => r.OrderItem.BookId)
-            .ToListAsync();
+
+        if (!isAdmin && customer != null)
+        {
+            reviewedBookIds = await context.Review
+                .Where(r => r.CustomerId == customer.Id && orders.Select(oi => oi.BookId).Contains(r.OrderItem.BookId))
+                .Select(r => r.OrderItem.BookId)
+                .ToListAsync();
+        }
+
+
+        var payment = await context.Payment.FirstOrDefaultAsync(p => p.OrderId == Id);
+
+        if (payment != null)
+        {
+            if (payment.PaymentAmountAftDiscount > 0)
+            {
+                totalCost = (float)payment.PaymentAmountAftDiscount;
+            }
+            else
+            {
+                totalCost = (float)payment.PaymentAmountBefDiscount;
+            }
+        }
+
     }
+
+
 
     private void AddReview(int bookId, int orderItemId)
     {

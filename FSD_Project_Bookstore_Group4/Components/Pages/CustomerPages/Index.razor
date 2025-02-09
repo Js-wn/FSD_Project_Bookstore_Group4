@@ -58,14 +58,28 @@
         var userId = UserManager.GetUserId(user);
 
         var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+        loggedInCustomerId = customer?.Id;
 
-        loggedInCustomerId = customer.Id;
-  
-        customerInfo = await context.Customer
-            .Where(c => c.Id == loggedInCustomerId) 
-            .Include(c => c.Gender)
-            .ToListAsync();
+        
+        bool isAdmin = user.IsInRole("Administrator");
+
+        
+        if (isAdmin)
+        {
+            customerInfo = await context.Customer
+                .Include(c => c.Gender)
+                .ToListAsync();
+        }
+        else
+        {
+            customerInfo = await context.Customer
+                .Where(c => c.Id == loggedInCustomerId)
+                .Include(c => c.Gender)
+                .ToListAsync();
+        }
+
     }
+
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
