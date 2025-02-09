@@ -21,10 +21,10 @@
             <dd class="col-sm-10">@review.ReviewText</dd>
             <dt class="col-sm-2">ReviewRating</dt>
             <dd class="col-sm-10">@review.ReviewRating</dd>
-            <dt class="col-sm-2">CustomerId</dt>
-            <dd class="col-sm-10">@review.CustomerId</dd>
-            <dt class="col-sm-2">OrderItemId</dt>
-            <dd class="col-sm-10">@review.OrderItemId</dd>
+            <dt class="col-sm-2">Customer Name</dt>
+            <dd class="col-sm-10">@($"{review.Customer.CustomerFirstName} {review.Customer.CustomerLastName}")</dd>
+            <dt class="col-sm-2">Book Title</dt>
+            <dd class="col-sm-10">@review.OrderItem.Book.BookTitle</dd>
             <dt class="col-sm-2">DateCreated</dt>
             <dd class="col-sm-10">@review.DateCreated</dd>
             <dt class="col-sm-2">DateUpdate</dt>
@@ -46,7 +46,11 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        review = await context.Review.FirstOrDefaultAsync(m => m.Id == Id);
+        review = await context.Review
+       .Include(r => r.Customer)
+       .Include(r => r.OrderItem)
+           .ThenInclude(oi => oi.Book)
+       .FirstOrDefaultAsync(m => m.Id == Id);
 
         if (review is null)
         {

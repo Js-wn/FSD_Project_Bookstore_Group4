@@ -3,8 +3,14 @@
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Forms
 @implements IAsyncDisposable
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
 
 @attribute [Authorize(Roles = "Administrator, User")]
 
@@ -12,15 +18,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a href="reviews/create">Create New</a>
-</p>
 
-<QuickGrid Class="table" Items="context.Review">
+<QuickGrid Class="table" Items="customerReviews.AsQueryable()">
     <PropertyColumn Property="review => review.ReviewText" />
     <PropertyColumn Property="review => review.ReviewRating" />
-    <PropertyColumn Property="review => review.CustomerId" />
-    <PropertyColumn Property="review => review.OrderItemId" />
+    <PropertyColumn Property="review => review.Customer.CustomerFirstName + ' ' + review.Customer.CustomerLastName" Title="Customer Name" />
+    <PropertyColumn Property="review => review.OrderItem.Book.BookTitle" Title="Book Title" />
     <PropertyColumn Property="review => review.DateCreated" />
     <PropertyColumn Property="review => review.DateUpdate" />
     <PropertyColumn Property="review => review.CreatedBy" />
@@ -35,9 +38,31 @@
 @code {
     private FSD_Project_Bookstore_Group4Context context = default!;
 
-    protected override void OnInitialized()
+    [Parameter]
+    public int? CustomerId { get; set; }
+    private int? loggedInCustomerId;
+    private List<Review> customerReviews = new();
+
+    protected override async Task OnInitializedAsync()
     {
         context = DbFactory.CreateDbContext();
+
+
+        
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+
+        loggedInCustomerId = customer.Id;
+
+        customerReviews = await context.Review
+        .Include(r => r.Customer)  
+        .Include(r => r.OrderItem)
+            .ThenInclude(oi => oi.Book)  
+        .Where(r => r.CustomerId == loggedInCustomerId)
+        .ToListAsync();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

@@ -3,8 +3,13 @@
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Forms
 @implements IAsyncDisposable
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 @attribute [Authorize(Roles = "Administrator, User")]
 
@@ -12,11 +17,8 @@
 
 <h1>Index</h1>
 
-<p>
-    <a href="customers/create">Create New</a>
-</p>
 
-<QuickGrid Class="table" Items="context.Customer">
+<QuickGrid Class="table" Items="customerInfo.AsQueryable()">
     <PropertyColumn Property="customer => customer.CustomerFirstName" Title="FirstName" />
     <PropertyColumn Property="customer => customer.CustomerLastName" Title="LastName" />
     <PropertyColumn Property="customer => customer.CustomerEmail" Title="Email" />
@@ -24,7 +26,7 @@
     <PropertyColumn Property="customer => customer.CustomerContact" Title="Contact" />
     <PropertyColumn Property="customer => customer.CustomerPoints" Title="Points" />
     <PropertyColumn Property="customer => customer.HasActiveSubscription" Title="Has Active Subscription" />
-    <PropertyColumn Property="customer => customer.GenderId" Title="Gender" />
+    <PropertyColumn Property="customer => customer.Gender.GenderName" Title="Gender" />
     <PropertyColumn Property="customer => customer.DateCreated" />
     <PropertyColumn Property="customer => customer.DateUpdate" />
     <PropertyColumn Property="customer => customer.CreatedBy" />
@@ -42,10 +44,27 @@
 @code {
     private FSD_Project_Bookstore_Group4Context context = default!;
 
-    protected override void OnInitialized()
+    [Parameter]
+    public int? CustomerId { get; set; }
+    private int? loggedInCustomerId;
+    private List<Customer> customerInfo = new();
+
+    protected override async Task OnInitializedAsync()
     {
         context = DbFactory.CreateDbContext();
 
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+
+        loggedInCustomerId = customer.Id;
+  
+        customerInfo = await context.Customer
+            .Where(c => c.Id == loggedInCustomerId) 
+            .Include(c => c.Gender)
+            .ToListAsync();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

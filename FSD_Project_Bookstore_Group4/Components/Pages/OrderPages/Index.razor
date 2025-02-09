@@ -1,11 +1,16 @@
 ﻿@page "/orders"
-@page "/orders/{CustomerId:int}"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using FSD_Project_Bookstore_Group4.Domain
 @using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Forms
 @implements IAsyncDisposable
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
 
 @attribute [Authorize(Roles = "Administrator, User")]
 
@@ -13,11 +18,8 @@
 
 <h1>Index</h1>
 
-<p>
-    <a href="orders/create">Create New</a>
-</p>
-
-<QuickGrid Class="table" Items="context.Order">
+<QuickGrid Class="table" Items="customerOrders.AsQueryable()">
+    <PropertyColumn Property="order => order.Id" />
     <PropertyColumn Property="order => order.OrderDateTime" />
     <PropertyColumn Property="order => order.CustomerId" />
     <PropertyColumn Property="order => order.IsInCart" />
@@ -40,11 +42,24 @@
 
     [Parameter]
     public int? CustomerId { get; set; }
+    private int? loggedInCustomerId;
+    private List<Order> customerOrders = new();
 
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         context = DbFactory.CreateDbContext();
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+
+        loggedInCustomerId = customer.Id;
+
+        customerOrders = await context.Order
+            .Where(o => o.CustomerId == loggedInCustomerId)
+            .ToListAsync();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

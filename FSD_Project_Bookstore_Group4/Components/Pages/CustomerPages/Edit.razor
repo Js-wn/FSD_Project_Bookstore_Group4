@@ -47,23 +47,30 @@ else
                     <InputText id="customercontact" @bind-Value="Customer.CustomerContact" class="form-control" />
                     <ValidationMessage For="() => Customer.CustomerContact" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="customerpoints" class="form-label">CustomerPoints:</label>
                     <InputNumber id="customerpoints" @bind-Value="Customer.CustomerPoints" class="form-control" />
                     <ValidationMessage For="() => Customer.CustomerPoints" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="genderid" class="form-label">GenderId:</label>
-                    <InputNumber id="genderid" @bind-Value="Customer.GenderId" class="form-control" />
+                    <label for="genderid" class="form-label">Gender:</label>
+                    <select id="genderid" class="form-control" @bind="Customer.GenderId">
+                        @foreach (var gender in Genders)
+                        {
+                            <option value="@gender.Id">@gender.GenderName</option>
+                        }
+                    </select>
                     <ValidationMessage For="() => Customer.GenderId" class="text-danger" />
                 </div>
+
+
 
                 <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated: @Customer.DateCreated</label>
                     <input type="hidden" name="Customer.datecreated" value="@Customer.DateCreated" />
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <input type="datetime-local" id="dateupdate" @bind="Customer.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Customer.DateUpdate" class="text-danger" />
@@ -97,10 +104,14 @@ else
     [SupplyParameterFromForm]
     private Customer? Customer { get; set; }
 
+    private List<Gender> Genders = new();
+
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Customer ??= await context.Customer.FirstOrDefaultAsync(m => m.Id == Id);
+        Customer ??= await context.Customer
+        .Include(c => c.Gender)
+        .FirstOrDefaultAsync(m => m.Id == Id);
 
         if (Customer is null)
         {
@@ -114,6 +125,7 @@ else
         {
             Customer.DateUpdate = DateTime.Now;
         }
+        Genders = await context.Gender.ToListAsync();
     }
 
     // To protect from overposting attacks, enable the specific properties you want to bind to.

@@ -32,26 +32,35 @@ else
                     <InputNumber id="reviewrating" @bind-Value="Review.ReviewRating" class="form-control" />
                     <ValidationMessage For="() => Review.ReviewRating" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="customerid" class="form-label">CustomerId:</label>
                     <InputNumber id="customerid" @bind-Value="Review.CustomerId" class="form-control" />
                     <ValidationMessage For="() => Review.CustomerId" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="orderitemid" class="form-label">OrderItemId:</label>
                     <InputNumber id="orderitemid" @bind-Value="Review.OrderItemId" class="form-control" />
                     <ValidationMessage For="() => Review.OrderItemId" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Review.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Review.DateCreated" class="text-danger" />
+                <div class="mb-3" hidden>
+                    <label for="datecreated" class="form-label">DateCreated: @Review.DateCreated</label>
+                    <input type="hidden" name="Review.datecreated" value="@Review.DateCreated" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dateupdate" class="form-label">DateUpdate:</label>
                     <InputDate id="dateupdate" @bind-Value="Review.DateUpdate" class="form-control" />
                     <ValidationMessage For="() => Review.DateUpdate" class="text-danger" />
                 </div>
+                <div class="mb-3" hidden>
+                    <label for="createdby" class="form-label">CreatedBy: @Review.CreatedBy</label>
+                    <input type="hidden" name="Review.createdby" value="@Review.CreatedBy" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Review.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Review.UpdatedBy" class="text-danger" />
+                </div>
+
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
         </div>

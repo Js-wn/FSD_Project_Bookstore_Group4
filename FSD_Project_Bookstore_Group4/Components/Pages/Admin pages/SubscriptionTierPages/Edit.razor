@@ -37,6 +37,11 @@ else
                     <InputText id="description" @bind-Value="SubscriptionTier.Description" class="form-control" />
                     <ValidationMessage For="() => SubscriptionTier.Description" class="text-danger" />
                 </div>
+                <div class="mb-3">
+                    <label for="discount" class="form-label">Discount:</label>
+                    <InputNumber id="discount" @bind-Value="SubscriptionTier.Discount" class="form-control" />
+                    <ValidationMessage For="() => SubscriptionTier.Discount" class="text-danger" />
+                </div>
                 <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated: @SubscriptionTier.DateCreated</label>
                     <input type="hidden" name="SubscriptionTier.datecreated" value="@SubscriptionTier.DateCreated" />

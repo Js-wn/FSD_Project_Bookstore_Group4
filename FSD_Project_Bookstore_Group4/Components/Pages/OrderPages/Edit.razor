@@ -3,6 +3,7 @@
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
 
 <PageTitle>Edit</PageTitle>
 
