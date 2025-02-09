@@ -14,7 +14,16 @@
 <PageTitle>Subscription</PageTitle>
 
 <h1>Subscription</h1>
-
+@if (!IsUserLoggedIn)
+{
+    @if (ShowLoginWarning)
+    {
+        <div class="alert alert-warning">
+            ⚠️ You need to <strong>log in</strong> or <strong>sign up</strong> to add books to your cart.
+            <button class="btn btn-primary btn-sm" @onclick="CloseAlert">OK</button>
+        </div>
+    }
+}
 @if (isSubscribed)
 {
     <p><strong>You are subscribed!</strong> 🎉</p>
@@ -39,6 +48,26 @@ else
 }
 
 @code {
+    private bool IsUserLoggedIn = true;
+    private bool ShowLoginWarning = false;
+
+    private void promptToLogin()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void promptToSignup()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void CloseAlert()
+    {
+        ShowLoginWarning = false;
+    }
+
     private SubscriptionInfo? subscription;
     private bool isSubscribed = false;
     private List<SubscriptionTier> subscriptionTiers = new List<SubscriptionTier>();
@@ -86,6 +115,11 @@ else
 
     private async Task Subscribe(int tierId)
     {
+        if (string.IsNullOrEmpty(customerid))
+        {
+            promptToLogin();
+            return;
+        }
         await using var context = DbFactory.CreateDbContext();
 
         
@@ -96,9 +130,10 @@ else
 
         
         var customerExists = await context.Customer.AnyAsync(c => c.AuthCustId == customerid);
-        if (!customerExists)
+
+        if (customerExists == null)
         {
-            Console.WriteLine($"Error: Customer with ID {customerid} does not exist.");
+            promptToSignup();
             return;
         }
 
