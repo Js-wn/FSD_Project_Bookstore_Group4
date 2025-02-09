@@ -15,6 +15,16 @@
 
 
 <div class="search-container">
+    @if (!IsUserLoggedIn)
+    {
+        @if (ShowLoginWarning)
+        {
+            <div class="alert alert-warning">
+                ⚠️ You need to <strong>log in</strong> or <strong>sign up</strong> to add books to your cart.
+                <button class="btn btn-primary btn-sm" @onclick="CloseAlert">OK</button>
+            </div>
+        }
+    }
     <h1>Search</h1>
     <form action="/Search" data-enhance>
         <input type="search" name="titleFilter" />
@@ -34,21 +44,21 @@
                     </a>
 
                     <p>
-                        
+
                         <strong>Publish date:</strong> @book.published.ToShortDateString()
                     </p>
 
-                    <!-- Fixed Button: Uses async method -->
+
                     <button class="btn btn-primary" @onclick="@(async () => await AddToCart(book.bkid))">
                         Add to Cart
                     </button>
                 </TemplateColumn>
                 <TemplateColumn Context="book" Title="Rating" Class="w-10" Sortable="true" SortBy="@ratingsort">
-                    
+
                     @if (book.totalrevs > 0)
                     {
                         <h3>
-                        @book.avgrating/10 
+                            @book.avgrating/10 
                         </h3>
                         <h4>(reviews: @book.totalrevs)</h4>
                     }
@@ -56,7 +66,7 @@
                     {
                         <H3>No reviews</H3>
                     }
-                    
+
                 </TemplateColumn>
                 <TemplateColumn Context="book" Title="Price" Class="w-10" Sortable="true" SortBy="@pricesort">
                     <h3><strong> $@book.price</strong></h3>
@@ -83,6 +93,26 @@
 </div>
 
 @code {
+    private bool IsUserLoggedIn = true; 
+    private bool ShowLoginWarning = false; 
+
+    private void promptToLogin()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void promptToSignup()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void CloseAlert()
+    {
+        ShowLoginWarning = false;
+    }
+
     private IList<Book> Books;
     QuickGrid<SearchItem>? grid;
     private bool showPopup = false;
@@ -140,9 +170,6 @@
     protected override async Task OnInitializedAsync()
     {
 
-
-
-
         context = DbFactory.CreateDbContext();
         Books = context.Book.ToList();
         foreach (Book item in Books)
@@ -177,14 +204,14 @@
                 count = 0;
                 avgrating = 0f;
             }
-            
+
             SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, Math.Round(avgrating,1), count);
-            
-   
+
+
 
             searchlist.Add(search);
         }
-        if (!string.IsNullOrEmpty(customerid))
+        if (!string.IsNullOrEmpty(customerid)) //ensure customer is logged in
         {
             customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == customerid);
         }
@@ -193,7 +220,7 @@
 
     private async Task AddToCart(int bookId)
     {
-        Console.WriteLine($"Attempting to add book {bookId} to cart...");
+        Console.WriteLine($"Attempting to add book {bookId} to cart..."); //debugging line
 
         using var newContext = DbFactory.CreateDbContext();
 
@@ -201,16 +228,28 @@
         var claimsPrincipal = authState.User;
         var userId = UserManager.GetUserId(claimsPrincipal);
 
+        if (string.IsNullOrEmpty(userId))
+        {
+            promptToLogin();
+            return;
+        }
+
         var customer = await newContext.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
 
-        var cartOrder = await newContext.Order
-            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
+        if (customer == null)
+        {
+            promptToSignup();
+            return;
+        }
 
-        if (cartOrder == null)
+        var cartOrder = await newContext.Order
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes"); //linking the order to customerid
+
+        if (cartOrder == null) //creating a new order
         {
             cartOrder = new Order
                 {
-                    CustomerId = customer.Id, // Link to the customer
+                    CustomerId = customer.Id, 
                     IsInCart = "Yes",
                     OrderDateTime = DateTime.Now
                 };
@@ -220,13 +259,13 @@
         }
 
         var existingOrderItem = await newContext.OrderItem
-            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId);
+            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId); //linking the orderitem to bookid
 
-        if (existingOrderItem != null)
+        if (existingOrderItem != null) //checks whether item is already in cart if so increment
         {
             existingOrderItem.OrderQty++;
         }
-        else
+        else //create new order item if not in cart
         {
             var orderItem = new OrderItem
                 {

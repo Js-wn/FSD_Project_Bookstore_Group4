@@ -24,7 +24,7 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm method="post" Model="Review" OnValidSubmit="SubmitReview">
+            <EditForm method="post" Model="Review" OnValidSubmit="submitReview">
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert"/>
                 
@@ -60,8 +60,10 @@ else
     private string BookTitle = "";
     private int OrderId;
     
-    [SupplyParameterFromQuery] private int BookId { get; set; }
-    [SupplyParameterFromQuery] private int OrderItemId { get; set; }
+    [SupplyParameterFromQuery] 
+    private int BookId { get; set; }
+    [SupplyParameterFromQuery] 
+    private int OrderItemId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -113,7 +115,7 @@ else
     }
 
 
-    private async Task SubmitReview()
+    private async Task submitReview()
     {
         using var context = DbFactory.CreateDbContext();
         context.Review.Add(Review);

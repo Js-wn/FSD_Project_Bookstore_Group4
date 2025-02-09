@@ -41,17 +41,17 @@ else
             <li>
                 @orderItem.OrderQty x | @orderItem.Book.BookTitle |
 
-                @if (!gIsAdmin)
+                @if (!gIsAdmin) //if not user is not admin
                 {
-                    @if (!reviewedBookIds.Contains(orderItem.BookId))
+                    @if (!reviewedBookIds.Contains(orderItem.BookId)) //check if book has been reviewed
                     {
-                        <button class="btn btn-primary btn-sm" @onclick="() => AddReview(orderItem.BookId, orderItem.Id)">
+                        <button class="btn btn-primary btn-sm" @onclick="() => AddReview(orderItem.BookId, orderItem.Id)"> 
                             Write Review
-                        </button>
-                    }
+                        </button> //display button to review
+                    } 
                     else
                     {
-                        <span class="text-muted">(Reviewed)</span>
+                        <span class="text-muted">(Reviewed)</span> //display (Reviewed) if already reviewed
                     }
                 }
             </li>
@@ -85,7 +85,7 @@ else
         var userId = UserManager.GetUserId(user);
 
         var isAdmin = user.IsInRole("Administrator");
-        gIsAdmin = isAdmin;
+        gIsAdmin = isAdmin; //make global admin variable
 
         Customer? customer = null;
         if (!isAdmin)
@@ -93,7 +93,7 @@ else
             customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
             if (customer != null)
             {
-                customerName = $"{customer.CustomerFirstName} {customer.CustomerLastName}";
+                customerName = $"{customer.CustomerFirstName} {customer.CustomerLastName}"; //represents logged in customer
             }
         }
 
@@ -110,20 +110,22 @@ else
 
         if (isAdmin)
         {
-            customerName = $"{order.Customer.CustomerFirstName} {order.Customer.CustomerLastName}";
+            customerName = $"{order.Customer.CustomerFirstName} {order.Customer.CustomerLastName}"; //represents customer name from order
         }
 
-
-        orders = await context.OrderItem
+        //loads orderitems related to book entity
+        orders = await context.OrderItem 
             .Where(oi => oi.OrderId == Id)
             .Include(oi => oi.Book)
             .ToListAsync();
 
 
+        //if user is not admin and exists then pull list of bookids that customer has reviewed
         if (!isAdmin && customer != null)
         {
             reviewedBookIds = await context.Review
-                .Where(r => r.CustomerId == customer.Id && orders.Select(oi => oi.BookId).Contains(r.OrderItem.BookId))
+                //ensure reviews exist in the current list and is by current customer
+                .Where(r => r.CustomerId == customer.Id && orders.Select(oi => oi.BookId).Contains(r.OrderItem.BookId)) 
                 .Select(r => r.OrderItem.BookId)
                 .ToListAsync();
         }
@@ -133,7 +135,7 @@ else
 
         if (payment != null)
         {
-            if (payment.PaymentAmountAftDiscount > 0)
+            if (payment.PaymentAmountAftDiscount > 0) //checks whether customer has a discounted price to display
             {
                 totalCost = (float)payment.PaymentAmountAftDiscount;
             }
@@ -146,8 +148,8 @@ else
     }
 
 
-
-    private void AddReview(int bookId, int orderItemId)
+    //navs the user to add review page with the specific book and orderitem details
+    private void AddReview(int bookId, int orderItemId) 
     {
         Navigation.NavigateTo($"/reviews/add?bookId={bookId}&orderItemId={orderItemId}");
     }

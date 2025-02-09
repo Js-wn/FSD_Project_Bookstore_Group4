@@ -14,6 +14,16 @@
 <h1>Details</h1>
 
 <div>
+    @if (!IsUserLoggedIn)
+    {
+        @if (ShowLoginWarning)
+        {
+            <div class="alert alert-warning">
+                ⚠️ You need to <strong>log in</strong> or <strong>sign up</strong> to add books to your cart.
+                <button class="btn btn-primary btn-sm" @onclick="CloseAlert">OK</button>
+            </div>
+        }
+    }
     <h2>Book</h2>
     <hr />
     @if (book is null)
@@ -111,6 +121,26 @@
 </div>
 
 @code {
+    private bool IsUserLoggedIn = true;
+    private bool ShowLoginWarning = false;
+
+    private void promptToLogin()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void promptToSignup()
+    {
+        IsUserLoggedIn = false;
+        ShowLoginWarning = true;
+    }
+
+    private void CloseAlert()
+    {
+        ShowLoginWarning = false;
+    }
+
     private Book? book;
     private Publisher? publisher;
     private List<BookAuthor> authors;
@@ -182,7 +212,7 @@
     }
     private async Task AddToCart(int bookId)
     {
-        Console.WriteLine($"Attempting to add book {bookId} to cart...");
+        Console.WriteLine($"Attempting to add book {bookId} to cart..."); //debugging line
 
         using var newContext = DbFactory.CreateDbContext();
 
@@ -190,16 +220,28 @@
         var claimsPrincipal = authState.User;
         var userId = UserManager.GetUserId(claimsPrincipal);
 
+        if (string.IsNullOrEmpty(userId))
+        {
+            promptToLogin();
+            return;
+        }
+
         var customer = await newContext.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
 
-        var cartOrder = await newContext.Order
-            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
+        if (customer == null)
+        {
+            promptToSignup();
+            return;
+        }
 
-        if (cartOrder == null)
+        var cartOrder = await newContext.Order
+            .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes"); //linking the order to customerid
+
+        if (cartOrder == null) //creating a new order
         {
             cartOrder = new Order
                 {
-                    CustomerId = customer.Id, // Link to the customer
+                    CustomerId = customer.Id,
                     IsInCart = "Yes",
                     OrderDateTime = DateTime.Now
                 };
@@ -209,13 +251,13 @@
         }
 
         var existingOrderItem = await newContext.OrderItem
-            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId);
+            .FirstOrDefaultAsync(oi => oi.OrderId == cartOrder.Id && oi.BookId == bookId); //linking the orderitem to bookid
 
-        if (existingOrderItem != null)
+        if (existingOrderItem != null) //checks whether item is already in cart if so increment
         {
             existingOrderItem.OrderQty++;
         }
-        else
+        else //create new order item if not in cart
         {
             var orderItem = new OrderItem
                 {

@@ -82,10 +82,7 @@ else
         var user = authState.User;
         var userId = UserManager.GetUserId(user);
 
-
-
-
-
+        //retrieve customer based on auth user id and sub details
         customer = await context.Customer
             .Include(c => c.SubscriptionInfos)
             .ThenInclude(si => si.SubscriptionTier)
@@ -93,17 +90,19 @@ else
 
         if (customer == null) return;
 
+        //retrieve cust's current cart with orderitems and book details
         cartOrder = await context.Order
             .Include(o => o.OrderItems)
             .ThenInclude(oi => oi.Book)
             .FirstOrDefaultAsync(o => o.CustomerId == customer.Id && o.IsInCart == "Yes");
 
+        //if cart exists convert to a list
         if (cartOrder != null)
         {
             CartItems = cartOrder.OrderItems.ToList();
         }
 
-        // Check Active Subscription
+        //check if cust has subscription or not
         var activeSubscription = customer.SubscriptionInfos
             .FirstOrDefault(si => si.DateEnd >= DateTime.Now);
 
@@ -117,7 +116,7 @@ else
             SubscriptionDiscount = activeSubscription.SubscriptionTier.Discount;
         }
 
-        // Calculate Prices
+        //calculation of prices
         TotalPrice = totalPrice;
         DiscountedTotal = HasActiveSubscription ? TotalPrice * (1 - SubscriptionDiscount) : TotalPrice;
     }
@@ -128,25 +127,24 @@ else
 
         if (cartOrder == null || customer == null)
         {
-            Console.WriteLine("Error: Cart order or customer is null.");
+            Console.WriteLine("Error: Cart order or customer is null."); //debugging line
             return;
         }   
 
 
 
-        // Calculate final price
+        //confirm and calculate prices
         double totalPrice = cartOrder.OrderItems.Sum(item => item.Book.BookPrice * item.OrderQty);
         double discountedTotal = totalPrice * (1 - discount);
 
-        // Create Payment Record
         var newPayment = new Payment
             {
                 CustomerId = customer.Id,
                 OrderId = cartOrder.Id,
                 PaymentMethod = PaymentMethod,
                 PaymentDate = DateTime.Now,
-                PaymentAmountBefDiscount = (float)Math.Round(totalPrice, 2),
-                PaymentAmountAftDiscount = (float)Math.Round(discountedTotal, 2),
+                PaymentAmountBefDiscount = (float)Math.Round(totalPrice, 2), //2dp
+                PaymentAmountAftDiscount = (float)Math.Round(discountedTotal, 2), //2dp
                 SubscriptionId = subscriptionId,
                 TierId = tierId,
                 DateCreated = DateTime.Now,
@@ -155,12 +153,11 @@ else
 
         context.Payment.Add(newPayment);
 
-        // Confirm Order
         cartOrder.IsInCart = "No";
         context.Attach(cartOrder!).State = EntityState.Modified;
         await context.SaveChangesAsync();
 
-        Console.WriteLine($"Order confirmed. Payment ID: {newPayment.Id}, SubscriptionID: {subscriptionId}");
+        Console.WriteLine($"Order confirmed. Payment ID: {newPayment.Id}, SubscriptionID: {subscriptionId}"); //debugging line
         Navigation.NavigateTo("/ThankYou");
     }
 

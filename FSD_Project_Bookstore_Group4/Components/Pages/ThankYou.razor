@@ -15,49 +15,52 @@
     <h1>Thank You!</h1>
     <p>Your order has been placed successfully.</p>
 
-    @if (PurchasedItems.Count > 0 && !IsReviewing)
+    @if (purchasedItems.Count > 0 && !isReviewing)
     {
-        <button class="btn btn-primary mt-3" @onclick="StartReviewProcess">Would you like to leave a review?</button>
+        <button class="btn btn-primary mt-3" @onclick="startReviewProcess">Would you like to leave a review?</button>
     }
 
-    @if (IsReviewing)
+    @if (isReviewing)
     {
         <div class="review-section">
-            <h3>Leave a Review for: @SelectedOrderItem?.Book.BookTitle</h3>
+            <h3>Leave a Review for: @selectedOrderItem?.Book.BookTitle</h3>
 
             <label>Rating:</label>
-            <input type="number" class="form-control" min="1" max="10" @bind="ReviewRating" />
+            <input type="number" class="form-control" min="1" max="10" @bind="reviewRating" />
 
             <label>Review:</label>
-            <textarea class="form-control" @bind="ReviewText" placeholder="Write your review here..."></textarea>
+            <textarea class="form-control" @bind="reviewText" placeholder="Write your review here..."></textarea>
 
             <br />
-            <button class="btn btn-success" @onclick="SubmitReview">Submit Review</button>
+            <button class="btn btn-success" @onclick="submitReview">Submit Review</button>
             <button class="btn btn-secondary" @onclick="SkipReview">Skip</button>
         </div>
     }
 </div>
 
 @code {
-    private List<OrderItem> PurchasedItems = new();
+    private List<OrderItem> purchasedItems = new();
     private int? loggedInCustomerId;
-    private OrderItem? SelectedOrderItem;
-    private string ReviewText = string.Empty;
-    private float ReviewRating = 5;
-    private bool IsReviewing = false;
+    private OrderItem? selectedOrderItem;
+    private string reviewText = string.Empty;
+    private float reviewRating = 5;
+    private bool isReviewing = false;
 
     protected override async Task OnInitializedAsync()
     {
         var context = await DbFactory.CreateDbContextAsync();
+
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        var userId = UserManager.GetUserId(user);
+        var userId = UserManager.GetUserId(user); 
 
+        
         var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
-        if (customer == null) return;
+        if (customer == null) return; 
 
         loggedInCustomerId = customer.Id;
 
+        //retrieve latest purchased order
         var latestOrder = await context.Order
             .Include(o => o.OrderItems)
             .ThenInclude(oi => oi.Book)
@@ -65,32 +68,38 @@
             .OrderByDescending(o => o.DateCreated)
             .FirstOrDefaultAsync();
 
+        //if order exists then put into list for review
         if (latestOrder != null)
         {
-            PurchasedItems = latestOrder.OrderItems.ToList();
+            purchasedItems = latestOrder.OrderItems.ToList();
         }
     }
 
-    private void StartReviewProcess()
+   
+    //ask user to review the items 1 by 1
+    private void startReviewProcess()
     {
-        if (PurchasedItems.Count > 0)
+        if (purchasedItems.Count > 0)
         {
-            IsReviewing = true;
-            SelectedOrderItem = PurchasedItems.FirstOrDefault();
+            isReviewing = true; 
+            selectedOrderItem = purchasedItems.FirstOrDefault(); 
         }
     }
 
-    private async Task SubmitReview()
+    //create new review for selected book
+    private async Task submitReview()
     {
-        if (SelectedOrderItem != null && !string.IsNullOrWhiteSpace(ReviewText))
+        if (selectedOrderItem != null && !string.IsNullOrWhiteSpace(reviewText))
         {
             var context = await DbFactory.CreateDbContextAsync();
+
+            // Create a new review entry
             var newReview = new Review
                 {
                     CustomerId = loggedInCustomerId.Value,
-                    OrderItemId = SelectedOrderItem.Id,
-                    ReviewText = ReviewText,
-                    ReviewRating = ReviewRating,
+                    OrderItemId = selectedOrderItem.Id,
+                    ReviewText = reviewText,
+                    ReviewRating = reviewRating,
                     DateCreated = DateTime.Now
                 };
 
@@ -98,26 +107,29 @@
             await context.SaveChangesAsync();
         }
 
-        MoveToNextItem();
+        moveToNextItem();
     }
 
+    //skip item and move to next item
     private void SkipReview()
     {
-        MoveToNextItem();
+        moveToNextItem();
     }
 
-    private void MoveToNextItem()
+    //moves to next item in list or ends reviewing if no more books available
+    private void moveToNextItem()
     {
-        PurchasedItems.Remove(SelectedOrderItem);
-        if (PurchasedItems.Count > 0)
+        purchasedItems.Remove(selectedOrderItem);
+
+        if (purchasedItems.Count > 0)
         {
-            SelectedOrderItem = PurchasedItems.FirstOrDefault();
-            ReviewText = string.Empty;
-            ReviewRating = 5;
+            selectedOrderItem = purchasedItems.FirstOrDefault();
+            reviewText = string.Empty;
+            reviewRating = 5;
         }
         else
         {
-            IsReviewing = false;
+            isReviewing = false;
         }
     }
 }
