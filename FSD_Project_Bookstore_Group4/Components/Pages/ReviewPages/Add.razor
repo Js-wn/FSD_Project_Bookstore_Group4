@@ -1,0 +1,125 @@
+﻿@page "/reviews/add"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Domain
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Forms
+@inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
+@inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+<PageTitle>Add Review</PageTitle>
+
+<h1>Add Review</h1>
+
+@if (Review is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Review" OnValidSubmit="SubmitReview">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert"/>
+                
+                <div class="mb-3">
+                    <label class="form-label">Book:</label>
+                    <input type="text" class="form-control" value="@BookTitle" disabled />
+                </div>
+
+                <div class="mb-3">
+                    <label for="reviewtext" class="form-label">Review Text:</label>
+                    <InputText id="reviewtext" @bind-Value="Review.ReviewText" class="form-control" />
+                    <ValidationMessage For="() => Review.ReviewText" class="text-danger" />
+                </div>        
+                
+                <div class="mb-3">
+                    <label for="reviewrating" class="form-label">Rating:</label> 
+                    <InputNumber id="reviewrating" @bind-Value="Review.ReviewRating" class="form-control" min="1" max="10" /> 
+                    <ValidationMessage For="() => Review.ReviewRating" class="text-danger" /> 
+                </div>        
+
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/orders/details?id=@OrderId">Back to Order</a>
+</div>
+
+@code {
+    private Review Review { get; set; } = new Review();
+    private string BookTitle = "";
+    private int OrderId;
+    
+    [SupplyParameterFromQuery] private int BookId { get; set; }
+    [SupplyParameterFromQuery] private int OrderItemId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+
+        // Get authenticated user
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+        if (customer is null)
+        {
+            Navigation.NavigateTo("/notfound");
+            return;
+        }
+
+        // Check if the customer has purchased this book
+        var orderItem = await context.OrderItem
+            .Include(oi => oi.Book)
+            .Include(oi => oi.Order)
+            .FirstOrDefaultAsync(oi => oi.Id == OrderItemId && oi.Order.CustomerId == customer.Id);
+
+        if (orderItem is null)
+        {
+            Navigation.NavigateTo("/notfound");
+            return;
+        }
+
+        // ✅ **Check if a review already exists**
+        var existingReview = await context.Review
+            .FirstOrDefaultAsync(r => r.CustomerId == customer.Id && r.OrderItemId == OrderItemId);
+
+        if (existingReview is not null)
+        {
+            // ✅ Redirect back since they have already reviewed this book
+            Navigation.NavigateTo($"/orders/details?id={orderItem.OrderId}");
+            return;
+        }
+
+        // ✅ Initialize review object if no review exists
+        OrderId = orderItem.OrderId;
+        BookTitle = orderItem.Book.BookTitle;
+        Review = new Review
+            {
+                CustomerId = customer.Id,
+                OrderItemId = OrderItemId,
+                DateCreated = DateTime.Now,
+                DateUpdate = DateTime.Now
+            };
+    }
+
+
+    private async Task SubmitReview()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Review.Add(Review);
+        await context.SaveChangesAsync();
+        Navigation.NavigateTo($"/orders/details?id={OrderId}");
+    }
+}

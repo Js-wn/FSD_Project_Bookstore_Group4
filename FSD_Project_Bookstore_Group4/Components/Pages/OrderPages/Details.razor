@@ -2,63 +2,110 @@
 @using Microsoft.EntityFrameworkCore
 @using FSD_Project_Bookstore_Group4.Domain
 @inject IDbContextFactory<FSD_Project_Bookstore_Group4.Data.FSD_Project_Bookstore_Group4Context> DbFactory
-@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FSD_Project_Bookstore_Group4.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Forms
+@inject NavigationManager Navigation
+@inject UserManager<FSD_Project_Bookstore_Group4User> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
 
-<PageTitle>Details</PageTitle>
+<PageTitle>Order Details</PageTitle>
 
-<h1>Details</h1>
+<h1>Order Details</h1>
 
-<div>
-    <h2>Order</h2>
-    <hr />
-    @if (order is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">OrderDateTime</dt>
-            <dd class="col-sm-10">@order.OrderDateTime</dd>
-            <dt class="col-sm-2">CustomerId</dt>
-            <dd class="col-sm-10">@order.CustomerId</dd>
-            <dt class="col-sm-2">DateCreated</dt>
-            <dd class="col-sm-10">@order.DateCreated</dd>
-            <dt class="col-sm-2">DateUpdate</dt>
-            <dd class="col-sm-10">@order.DateUpdate</dd>
-        </dl>
-        <ul>
-            @foreach (var or in orderList)
-            {
-                <li>@or</li>
-            }
-        </ul>
-        <div>
-            <a href="@($"/orders")">Back to List</a>
-        </div>
+@if (order is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <dl class="row">
+        <dt class="col-sm-2">Order Date</dt>
+        <dd class="col-sm-10">@order.OrderDateTime</dd>
+        <dt class="col-sm-2">Customer</dt>
+        <dd class="col-sm-10">@customerName</dd>
+        <dt class="col-sm-2">Created On</dt>
+        <dd class="col-sm-10">@order.DateCreated</dd>
+        <dt class="col-sm-2">Last Updated</dt>
+        <dd class="col-sm-10">@order.DateUpdate</dd>
+    </dl>
 
-    }
-</div>
+    <h2>Order Items</h2>
+    <ul>
+        @foreach (var orderItem in orders)
+        {
+            <li>
+                @orderItem.OrderQty x | @orderItem.Book.BookTitle
+                @if (!reviewedBookIds.Contains(orderItem.BookId))
+                {
+                    if (!reviewedBookIds.Contains(orderItem.BookId))
+                    {
+                        <button class="btn btn-primary btn-sm" @onclick="() => AddReview(orderItem.BookId, orderItem.Id)">
+                            Write Review
+                        </button>
+                    }
+
+                }
+                else
+                {
+                    <span class="text-muted">(Reviewed)</span>
+                }
+            </li>
+        }
+    </ul>
+
+    <div>
+        <a href="@($"/orders")">Back to List</a>
+    </div>
+}
 
 @code {
     private Order? order;
-    private List<OrderItem> orders;
-    List<string> orderList = new List<string>();
+    private List<OrderItem> orders = new();
+    private List<int> reviewedBookIds = new();
+    private string customerName = "";
     [SupplyParameterFromQuery]
     private int Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        order = await context.Order.FirstOrDefaultAsync(m => m.Id == Id);
-        orders = context.OrderItem.Where(ba => ba.OrderId == Id).ToList();
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = UserManager.GetUserId(user);
+
+        var customer = await context.Customer.FirstOrDefaultAsync(c => c.AuthCustId == userId);
+        if (customer != null)
+        {
+            customerName = $"{customer.CustomerFirstName} {customer.CustomerLastName}";
+        }
+
+        order = await context.Order.FirstOrDefaultAsync(o => o.Id == Id);
         if (order is null)
         {
-            NavigationManager.NavigateTo("notfound");
+            Navigation.NavigateTo("notfound");
+            return;
         }
-        foreach (OrderItem a in orders)
-        {
-            var bk = await context.Book.FirstOrDefaultAsync(g => g.Id == a.BookId);
-            orderList.Add(a.OrderQty+"x | "+bk.BookTitle);
-        }
+
+        // Fetch order items and books
+        orders = await context.OrderItem
+            .Where(oi => oi.OrderId == Id)
+            .Include(oi => oi.Book)
+            .ToListAsync();
+
+        // Fetch existing reviews for books in this order
+        reviewedBookIds = await context.Review
+            .Where(r => r.CustomerId == customer.Id && orders.Select(oi => oi.BookId).Contains(r.OrderItem.BookId))
+            .Select(r => r.OrderItem.BookId)
+            .ToListAsync();
     }
+
+    private void AddReview(int bookId, int orderItemId)
+    {
+        Navigation.NavigateTo($"/reviews/add?bookId={bookId}&orderItemId={orderItemId}");
+    }
+
 }
