@@ -37,7 +37,7 @@ else
         @foreach (var orderItem in orders)
         {
             <li>
-                @orderItem.OrderQty x | @orderItem.Book.BookTitle
+                @orderItem.OrderQty x | @orderItem.Book.BookTitle | 
                 @if (!reviewedBookIds.Contains(orderItem.BookId))
                 {
                     if (!reviewedBookIds.Contains(orderItem.BookId))

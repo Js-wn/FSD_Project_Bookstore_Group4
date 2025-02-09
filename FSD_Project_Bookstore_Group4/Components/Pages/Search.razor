@@ -122,9 +122,9 @@
         public DateTime published { get; set; }
         public string desc { get; set; }
         public float price { get; set; }
-        public float avgrating { get; set; }
+        public double avgrating { get; set; }
         public int totalrevs { get; set; }
-        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, float _avgrating, int _totalrevs)
+        public SearchItem(int _Id, string _title, string _img, DateTime _published, string _desc, float _price, double _avgrating, int _totalrevs)
         {
             bkid = _Id;
             title = _title;
@@ -178,7 +178,7 @@
                 avgrating = 0f;
             }
             
-            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, avgrating, count);
+            SearchItem search = new SearchItem(item.Id, item.BookTitle, item.ImgLink, item.BookPublishDate, item.BookDesc, item.BookPrice, Math.Round(avgrating,1), count);
             
    
 
