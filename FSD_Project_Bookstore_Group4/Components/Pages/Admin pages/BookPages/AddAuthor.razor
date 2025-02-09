@@ -110,7 +110,7 @@ else
         using var context = DbFactory.CreateDbContext();
         context.BookAuthor.Add(BookAuthor);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/books/addauthors?id=" + Id);
+        NavigationManager.NavigateTo("/books/addauthors?id=" + Id, forceLoad: true);
         await context.SaveChangesAsync();
     }
     //Declare and initialize CarRentalManagementContext and IList
