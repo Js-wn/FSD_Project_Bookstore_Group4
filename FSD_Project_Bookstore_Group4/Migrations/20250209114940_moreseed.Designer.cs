@@ -4,6 +4,7 @@ using FSD_Project_Bookstore_Group4.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FSD_Project_Bookstore_Group4.Migrations
 {
     [DbContext(typeof(FSD_Project_Bookstore_Group4Context))]
-    partial class FSD_Project_Bookstore_Group4ContextModelSnapshot : ModelSnapshot
+    [Migration("20250209114940_moreseed")]
+    partial class moreseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +100,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ce4fdae-58c7-4a86-8ad3-80c9166be823",
+                            ConcurrencyStamp = "1af69f52-5b60-4410-965e-026cd68b24b6",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -105,9 +108,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB//aoIK+CiabUeGF40GLJ8Wdy6+8CU8nj4yvhMNCItleAvoKRl+HGpx/Ysauf/1gA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPwmI7CuXEn2Lrb65fKkMBtiADGPIIXEKCoZoTrlNQuClOyZzlOG2BkB7fp/EoL7kg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "89747724-e543-4170-89c1-cb88b81c5567",
+                            SecurityStamp = "6403856d-dc15-4727-b7b3-5abe165e3083",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -115,7 +118,7 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = "5436aeb6-34ac-90f0-860f-e446d23252e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "158d1259-6312-4527-bf5b-2c74ec9c3212",
+                            ConcurrencyStamp = "6b86dd0a-9c30-44ef-ae21-9a128fdf302e",
                             Email = "customer@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Customer",
@@ -123,9 +126,9 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@LOCALHOST.COM",
                             NormalizedUserName = "CUSTOMER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGub9SpY6gnLj80j9GKPhLpiSoBTL4YckQqy9VNAQpYJFayy/6f92Mpzd9APLODkhg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGZTTHParp/j/nl4rkAn7qOr4SVjA5NjmOO+5KK5TXlR0CmCGVZx083CZPn5y8NN2Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8f67ad21-d549-43cb-a509-1bf8064184d6",
+                            SecurityStamp = "99aa68a3-7705-44ba-8863-7ddf27ee1e7c",
                             TwoFactorEnabled = false,
                             UserName = "customer@localhost.com"
                         });
@@ -174,8 +177,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1952, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "Douglas Noel Adams was an English author, humourist, and screenwriter, best known as the creator of The Hitchhiker's Guide to the Galaxy. Originally a 1978 BBC radio comedy, The Hitchhiker's Guide to the Galaxy developed into a \"trilogy\" of five books which sold more than 15 million copies in his lifetime.",
                             AuthorName = "Douglas Adams",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9543),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9544),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9567),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9569),
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/c/c0/Douglas_adams_portrait_cropped.jpg"
                         },
                         new
@@ -184,8 +187,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "Eric Arthur Blair was an English novelist, poet, essayist, journalist and critic who wrote under the pen name of George Orwell. His work is characterised by lucid prose, social criticism, opposition to all totalitarianism, and support of democratic socialism.",
                             AuthorName = "George Orwell",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9554),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9555),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9578),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9580),
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/George_Orwell_press_photo.jpg/1024px-George_Orwell_press_photo.jpg"
                         },
                         new
@@ -194,8 +197,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1956),
                             AuthorBio = "David Alderton is an English writer specialising in pets and natural history topics. Growing up in a home surrounded by pets, he originally trained to become a veterinary surgeon. An allergic dermatitis acquired in his final year of study forced a change of career however, and so led him into the field of writing about pets and their care. He has since become a regular contributor of articles on this subject to a wide range of newspapers and magazines in the UK and abroad, and also participates frequently in radio and television programmes.",
                             AuthorName = "David Alderton",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9563),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9565),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9585),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9586),
                             ImgLink = "https://m.media-amazon.com/images/S/amzn-author-media-prod/m84i99ih3q7o6ec59b5ftmhijp._SX272_CR0%2C0%2C272%2C272_.jpg"
                         },
                         new
@@ -204,8 +207,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             AurthorDOB = new DateTime(1951, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AuthorBio = "John Hardress Wilfred Lloyd is a British comedy writer and television producer. ",
                             AuthorName = "John Lloyd",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9571),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9572),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9594),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9595),
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/John_lloyd_secret_comedy_podcast.jpg/1280px-John_lloyd_secret_comedy_podcast.jpg"
                         });
                 });
@@ -263,8 +266,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(2002, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "The Ultimate Hitchhiker's Guide to the Galaxy: Five Novels in One Outrageous Volume",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7649),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7650),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2162),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2163),
                             ImgLink = "https://m.media-amazon.com/images/I/91Mu7rVLIFL.jpg",
                             PublisherId = 2,
                             UpdatedBy = "System"
@@ -277,8 +280,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(1949, 6, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "Nineteen Eighty-Four",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7716),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7716),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2182),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2183),
                             ImgLink = "https://m.media-amazon.com/images/I/612ADI+BVlL.jpg",
                             PublisherId = 3,
                             UpdatedBy = "System"
@@ -291,8 +294,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(1991, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "American Psycho",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7720),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7721),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2189),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2191),
                             ImgLink = "https://m.media-amazon.com/images/I/7150fwe2f9L._SL1200_.jpg",
                             PublisherId = 1,
                             UpdatedBy = "System"
@@ -305,8 +308,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(2018, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "Complete Illustrated Encyclopedia of Birds of the World: A Detailed Visual Reference Guide to 1600 Birds and Their Habitats, Shown in More Than 1800 Pictures",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7725),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7725),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2197),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2198),
                             ImgLink = "https://m.media-amazon.com/images/I/61wRoaVqXyL._SY385_.jpg",
                             PublisherId = 1,
                             UpdatedBy = "System"
@@ -319,8 +322,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(1983, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "The Meaning of Liff",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7728),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7729),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2205),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2206),
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/The_Meaning_of_Liff_1983_cover_with_sticker.jpg/800px-The_Meaning_of_Liff_1983_cover_with_sticker.jpg",
                             PublisherId = 2,
                             UpdatedBy = "System"
@@ -333,8 +336,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             BookPublishDate = new DateTime(1945, 8, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookTitle = "Animal Farm",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7732),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7733),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2214),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2216),
                             ImgLink = "https://upload.wikimedia.org/wikipedia/commons/f/fb/Animal_Farm_-_1st_edition.jpg",
                             PublisherId = 3,
                             UpdatedBy = "System"
@@ -381,48 +384,48 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 1,
                             AuthorId = 1,
                             BookId = 1,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9796),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9797)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9838),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9839)
                         },
                         new
                         {
                             Id = 2,
                             AuthorId = 2,
                             BookId = 2,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9801),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9802)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9845),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9846)
                         },
                         new
                         {
                             Id = 3,
                             AuthorId = 3,
                             BookId = 4,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9805),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9806)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9849),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9850)
                         },
                         new
                         {
                             Id = 4,
                             AuthorId = 1,
                             BookId = 5,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9808),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9809)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9853),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9854)
                         },
                         new
                         {
                             Id = 5,
                             AuthorId = 4,
                             BookId = 5,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9811),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9812)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9870),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9873)
                         },
                         new
                         {
                             Id = 6,
                             AuthorId = 2,
                             BookId = 6,
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9814),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 787, DateTimeKind.Local).AddTicks(9832)
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9876),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 678, DateTimeKind.Local).AddTicks(9891)
                         });
                 });
 
@@ -466,8 +469,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 1,
                             BookId = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(308),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(309),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(521),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(522),
                             GenreId = 1,
                             UpdatedBy = "System"
                         },
@@ -476,8 +479,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 2,
                             BookId = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(312),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(313),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(525),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(526),
                             GenreId = 3,
                             UpdatedBy = "System"
                         },
@@ -486,8 +489,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 3,
                             BookId = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(315),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(316),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(529),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(530),
                             GenreId = 4,
                             UpdatedBy = "System"
                         },
@@ -496,8 +499,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 4,
                             BookId = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(377),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(378),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(532),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(533),
                             GenreId = 1,
                             UpdatedBy = "System"
                         },
@@ -506,8 +509,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 5,
                             BookId = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(381),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(381),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(535),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(536),
                             GenreId = 5,
                             UpdatedBy = "System"
                         },
@@ -516,8 +519,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 6,
                             BookId = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(384),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(385),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(539),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(540),
                             GenreId = 6,
                             UpdatedBy = "System"
                         },
@@ -526,8 +529,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 7,
                             BookId = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(387),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(388),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(542),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(543),
                             GenreId = 7,
                             UpdatedBy = "System"
                         },
@@ -536,8 +539,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 8,
                             BookId = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(391),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(391),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(546),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(546),
                             GenreId = 1,
                             UpdatedBy = "System"
                         },
@@ -546,8 +549,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 9,
                             BookId = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(394),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(395),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(549),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(550),
                             GenreId = 8,
                             UpdatedBy = "System"
                         },
@@ -556,8 +559,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 10,
                             BookId = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(397),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(398),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(552),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(553),
                             GenreId = 9,
                             UpdatedBy = "System"
                         },
@@ -566,8 +569,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 11,
                             BookId = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(401),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(401),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(555),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(556),
                             GenreId = 10,
                             UpdatedBy = "System"
                         },
@@ -576,8 +579,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 12,
                             BookId = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(404),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(405),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(558),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(559),
                             GenreId = 11,
                             UpdatedBy = "System"
                         },
@@ -586,8 +589,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 13,
                             BookId = 6,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(407),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(408),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(562),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(562),
                             GenreId = 6,
                             UpdatedBy = "System"
                         },
@@ -596,8 +599,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 14,
                             BookId = 6,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(410),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(411),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(565),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(566),
                             GenreId = 9,
                             UpdatedBy = "System"
                         },
@@ -606,8 +609,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 15,
                             BookId = 6,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(414),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(414),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(568),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(569),
                             GenreId = 1,
                             UpdatedBy = "System"
                         },
@@ -616,8 +619,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                             Id = 16,
                             BookId = 5,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(417),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(418),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(571),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(572),
                             GenreId = 4,
                             UpdatedBy = "System"
                         });
@@ -717,8 +720,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7890),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7891),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2596),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2598),
                             GenderId = 0,
                             GenderName = "Male",
                             UpdatedBy = "System"
@@ -727,8 +730,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7894),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7895),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2605),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2606),
                             GenderId = 0,
                             GenderName = "Female",
                             UpdatedBy = "System"
@@ -737,8 +740,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7897),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7898),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2610),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2611),
                             GenderId = 0,
                             GenderName = "Attack-Helicopter",
                             UpdatedBy = "System"
@@ -747,8 +750,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 4,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7900),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7901),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2615),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(2617),
                             GenderId = 0,
                             GenderName = "Toaster",
                             UpdatedBy = "System"
@@ -790,8 +793,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(87),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(87),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(152),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(153),
                             GenreDesc = "Fiction is any creative work, chiefly any narrative work, portraying individuals, events, or places that are imaginary or in ways that are imaginary.",
                             GenreName = "Fiction",
                             UpdatedBy = "System"
@@ -800,8 +803,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(91),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(92),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(157),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(158),
                             GenreDesc = "Non-fiction (or nonfiction) is any document or media content that attempts, in good faith, to convey information only about the real world, rather than being grounded in imagination.",
                             GenreName = "Non-fiction",
                             UpdatedBy = "System"
@@ -810,8 +813,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(95),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(96),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(162),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(163),
                             GenreDesc = "Science fiction (sometimes shortened to sci-fi or abbreviated SF) is a genre of speculative fiction which typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
                             GenreName = "Science fiction",
                             UpdatedBy = "System"
@@ -820,8 +823,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 4,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(99),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(99),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(165),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(166),
                             GenreDesc = "Comedy is a genre that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.",
                             GenreName = "Comedy",
                             UpdatedBy = "System"
@@ -830,8 +833,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 5,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(102),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(103),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(170),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(170),
                             GenreDesc = "Utopian and dystopian fiction are subgenres of speculative fiction that explore social and political structures. Utopian fiction portrays a setting that agrees with the author's ethos, having various attributes of another reality intended to appeal to readers. ",
                             GenreName = "Dystopian Fiction",
                             UpdatedBy = "System"
@@ -840,8 +843,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 6,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(105),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(106),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(173),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(174),
                             GenreDesc = "Political fiction employs narrative to comment on political events, systems and theories. Works of political fiction, such as political novels, often \"directly criticize an existing society or present an alternative, even fantastic, reality\".",
                             GenreName = "Political fiction",
                             UpdatedBy = "System"
@@ -850,8 +853,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 7,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(109),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(110),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(177),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(178),
                             GenreDesc = "Social science fiction is a subgenre of science fiction, usually (but not necessarily) soft science fiction, concerned less with technology or space opera and more with speculation about society. In other words, it \"absorbs and discusses anthropology\" and speculates about human behavior and interactions.",
                             GenreName = "Social science fiction",
                             UpdatedBy = "System"
@@ -860,8 +863,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 8,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(112),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(113),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(180),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(181),
                             GenreDesc = "Transgressive fiction is a genre of literature which focuses on characters who feel confined by the norms and expectations of society and who break free of those confines in unusual or illicit ways.",
                             GenreName = "Transgressive fiction",
                             UpdatedBy = "System"
@@ -870,8 +873,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 9,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(115),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(116),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(183),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(184),
                             GenreDesc = "Satire is a genre of the visual, literary, and performing arts, usually in the form of fiction and less frequently non-fiction, in which vices, follies, abuses, and shortcomings are held up to ridicule, often with the intent of exposing or shaming the perceived flaws of individuals, corporations, government, or society itself into improvement.",
                             GenreName = "Satire",
                             UpdatedBy = "System"
@@ -880,8 +883,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 10,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(119),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(120),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(187),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(187),
                             GenreDesc = "Black comedy, also known as black humor, bleak comedy, dark comedy, dark humor, gallows humor or morbid humor, is a style of comedy that makes light of subject matter that is generally considered taboo, particularly subjects that are normally considered serious or painful to discuss.",
                             GenreName = "Black comedy",
                             UpdatedBy = "System"
@@ -890,8 +893,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 11,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(122),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(123),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(190),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(191),
                             GenreDesc = "Horror is a genre of speculative fiction that is intended to disturb, frighten, or scare.[1] Horror is often divided into the sub-genres of psychological horror and supernatural horror.",
                             GenreName = "Horror",
                             UpdatedBy = "System"
@@ -1071,8 +1074,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7364),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7364),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1106),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1109),
                             PublisherAddress = "123 street",
                             PublisherContact = "11111111",
                             PublisherEmail = "example@gmail.com",
@@ -1083,8 +1086,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7375),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7375),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1128),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1129),
                             PublisherAddress = "6 Briset Street",
                             PublisherContact = "0207 038 5000",
                             PublisherEmail = "webqueries@macmillan.co.uk",
@@ -1095,8 +1098,8 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7379),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 646, DateTimeKind.Local).AddTicks(7379),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1135),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 458, DateTimeKind.Local).AddTicks(1136),
                             PublisherAddress = " 8 Viaduct Gardens",
                             PublisherContact = "+44 (0)20 7139 3000",
                             PublisherEmail = "VintagePublicity@penguinrandomhouse.co.uk",
@@ -1228,37 +1231,31 @@ namespace FSD_Project_Bookstore_Group4.Migrations
                         {
                             Id = 1,
                             Cost = 15f,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(652),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(653),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(889),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(889),
                             Description = "15% discount for all orders",
                             Discount = 0.14999999999999999,
-                            TierName = "Basic",
-                            UpdatedBy = "System"
+                            TierName = "Basic"
                         },
                         new
                         {
                             Id = 2,
                             Cost = 20f,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(661),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(662),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(900),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(901),
                             Description = "20% discount for all orders",
                             Discount = 0.20000000000000001,
-                            TierName = "Premium",
-                            UpdatedBy = "System"
+                            TierName = "Premium"
                         },
                         new
                         {
                             Id = 3,
                             Cost = 25f,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(665),
-                            DateUpdate = new DateTime(2025, 2, 9, 19, 58, 1, 788, DateTimeKind.Local).AddTicks(665),
+                            DateCreated = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(904),
+                            DateUpdate = new DateTime(2025, 2, 9, 19, 49, 39, 679, DateTimeKind.Local).AddTicks(904),
                             Description = "25% discount for all orders",
                             Discount = 0.25,
-                            TierName = "Premium+",
-                            UpdatedBy = "System"
+                            TierName = "Premium+"
                         });
                 });
 
